@@ -20,3 +20,7 @@ try:
     from .local import *  # noqa
 except ImportError:
     pass
+
+# CRX_BANNER = "Development"
+# CRX_BANNER_BACKGROUND = '#FFFFE0'   # light yellow background
+# CRX_BANNER_TEXT_COLOR = '#000'              # black text color

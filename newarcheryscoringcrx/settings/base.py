@@ -165,7 +165,7 @@ LOGIN_REDIRECT_URL = "wagtailadmin_home"
 
 # Wagtail settings
 
-WAGTAIL_SITE_NAME = "newarcheryscoringcrx"
+WAGTAIL_SITE_NAME = "New Archery Scoring CRX"
 
 WAGTAIL_ENABLE_UPDATE_CHECK = False
 
@@ -194,3 +194,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # custom implementation.
 CRX_DISABLE_NAVBAR = True
 CRX_DISABLE_FOOTER = True
+
