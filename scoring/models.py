@@ -34,6 +34,14 @@ from wagtail.admin.panels import (
     TitleFieldPanel,
 )
 
+from coderedcms.models import (
+    CoderedArticlePage,
+    CoderedArticleIndexPage,
+    CoderedEmail,
+    CoderedFormPage,
+    CoderedWebPage,
+)
+
 class BaseScoringModel(ClusterableModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
@@ -44,6 +52,8 @@ class BaseScoringModel(ClusterableModel):
 
     class Meta:
         abstract = True
+
+# TODO: models - Begin
 
 class Archer(BaseScoringModel):
     def __init__(self, *args, **kwargs):
@@ -182,6 +192,9 @@ class Archer(BaseScoringModel):
             s_middle_name = self.middle_name
         return f"{self.last_name} {self.first_name} {s_middle_name}"   
 
+# TODO: models - End
+
+# TODO: snippets - Begin
 class ArcherSnippetViewSet(SnippetViewSet):
     model = Archer
     icon = "arrow-right-full"
@@ -239,3 +252,52 @@ class ModelingSnippetViewSetGroup(SnippetViewSetGroup):
         ArcherSnippetViewSet,        
     )
 register_snippet(ModelingSnippetViewSetGroup)    
+# TODO: snippets - End
+
+# TODO: Page models - Begin
+        
+class ArcherIndexPage(CoderedWebPage):
+    """
+    Page model for listing Archers.
+    """
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.ArcherPage'
+
+    subpage_types = ['scoring.ArcherPage']
+
+    content_panels = CoderedWebPage.content_panels
+
+    class Meta:
+        verbose_name = _("Archer Index Page")
+        verbose_name_plural = _("Archer Index Pages")
+
+class ArcherPage(CoderedWebPage):
+    """
+    Custom Page model for displaying an Archer's details.
+    """
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+    archer = models.ForeignKey(
+        Archer,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='archer_pages',
+        verbose_name=_("Archer"),
+    )
+
+    parent_page_types = ['scoring.ArcherIndexPage']
+
+    content_panels = CoderedWebPage.content_panels + [
+        PageChooserPanel('archer'),
+    ]
+
+    class Meta:
+        verbose_name = _("Archer Page")
+        verbose_name_plural = _("Archer Pages")

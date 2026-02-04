@@ -30,7 +30,10 @@ Adding a Hero Unit to the Home Page
 ## 006 Create scoring app
 
 ```bash
+Part 1
 python manage.py startapp scoring
 # Create class models.Archer 
+Part 2
+classes of Archer* created
 ```
 
