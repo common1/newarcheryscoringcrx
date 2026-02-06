@@ -37,3 +37,10 @@ Part 2
 classes of Archer* created
 ```
 
+## 007 Scoring app - Part 1
+
+```
+Part 1
+Models, snippetview and pages added
+templates in scoring\templates\scoring\pages
+```

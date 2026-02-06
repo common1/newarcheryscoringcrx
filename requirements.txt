@@ -2,3 +2,4 @@
 # https://docs.coderedcorp.com/wagtail-crx/releases/
 coderedcms==6.0.*
 wagtail==7.2.*
+django-extensions==4.1
