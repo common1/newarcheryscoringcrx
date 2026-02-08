@@ -53,3 +53,10 @@ Models, snippetview and pages added
 templates in scoring\templates\scoring\pages
 ```
 
+## 008 Scoring app templates - Part 1
+
+```
+Part 1
+Working on page templates
+```
+

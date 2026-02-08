@@ -2127,6 +2127,7 @@ class AgeGroupPage(CoderedWebPage):
 
     # Only allow this page to be created beneath an AgeGroupIndexPage.
     parent_page_types = ['scoring.AgeGroupIndexPage']
+    subpage_types = []
 
     template = "scoring/pages/agegroup_page.html"
 
@@ -2144,9 +2145,19 @@ class AgeGroupPage(CoderedWebPage):
         blank=True,
         default=""
     )
+    photo = models.ForeignKey(
+        get_image_model_string(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Agegroup Photo',
+    )
 
     content_panels = CoderedWebPage.content_panels + [
         FieldPanel('age_group'),
+        FieldPanel('photo'),
+        FieldPanel('description'),
     ]
 
 class TeamIndexPage(CoderedWebPage):
