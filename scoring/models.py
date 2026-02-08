@@ -34,6 +34,7 @@ from wagtail.admin.panels import (
     MultipleChooserPanel,
     TitleFieldPanel,
 )
+from wagtail.fields import RichTextField
 
 from coderedcms.models import (
     CoderedArticlePage,
@@ -1267,7 +1268,7 @@ class ArcherSnippetViewSet(SnippetViewSet):
     inspect_view_enabled = True
     copy_view_enabled = True
     history_view_enabled = True
-    deletete_view_enabled=False
+    delete_view_enabled=True
 
     panels = [
         MultiFieldPanel(
@@ -1315,6 +1316,8 @@ class DisciplineSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('name'),
@@ -1348,6 +1351,8 @@ class DisciplineMembershipSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('discipline'),
@@ -1381,6 +1386,8 @@ class ClubSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('name'),
@@ -1427,6 +1434,8 @@ class ClubMembershipSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('club'),
@@ -1468,6 +1477,8 @@ class CategorySnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('name'),
@@ -1501,6 +1512,8 @@ class AgeGroupSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('name'),
@@ -1533,6 +1546,8 @@ class CategoryMembershipSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('category'),
@@ -1567,6 +1582,8 @@ class TeamSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('name'),
@@ -1600,6 +1617,9 @@ class TeamMembershipSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('team'),
@@ -1633,6 +1653,8 @@ class ScoringSheetSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [  
         FieldPanel('name'),
@@ -1716,6 +1738,8 @@ class RoundSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('name'),
@@ -1788,6 +1812,8 @@ class CompetitionSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('name'),
@@ -1824,6 +1850,8 @@ class CompetitionMembershipSnippetViewSet(SnippetViewSet):
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
 
     panels = [
         FieldPanel('competition'),
@@ -1897,6 +1925,17 @@ class ArcherPage(CoderedWebPage):
     """
     Custom page for individual archers
     """
+
+    class Meta:
+        verbose_name = "Archer Page"
+
+    # Only allow this page to be created beneath an ArchersIndexPage.
+    parent_page_types = ['scoring.ArcherIndexPage']
+    subpage_types = []  # No subpages allowed under ArcherPage
+    
+    template = "scoring/pages/archer_page.html"
+
+   # Archer Page model fields
     archer = models.ForeignKey(
         'scoring.Archer',
         null=True,
@@ -1905,18 +1944,17 @@ class ArcherPage(CoderedWebPage):
         related_name="+",
         help_text="Archer associated with this page (optional, but recommended for proper functionality)",
     )
+    description = RichTextField(
+        verbose_name="Archer Description",
+        null=True,
+        blank=True,
+        default=""
+    )
 
     content_panels = CoderedWebPage.content_panels + [
         FieldPanel('archer'),
+        FieldPanel('description'),
     ]
-
-    class Meta:
-        verbose_name = "Archer Page"
-
-    # Only allow this page to be created beneath an ArchersIndexPage.
-    parent_page_types = ['scoring.ArcherIndexPage']
-
-    template = "scoring/pages/archer_page.html"
 
 class DisciplineIndexPage(CoderedWebPage):
     """
@@ -1937,18 +1975,6 @@ class DisciplinePage(CoderedWebPage):
     """
     Custom page for individual disciplines
     """
-    discipline = models.ForeignKey(
-        'scoring.Discipline',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Discipline associated with this page (optional, but recommended for proper functionality)",
-    )
-
-    content_panels = CoderedWebPage.content_panels + [
-        FieldPanel('discipline'),
-    ]
 
     class Meta:
         verbose_name = "Discipline Page"
@@ -1957,6 +1983,27 @@ class DisciplinePage(CoderedWebPage):
     parent_page_types = ['scoring.DisciplineIndexPage']
 
     template = "scoring/pages/discipline_page.html"
+
+   # Discipline Page model fields
+    discipline = models.ForeignKey(
+        'scoring.Discipline',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Discipline associated with this page (optional, but recommended for proper functionality)",
+    )
+    description = RichTextField(
+        verbose_name="Discipline Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('discipline'),
+        FieldPanel('description'),
+    ]
 
 class ClubIndexPage(CoderedWebPage):
     """
@@ -1977,18 +2024,6 @@ class ClubPage(CoderedWebPage):
     """
     Custom page for individual clubs
     """
-    club = models.ForeignKey(
-        'scoring.Club',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Club associated with this page (optional, but recommended for proper functionality)",
-    )
-
-    content_panels = CoderedWebPage.content_panels + [
-        FieldPanel('club'),
-    ]
 
     class Meta:
         verbose_name = "Club Page"
@@ -1997,6 +2032,27 @@ class ClubPage(CoderedWebPage):
     parent_page_types = ['scoring.ClubIndexPage']
 
     template = "scoring/pages/club_page.html"
+
+   # Discipline Page model fields
+    club = models.ForeignKey(
+        'scoring.Club',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Club associated with this page (optional, but recommended for proper functionality)",
+    )
+    description = RichTextField(
+        verbose_name="Club Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('club'),
+        FieldPanel('description'),
+    ]
 
 class CategoryIndexPage(CoderedWebPage):
     """
@@ -2017,18 +2073,6 @@ class CategoryPage(CoderedWebPage):
     """
     Custom page for individual categories
     """
-    category = models.ForeignKey(
-        'scoring.Category',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Category associated with this page (optional, but recommended for proper functionality)",
-    )
-
-    content_panels = CoderedWebPage.content_panels + [
-        FieldPanel('category'),
-    ]
 
     class Meta:
         verbose_name = "Category Page"
@@ -2038,6 +2082,27 @@ class CategoryPage(CoderedWebPage):
 
     template = "scoring/pages/category_page.html"
 
+   # Category Page model fields
+    category = models.ForeignKey(
+        'scoring.Category',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Category associated with this page (optional, but recommended for proper functionality)",
+    )
+    description = RichTextField(
+        verbose_name="Category Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('category'),
+        FieldPanel('description'),
+    ]
+    
 class AgeGroupIndexPage(CoderedWebPage):
     """
     Landing page for age groups
@@ -2057,6 +2122,14 @@ class AgeGroupPage(CoderedWebPage):
     """
     Custom page for individual age groups
     """
+    class Meta:
+        verbose_name = "Age Group Page"
+
+    # Only allow this page to be created beneath an AgeGroupIndexPage.
+    parent_page_types = ['scoring.AgeGroupIndexPage']
+
+    template = "scoring/pages/agegroup_page.html"
+
     age_group = models.ForeignKey(
         'scoring.AgeGroup',
         null=True,
@@ -2065,18 +2138,16 @@ class AgeGroupPage(CoderedWebPage):
         related_name="+",
         help_text="Age group associated with this page (optional, but recommended for proper functionality)",
     )
+    description = RichTextField(
+        verbose_name="AgeGroup Description",
+        null=True,
+        blank=True,
+        default=""
+    )
 
     content_panels = CoderedWebPage.content_panels + [
         FieldPanel('age_group'),
     ]
-
-    class Meta:
-        verbose_name = "Age Group Page"
-
-    # Only allow this page to be created beneath an AgeGroupIndexPage.
-    parent_page_types = ['scoring.AgeGroupIndexPage']
-
-    template = "scoring/pages/agegroup_page.html"
 
 class TeamIndexPage(CoderedWebPage):
     """
@@ -2097,18 +2168,6 @@ class TeamPage(CoderedWebPage):
     """
     Custom page for individual teams
     """
-    team = models.ForeignKey(
-        'scoring.Team',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Team associated with this page (optional, but recommended for proper functionality)",
-    )
-
-    content_panels = CoderedWebPage.content_panels + [
-        FieldPanel('team'),
-    ]
 
     class Meta:
         verbose_name = "Team Page"
@@ -2117,6 +2176,25 @@ class TeamPage(CoderedWebPage):
     parent_page_types = ['scoring.TeamIndexPage']
 
     template = "scoring/pages/team_page.html"
+
+    team = models.ForeignKey(
+        'scoring.Team',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Team associated with this page (optional, but recommended for proper functionality)",
+    )
+    description = RichTextField(
+        verbose_name="Team Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('team'),
+    ]
 
 class ScoringSheetIndexPage(CoderedWebPage):
     """
@@ -2137,18 +2215,6 @@ class ScoringSheetPage(CoderedWebPage):
     """
     Custom page for individual scoring sheets
     """
-    scoring_sheet = models.ForeignKey(
-        'scoring.ScoringSheet',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Scoring sheet associated with this page (optional, but recommended for proper functionality)",
-    )
-
-    content_panels = CoderedWebPage.content_panels + [
-        FieldPanel('scoring_sheet'),
-    ]
 
     class Meta:
         verbose_name = "Scoring Sheet Page"
@@ -2157,6 +2223,26 @@ class ScoringSheetPage(CoderedWebPage):
     parent_page_types = ['scoring.ScoringSheetIndexPage']
 
     template = "scoring/pages/scoringsheet_page.html"
+
+    scoring_sheet = models.ForeignKey(
+        'scoring.ScoringSheet',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Scoring sheet associated with this page (optional, but recommended for proper functionality)",
+    )
+    description = RichTextField(
+        verbose_name="ScoringSheet Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+    
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('scoring_sheet'),
+        FieldPanel('description'),
+    ]
 
 class TargetFaceNameChoiceIndexPage(CoderedWebPage):
     """
@@ -2185,9 +2271,16 @@ class TargetFaceNameChoicePage(CoderedWebPage):
         related_name="+",
         help_text="Target face name choice associated with this page (optional, but recommended for proper functionality)",
     )
+    description = RichTextField(
+        verbose_name="TargetFaceNameChoice Description",
+        null=True,
+        blank=True,
+        default=""
+    )
 
     content_panels = CoderedWebPage.content_panels + [
         FieldPanel('target_face_name_choice'),
+        FieldPanel('description'),
     ]
 
     class Meta:
@@ -2217,18 +2310,6 @@ class TargetFacePage(CoderedWebPage):
     """
     Custom page for individual target faces
     """
-    target_face = models.ForeignKey(
-        'scoring.TargetFace',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Target face associated with this page (optional, but recommended for proper functionality)",
-    )
-
-    content_panels = CoderedWebPage.content_panels + [
-        FieldPanel('target_face'),
-    ]
 
     class Meta:
         verbose_name = "Target Face Page"
@@ -2237,6 +2318,26 @@ class TargetFacePage(CoderedWebPage):
     parent_page_types = ['scoring.TargetFaceIndexPage']
 
     template = "scoring/pages/targetface_page.html"
+
+    target_face = models.ForeignKey(
+        'scoring.TargetFace',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Target face associated with this page (optional, but recommended for proper functionality)",
+    )
+    description = RichTextField(
+        verbose_name="Target Face Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('target_face'),
+        FieldPanel('description'),
+    ]
 
 class RoundIndexPage(CoderedWebPage):
     """
@@ -2257,18 +2358,6 @@ class RoundPage(CoderedWebPage):
     """
     Custom page for individual rounds
     """
-    round = models.ForeignKey(
-        'scoring.Round',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Round associated with this page (optional, but recommended for proper functionality)",
-    )
-
-    content_panels = CoderedWebPage.content_panels + [
-        FieldPanel('round'),
-    ]
 
     class Meta:
         verbose_name = "Round Page"
@@ -2277,6 +2366,26 @@ class RoundPage(CoderedWebPage):
     parent_page_types = ['scoring.RoundIndexPage']
 
     template = "scoring/pages/round_page.html"
+
+    round = models.ForeignKey(
+        'scoring.Round',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Round associated with this page (optional, but recommended for proper functionality)",
+    )
+    description = RichTextField(
+        verbose_name="Round Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('round'),
+        FieldPanel('description'),
+    ]
 
 class ScoreIndexPage(CoderedWebPage):
     """
@@ -2297,18 +2406,6 @@ class ScorePage(CoderedWebPage):
     """
     Custom page for individual scores
     """
-    score = models.ForeignKey(
-        'scoring.Score',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Score associated with this page (optional, but recommended for proper functionality)",
-    )
-
-    content_panels = CoderedWebPage.content_panels + [
-        FieldPanel('score'),
-    ]
 
     class Meta:
         verbose_name = "Score Page"
@@ -2317,6 +2414,26 @@ class ScorePage(CoderedWebPage):
     parent_page_types = ['scoring.ScoreIndexPage']
 
     template = "scoring/pages/score_page.html"
+
+    score = models.ForeignKey(
+        'scoring.Score',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Score associated with this page (optional, but recommended for proper functionality)",
+    )
+    description = RichTextField(
+        verbose_name="Score Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('score'),
+        FieldPanel('description'),
+    ]
 
 class CompetitionIndexPage(CoderedWebPage):
     """
@@ -2337,18 +2454,6 @@ class CompetitionPage(CoderedWebPage):
     """
     Custom page for individual competitions
     """
-    competition = models.ForeignKey(
-        'scoring.Competition',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        help_text="Competition associated with this page (optional, but recommended for proper functionality)",
-    )
-
-    content_panels = CoderedWebPage.content_panels + [
-        FieldPanel('competition'),
-    ]
 
     class Meta:
         verbose_name = "Competition Page"
@@ -2358,17 +2463,104 @@ class CompetitionPage(CoderedWebPage):
 
     template = "scoring/pages/competition_page.html"
 
-# TODO: Here
+    competition = models.ForeignKey(
+        'scoring.Competition',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Competition associated with this page (optional, but recommended for proper functionality)",
+    )
+    description = RichTextField(
+        verbose_name="Archer Description",
+        null=True,
+        blank=True,
+        default=""
+    )
 
-class ScoringInfoPage(CoderedWebPage):
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('competition'),
+        FieldPanel('description'),
+    ]
+
+class ScoringIndexPage(CoderedWebPage):
     """
-    Information page about the scoring system.
+    Landing page for the scoring system.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.ScoringPage'
+
+    subpage_types = ['scoring.ScoringPage']
+
+    class Meta:
+        verbose_name = "Scoring Index Page"
+
+    template = "scoring/pages/scoring_index_page.html"
+
+class ScoringPage(CoderedWebPage):
+    """
+    Custom page for individual scoring information
+    """
+
+    # Only allow this page to be created beneath a ScoringIndexPage.
+    parent_page_types = ['scoring.ScoringIndexPage']
+
+    class Meta:
+        verbose_name = "Scoring Page"
+
+    template = "scoring/pages/scoring_page.html"
+
+    description = RichTextField(
+        verbose_name="Scoring Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class ArcherRankingIndexPage(CoderedWebPage):
+    """
+    Landing page for archer rankings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.ArcherRankingPage'
+
+    subpage_types = ['scoring.ArcherRankingPage']
+
+    class Meta:
+        verbose_name = "Archer Ranking Index Page"
+
+    template = "scoring/pages/archer_ranking_index_page.html"
+
+class ArcherRankingPage(CoderedWebPage):
+    """
+    Individual page for archer rankings.
     """
 
     class Meta:
-        verbose_name = "Scoring Info Page"
+        verbose_name = "Archer Ranking Page"
 
-    template = "scoring/pages/scoring_info_page.html"
+    template = "scoring/pages/archer_ranking_page.html"
+
+class RulesIndexPage(CoderedWebPage):
+    """
+    Landing page for the rules of the scoring system.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.RulesPage'
+
+    subpage_types = ['scoring.RulesPage']
+
+    class Meta:
+        verbose_name = "Rules Index Page"
+
+    template = "scoring/pages/rules_index_page.html"
 
 class RulesPage(CoderedWebPage):
     """
@@ -2380,9 +2572,24 @@ class RulesPage(CoderedWebPage):
 
     template = "scoring/pages/rules_page.html"
 
+class FAQIndexPage(CoderedWebPage):
+    """
+    Landing page for frequently asked questions.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.FAQPage'
+
+    subpage_types = ['scoring.FAQPage']
+
+    class Meta:
+        verbose_name = "FAQ Index Page"
+
+    template = "scoring/pages/faq_index_page.html"
+
 class FAQPage(CoderedWebPage):
     """
-    Frequently Asked Questions page.
+    Page for frequently asked questions.
     """
 
     class Meta:
@@ -2390,9 +2597,24 @@ class FAQPage(CoderedWebPage):
 
     template = "scoring/pages/faq_page.html"
 
+class AboutIndexPage(CoderedWebPage):
+    """
+    Landing page for about us information.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.AboutPage'
+
+    subpage_types = ['scoring.AboutPage']
+
+    class Meta:
+        verbose_name = "About Index Page"
+
+    template = "scoring/pages/about_index_page.html"
+
 class AboutPage(CoderedWebPage):
     """
-    About us page.
+    Page for about us information.
     """
 
     class Meta:
@@ -2400,375 +2622,1059 @@ class AboutPage(CoderedWebPage):
 
     template = "scoring/pages/about_page.html"
 
+class SponsorsIndexPage(CoderedWebPage):
+    """
+    Landing page for sponsors information.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.SponsorsPage'
+
+    subpage_types = ['scoring.SponsorsPage']
+
+    class Meta:
+        verbose_name = "Sponsors Index Page"
+
+    template = "scoring/pages/sponsors_index_page.html"
+
 class SponsorsPage(CoderedWebPage):
     """
-    Sponsors information page.
+    Custom page for individual sponsors information.
     """
 
     class Meta:
         verbose_name = "Sponsors Page"
 
+    # Only allow this page to be created beneath a SponsorsIndexPage.
+    parent_page_types = ['scoring.SponsorsIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/sponsors_page.html"
 
-class EventsPage(CoderedWebPage):
+    description = RichTextField(
+        verbose_name="Sponsors Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class ResultsIndexPage(CoderedWebPage):
     """
-    Events listing page.
+    Landing page for results listings.
     """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.ResultsPage'
+
+    subpage_types = ['scoring.ResultsPage']
 
     class Meta:
-        verbose_name = "Events Page"
+        verbose_name = "Results Index Page"
 
-    template = "scoring/pages/events_page.html"
+    template = "scoring/pages/results_index_page.html"
 
 class ResultsPage(CoderedWebPage):
     """
-    Results listing page.
+    Custom page for individual results listings.
     """
 
     class Meta:
         verbose_name = "Results Page"
 
+    # Only allow this page to be created beneath a ResultsIndexPage.
+    parent_page_types = ['scoring.ResultsIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/results_page.html"
+
+    description = RichTextField(
+        verbose_name="Results Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class RankingsIndexPage(CoderedWebPage):
+    """
+    Landing page for rankings listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.RankingsPage'
+
+    subpage_types = ['scoring.RankingsPage']
+
+    class Meta:
+        verbose_name = "Rankings Index Page"
+
+    template = "scoring/pages/rankings_index_page.html"
 
 class RankingsPage(CoderedWebPage):
     """
-    Rankings listing page.
+    Custom page for individual rankings listings.
     """
 
     class Meta:
         verbose_name = "Rankings Page"
 
+    # Only allow this page to be created beneath a RankingsIndexPage.
+    parent_page_types = ['scoring.RankingsIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/rankings_page.html"
+
+    description = RichTextField(
+        verbose_name="Rankings Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class NewsIndexPage(CoderedWebPage):
+    """
+    Landing page for news listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.NewsPage'
+
+    subpage_types = ['scoring.NewsPage']
+
+    class Meta:
+        verbose_name = "News Index Page"
+
+    template = "scoring/pages/news_index_page.html"
 
 class NewsPage(CoderedWebPage):
     """
-    News listing page.
+    Custom page for individual news listings.
     """
 
     class Meta:
         verbose_name = "News Page"
 
+    # Only allow this page to be created beneath a NewsIndexPage.
+    parent_page_types = ['scoring.NewsIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/news_page.html"
+
+    description = RichTextField(
+        verbose_name="News Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class BlogIndexPage(CoderedWebPage):
+    """
+    Landing page for blog listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.BlogPage'
+
+    subpage_types = ['scoring.BlogPage']
+
+    class Meta:
+        verbose_name = "Blog Index Page"
+
+    template = "scoring/pages/blog_index_page.html"
 
 class BlogPage(CoderedWebPage):
     """
-    Blog listing page.
+    Custom page for individual blog listings.
     """
 
     class Meta:
         verbose_name = "Blog Page"
 
+    # Only allow this page to be created beneath a BlogIndexPage.
+    parent_page_types = ['scoring.BlogIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/blog_page.html"
+
+    description = RichTextField(
+        verbose_name="Blog Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class ResourcesIndexPage(CoderedWebPage):
+    """
+    Landing page for resources listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.ResourcesPage'
+
+    subpage_types = ['scoring.ResourcesPage']
+
+    class Meta:
+        verbose_name = "Resources Index Page"
+
+    template = "scoring/pages/resources_index_page.html"
 
 class ResourcesPage(CoderedWebPage):
     """
-    Resources listing page.
+    Custom page for individual resources listings.
     """
 
     class Meta:
         verbose_name = "Resources Page"
 
+    # Only allow this page to be created beneath a ResourcesIndexPage.
+    parent_page_types = ['scoring.ResourcesIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/resources_page.html"
+
+    description = RichTextField(
+        verbose_name="Resources Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class TutorialsIndexPage(CoderedWebPage):
+    """
+    Landing page for tutorials listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.TutorialsPage'
+
+    subpage_types = ['scoring.TutorialsPage']
+
+    class Meta:
+        verbose_name = "Tutorials Index Page"
+
+    template = "scoring/pages/tutorials_index_page.html"
 
 class TutorialsPage(CoderedWebPage):
     """
-    Tutorials listing page.
+    Custom page for individual tutorials listings.
     """
 
     class Meta:
         verbose_name = "Tutorials Page"
 
+    # Only allow this page to be created beneath a TutorialsIndexPage.
+    parent_page_types = ['scoring.TutorialsIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/tutorials_page.html"
+
+    description = RichTextField(
+        verbose_name="Tutorials Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class GuidesIndexPage(CoderedWebPage):
+    """
+    Landing page for guides listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.GuidesPage'
+
+    subpage_types = ['scoring.GuidesPage']
+
+    class Meta:
+        verbose_name = "Guides Index Page"
+
+    template = "scoring/pages/guides_index_page.html"
 
 class GuidesPage(CoderedWebPage):
     """
-    Guides listing page.
+    Custom page for individual guides listings.
     """
 
     class Meta:
         verbose_name = "Guides Page"
 
+    # Only allow this page to be created beneath a GuidesIndexPage.
+    parent_page_types = ['scoring.GuidesIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/guides_page.html"
+
+    description = RichTextField(
+        verbose_name="Guides Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class TestimonialsIndexPage(CoderedWebPage):
+    """
+    Landing page for testimonials listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.TestimonialsPage'
+
+    subpage_types = ['scoring.TestimonialsPage']
+
+    class Meta:
+        verbose_name = "Testimonials Index Page"
+
+    template = "scoring/pages/testimonials_index_page.html"
 
 class TestimonialsPage(CoderedWebPage):
     """
-    Testimonials listing page.
+    Custom page for individual testimonials listings.
     """
 
     class Meta:
         verbose_name = "Testimonials Page"
 
+    # Only allow this page to be created beneath a TestimonialsIndexPage.
+    parent_page_types = ['scoring.TestimonialsIndexPage']
+    subpage_types = []
+
+    subpage_types = []
+
     template = "scoring/pages/testimonials_page.html"
+
+    description = RichTextField(
+        verbose_name="Testimonials Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class PartnersIndexPage(CoderedWebPage):
+    """
+    Landing page for partners information.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.PartnersPage'
+
+    subpage_types = ['scoring.PartnersPage']
+
+    class Meta:
+        verbose_name = "Partners Index Page"
+
+    template = "scoring/pages/partners_index_page.html"
 
 class PartnersPage(CoderedWebPage):
     """
-    Partners information page.
+    Custom page for individual partners information.
     """
 
     class Meta:
         verbose_name = "Partners Page"
 
+    # Only allow this page to be created beneath a PartnersIndexPage.
+    parent_page_types = ['scoring.PartnersIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/partners_page.html"
 
-class TeamPage(CoderedWebPage):
+    description = RichTextField(
+        verbose_name="Partners Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class CareersIndexPage(CoderedWebPage):
     """
-    Team information page.
+    Landing page for careers information.
     """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.CareersPage'
+
+    subpage_types = ['scoring.CareersPage']
 
     class Meta:
-        verbose_name = "Team Page"
+        verbose_name = "Careers Index Page"
 
-    template = "scoring/pages/team_page.html"
+    template = "scoring/pages/careers_index_page.html"
 
 class CareersPage(CoderedWebPage):
     """
-    Careers information page.
+    Custom page for individual careers information.
     """
 
     class Meta:
         verbose_name = "Careers Page"
 
+    # Only allow this page to be created beneath a CareersIndexPage.
+    parent_page_types = ['scoring.CareersIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/careers_page.html"
+
+    description = RichTextField(
+        verbose_name="Careers Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class PressIndexPage(CoderedWebPage):
+    """
+    Landing page for press information.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.PressPage'
+
+    subpage_types = ['scoring.PressPage']
+
+    class Meta:
+        verbose_name = "Press Index Page"
+
+    template = "scoring/pages/press_index_page.html"
 
 class PressPage(CoderedWebPage):
     """
-    Press information page.
+    Custom page for individual press information.
     """
 
     class Meta:
         verbose_name = "Press Page"
 
+    # Only allow this page to be created beneath a PressIndexPage.
+    parent_page_types = ['scoring.PressIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/press_page.html"
+
+    description = RichTextField(
+        verbose_name="Press Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class MediaIndexPage(CoderedWebPage):
+    """
+    Landing page for media listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.MediaPage'
+
+    subpage_types = ['scoring.MediaPage']
+
+    class Meta:
+        verbose_name = "Media Index Page"
+
+    template = "scoring/pages/media_index_page.html"
 
 class MediaPage(CoderedWebPage):
     """
-    Media listing page.
+    Custom page for individual media listings.
     """
 
     class Meta:
         verbose_name = "Media Page"
 
+    # Only allow this page to be created beneath a MediaIndexPage.
+    parent_page_types = ['scoring.MediaIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/media_page.html"
+
+    description = RichTextField(
+        verbose_name="Media Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class GalleryIndexPage(CoderedWebPage):
+    """
+    Landing page for gallery listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.GalleryPage'
+
+    subpage_types = ['scoring.GalleryPage']
+
+    class Meta:
+        verbose_name = "Gallery Index Page"
+
+    template = "scoring/pages/gallery_index_page.html"
 
 class GalleryPage(CoderedWebPage):
     """
-    Gallery listing page.
+    Custom page for individual gallery listings.
     """
 
     class Meta:
         verbose_name = "Gallery Page"
 
+    # Only allow this page to be created beneath a GalleryIndexPage.
+    parent_page_types = ['scoring.GalleryIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/gallery_page.html"
+
+    description = RichTextField(
+        verbose_name="Gallery Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class VideosIndexPage(CoderedWebPage):
+    """
+    Landing page for videos listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.VideosPage'
+
+    subpage_types = ['scoring.VideosPage']
+
+    class Meta:
+        verbose_name = "Videos Index Page"
+
+    template = "scoring/pages/videos_index_page.html"
 
 class VideosPage(CoderedWebPage):
     """
-    Videos listing page.
+    Custom page for individual videos listings.
     """
 
     class Meta:
         verbose_name = "Videos Page"
 
+    # Only allow this page to be created beneath a VideosIndexPage.
+    parent_page_types = ['scoring.VideosIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/videos_page.html"
+
+    description = RichTextField(
+        verbose_name="Videos Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class PodcastsIndexPage(CoderedWebPage):
+    """
+    Landing page for podcasts listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.PodcastsPage'
+
+    subpage_types = ['scoring.PodcastsPage']
+
+    class Meta:
+        verbose_name = "Podcasts Index Page"
+
+    template = "scoring/pages/podcasts_index_page.html"
 
 class PodcastsPage(CoderedWebPage):
     """
-    Podcasts listing page.
+    Custom page for individual podcasts listings.
     """
 
     class Meta:
         verbose_name = "Podcasts Page"
 
+    # Only allow this page to be created beneath a PodcastsIndexPage.
+    parent_page_types = ['scoring.PodcastsIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/podcasts_page.html"
+
+    description = RichTextField(
+        verbose_name="Podcasts Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class WebinarsIndexPage(CoderedWebPage):
+    """
+    Landing page for webinars listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.WebinarsPage'
+
+    subpage_types = ['scoring.WebinarsPage']
+
+    class Meta:
+        verbose_name = "Webinars Index Page"
+
+    template = "scoring/pages/webinars_index_page.html"
 
 class WebinarsPage(CoderedWebPage):
     """
-    Webinars listing page.
+    Custom page for individual webinars listings.
     """
 
     class Meta:
         verbose_name = "Webinars Page"
 
+    # Only allow this page to be created beneath a WebinarsIndexPage.
+    parent_page_types = ['scoring.WebinarsIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/webinars_page.html"
+
+    description = RichTextField(
+        verbose_name="Webinars Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class WorkshopsIndexPage(CoderedWebPage):
+    """
+    Landing page for workshops listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.WorkshopsPage'
+
+    subpage_types = ['scoring.WorkshopsPage']
+
+    class Meta:
+        verbose_name = "Workshops Index Page"
+
+    template = "scoring/pages/workshops_index_page.html"
 
 class WorkshopsPage(CoderedWebPage):
     """
-    Workshops listing page.
+    Custom page for individual workshops listings.
     """
 
     class Meta:
         verbose_name = "Workshops Page"
 
+    # Only allow this page to be created beneath a WorkshopsIndexPage.
+    parent_page_types = ['scoring.WorkshopsIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/workshops_page.html"
+
+    description = RichTextField(
+        verbose_name="Workshops Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class DownloadsIndexPage(CoderedWebPage):
+    """
+    Landing page for downloads listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.DownloadsPage'
+
+    subpage_types = ['scoring.DownloadsPage']
+
+    class Meta:
+        verbose_name = "Downloads Index Page"
+
+    template = "scoring/pages/downloads_index_page.html"
 
 class DownloadsPage(CoderedWebPage):
     """
-    Downloads listing page.
+    Custom page for individual downloads listings.
     """
 
     class Meta:
         verbose_name = "Downloads Page"
 
+    # Only allow this page to be created beneath a DownloadsIndexPage.
+    parent_page_types = ['scoring.DownloadsIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/downloads_page.html"
+
+    description = RichTextField(
+        verbose_name="Downloads Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class DocumentationIndexPage(CoderedWebPage):
+    """
+    Landing page for documentation listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.DocumentationPage'
+
+    subpage_types = ['scoring.DocumentationPage']
+
+    class Meta:
+        verbose_name = "Documentation Index Page"
+
+    template = "scoring/pages/documentation_index_page.html"
 
 class DocumentationPage(CoderedWebPage):
     """
-    Documentation listing page.
+    Custom page for individual documentation listings.
     """
 
     class Meta:
         verbose_name = "Documentation Page"
 
+    # Only allow this page to be created beneath a DocumentationIndexPage.
+    parent_page_types = ['scoring.DocumentationIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/documentation_page.html"
+
+    description = RichTextField(
+        verbose_name="Documentation Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class APIIndexPage(CoderedWebPage):
+    """
+    Landing page for API information.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.APIPage'
+
+    subpage_types = ['scoring.APIPage']
+
+    class Meta:
+        verbose_name = "API Index Page"
+
+    template = "scoring/pages/api_index_page.html"
 
 class APIPage(CoderedWebPage):
     """
-    API information page.
+    Custom page for individual API information.
     """
 
     class Meta:
         verbose_name = "API Page"
 
+    # Only allow this page to be created beneath a APIIndexPage.
+    parent_page_types = ['scoring.APIIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/api_page.html"
+
+    description = RichTextField(
+        verbose_name="API Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class CommunityIndexPage(CoderedWebPage):
+    """
+    Landing page for community information.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.CommunityPage'
+
+    subpage_types = ['scoring.CommunityPage']
+
+    class Meta:
+        verbose_name = "Community Index Page"
+
+    template = "scoring/pages/community_index_page.html"
 
 class CommunityPage(CoderedWebPage):
     """
-    Community information page.
+    Custom page for individual community information.
     """
 
     class Meta:
         verbose_name = "Community Page"
 
+    # Only allow this page to be created beneath a CommunityIndexPage.
+    parent_page_types = ['scoring.CommunityIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/community_page.html"
+
+    description = RichTextField(
+        verbose_name="Community Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class ContactIndexPage(CoderedWebPage):
+    """
+    Landing page for contact information.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.ContactPage'
+
+    subpage_types = ['scoring.ContactPage']
+
+    class Meta:
+        verbose_name = "Contact Index Page"
+
+    template = "scoring/pages/contact_index_page.html"
+
+class ContactPage(FormPage):
+    """
+    Custom page for individual contact information with a form.
+    """
+
+    class Meta:
+        verbose_name = "Contact Page"
+
+    # Only allow this page to be created beneath a ContactIndexPage.
+    parent_page_types = ['scoring.ContactIndexPage']
+    subpage_types = []
+
+    template = "scoring/pages/contact_page.html"
+
+    description = RichTextField(
+        verbose_name="Contact Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class ForumIndexPage(CoderedWebPage):
+    """
+    Landing page for forum listings.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.ForumPage'
+
+    subpage_types = ['scoring.ForumPage']
+
+    class Meta:
+        verbose_name = "Forum Index Page"
+
+    template = "scoring/pages/forum_index_page.html"
 
 class ForumPage(CoderedWebPage):
     """
-    Forum listing page.
+    Custom page for individual forum listings.
     """
 
     class Meta:
         verbose_name = "Forum Page"
 
+    # Only allow this page to be created beneath a ForumIndexPage.
+    parent_page_types = ['scoring.ForumIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/forum_page.html"
 
-class EventsLandingPage(CoderedWebPage):
+    description = RichTextField(
+        verbose_name="Forum Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class SupportIndexPage(CoderedWebPage):
     """
-    Landing page for events-related content.
+    Landing page for support information.
     """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.SupportPage'
+
+    subpage_types = ['scoring.SupportPage']
 
     class Meta:
-        verbose_name = "Events Landing Page"
+        verbose_name = "Support Index Page"
 
-    template = "scoring/pages/events_landing_page.html"
+    template = "scoring/pages/support_index_page.html"
 
-class ResultsLandingPage(CoderedWebPage):
+class SupportPage(CoderedWebPage):
     """
-    Landing page for results-related content.
-    """
-
-    class Meta:
-        verbose_name = "Results Landing Page"
-
-    template = "scoring/pages/results_landing_page.html"
-
-class RankingsLandingPage(CoderedWebPage):
-    """
-    Landing page for rankings-related content.
-    """
-
-    class Meta:
-        verbose_name = "Rankings Landing Page"
-
-    template = "scoring/pages/rankings_landing_page.html"
-
-class NewsLandingPage(CoderedWebPage):
-    """
-    Landing page for news-related content.
-    """
-
-    class Meta:
-        verbose_name = "News Landing Page"
-
-    template = "scoring/pages/news_landing_page.html"
-
-class BlogLandingPage(CoderedWebPage):
-    """
-    Landing page for blog-related content.
-    """
-
-    class Meta:
-        verbose_name = "Blog Landing Page"
-
-    template = "scoring/pages/blog_landing_page.html"
-
-class ResourcesLandingPage(CoderedWebPage):
-    """
-    Landing page for resources-related content.
-    """
-
-    class Meta:
-        verbose_name = "Resources Landing Page"
-
-    template = "scoring/pages/resources_landing_page.html"
-
-class TutorialsLandingPage(CoderedWebPage):
-    """
-    Landing page for tutorials-related content.
-    """
-
-    class Meta:
-        verbose_name = "Tutorials Landing Page"
-
-    template = "scoring/pages/tutorials_landing_page.html"
-
-class GuidesLandingPage(CoderedWebPage):
-    """
-    Landing page for guides-related content.
-    """
-
-    class Meta:
-        verbose_name = "Guides Landing Page"
-
-    template = "scoring/pages/guides_landing_page.html" 
-
-class SupportLandingPage(CoderedWebPage):
-    """
-    Landing page for support-related content.
-    """
-
-    class Meta:
-        verbose_name = "Support Landing Page"
-
-    template = "scoring/pages/support_landing_page.html"    
-
-class ContacUsPage(FormPage):
-    """
-    Contact us page with a form.
-    """
-    
-    class Meta:
-        verbose_name = "Contact Us Page"
-
-    template = "scoring/pages/contact_us_page.html"
-
-class SupportPage(FormPage):
-    """
-    Support page with a form.
+    Custom page for individual support information.
     """
 
     class Meta:
         verbose_name = "Support Page"
 
+    # Only allow this page to be created beneath a SupportIndexPage.
+    parent_page_types = ['scoring.SupportIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/support_page.html"
 
-class FeedbackPage(FormPage):
+    description = RichTextField(
+        verbose_name="Support Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+class FeedBackIndexPage(CoderedWebPage):
     """
-    Feedback page with a form.
+    Landing page for feedback information.
+    """
+
+    # Override to specify custom index ordering choice/default.
+    index_query_pagemodel = 'scoring.FeedbackPage'
+
+    subpage_types = ['scoring.FeedbackPage']
+
+    class Meta:
+        verbose_name = "Feedback Index Page"
+
+    template = "scoring/pages/feedback_index_page.html"
+
+class FeedbackPage(CoderedWebPage):
+    """
+    Custom page for individual feedback information.
     """
 
     class Meta:
         verbose_name = "Feedback Page"
 
+    # Only allow this page to be created beneath a FeedbackIndexPage.
+    parent_page_types = ['scoring.FeedbackIndexPage']
+    subpage_types = []
+
     template = "scoring/pages/feedback_page.html"
+
+    description = RichTextField(
+        verbose_name="Feedback Description",
+        null=True,
+        blank=True,
+        default=""
+    )
+
+    content_panels = CoderedWebPage.content_panels + [
+        FieldPanel('description'),
+    ]
+
+# class FeedbackPage(FormPage):
+#     """
+#     Feedback page with a form.
+#     """
+
+#     class Meta:
+#         verbose_name = "Feedback Page"
+
+#     template = "scoring/pages/feedback_page.html"
+
+# TODO: Here
 
 # TODO: Page models - End
 
