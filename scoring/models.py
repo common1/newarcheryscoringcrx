@@ -1766,6 +1766,41 @@ class RoundSnippetViewSet(SnippetViewSet):
         ),
     ]
 
+class RoundMembershipSnippetViewset(SnippetViewSet):
+    model = RoundMembership
+    menu_label = "Round Memberships"
+    icon = "list-ul"
+    menu_order = 60
+    add_to_settings_menu = False
+    add_to_admin_menu = False
+    list_display = ('round', 'archer', BooleanColumn('is_active'),)
+    list_filter = ('is_active',)
+    inspect_view_enabled = True
+    copy_view_enabled = True
+    history_view_enabled = True
+    delete_view_enabled=True
+
+    panels = [
+        FieldPanel('round'),
+        FieldPanel('archer'),
+        FieldPanel('info'),
+        MultiFieldPanel(
+            [
+                FieldPanel('slug'),
+                FieldPanel('author'),
+            ],
+            heading = "Extra Information",
+            classname="collapsible collapsed",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('is_active'),
+            ],
+            heading = "Special",
+            classname="collapsible collapsed",
+        ),
+    ]
+    
 class ScoreSnippetViewSet(SnippetViewSet):
     model = Score
     icon = "snippet"
@@ -1890,6 +1925,7 @@ class ModelingSnippetViewSetGroup(SnippetViewSetGroup):
         ClubSnippetViewSet,
         ClubMembershipSnippetViewSet,
         RoundSnippetViewSet,
+        RoundMembershipSnippetViewset,
         ScoreSnippetViewSet,
         ScoringSheetSnippetViewSet,
         TargetFaceNameChoiceSnippetViewSet,

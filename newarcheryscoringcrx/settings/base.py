@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "django_extensions",
     # Own apps
     "scoring",
+    "fill_db",
 ]
 
 MIDDLEWARE = [

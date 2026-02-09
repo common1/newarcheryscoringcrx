@@ -3,3 +3,5 @@
 coderedcms==6.0.*
 wagtail==7.2.*
 django-extensions==4.1
+pyclean==3.5.0
+lorem-text==3.0

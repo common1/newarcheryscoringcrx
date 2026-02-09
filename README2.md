@@ -60,3 +60,23 @@ Part 1
 Working on page templates
 ```
 
+## 009 Create app fill_db - Part 1
+
+```
+Part 1
+Create fill_db
+```
+
+```bash
+python manage.py startapp fill_db
+```
+
+```bash
+# Start with
+del db.sqlite3
+pyclean .
+python manage.py makemigrations
+python manage.py migrate
+python manage.py populate_db
+```
+
