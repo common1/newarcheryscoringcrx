@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     # Own apps
     "scoring",
     "fill_db",
+    "common",
 ]
 
 MIDDLEWARE = [

@@ -25,6 +25,8 @@ from scoring.models import (
     CompetitionMembership,
 )
 
+from common.utilities import get_rounds_strings
+
 SCREEN_OUTPUT = True
 DEFAULT_USERNAME = "admin"
 DEFAULT_SUPERUSER_EMAil = "me@mail.com"
@@ -62,7 +64,7 @@ class Command(BaseCommand):
         self.create_sample_scoringsheets()
         self.create_sample_target_face_name_choices()
         self.create_sample_target_faces()
-        self.create_sample_rounds()
+        self.create_sample_rounds("Indoor", 18, "meter", 2026, 'donderdag')
         self.create_sample_round_memberships()
         self.create_sample_competitions()
         self.create_sample_competitions_memberships()
@@ -473,9 +475,12 @@ class Command(BaseCommand):
     def create_sample_target_faces(self):
         pass
 
-    # January:  1,8,15,22,29
-    # February: 5,12,19,26
-    def create_sample_rounds(self):
+    def create_sample_rounds(self, prefix, distance, unit, year, day):
+        day_strings = get_rounds_strings(prefix, distance, unit, year, day)
+        # dates = get_all_weekday_dates(year, day)
+        # for date in dates:
+        #     print(f"year : {date.year} month: {date.month}")
+        
         rounds = [
             Round(
                 author = self.user,
@@ -543,7 +548,7 @@ class Command(BaseCommand):
 
         competitions = []
         for year in self.YEARS:
-            name_string = f"Indoor 30 pijlen, donderdag 20:00, {year}"
+            name_string = f"Indoor 30 pijlen, {year}"
             competition = Competition(
                 author=self.user,
                 name=name_string,
@@ -568,15 +573,16 @@ class Command(BaseCommand):
                         competition=competition,
                     )
                     if not competition_membership:
-                        # if str(year) in competition.name and 
-                        competition_membership = CompetitionMembership.objects.create(
-                            author=self.user,
-                            competition=competition,
-                            round=round,
-                            info=lorem.paragraph(),
-                        )
-                        if SCREEN_OUTPUT:
-                            self.stdout.write(self.style.SUCCESS(f'New CompetitionMembership created: Competition - {competition_membership.competition.name} ; Round - {competition_membership.round.name}'))                
+                        # Add competition_membership if years are equal
+                        if str(year) in competition.name and str(year) in round.name:
+                            competition_membership = CompetitionMembership.objects.create(
+                                author=self.user,
+                                competition=competition,
+                                round=round,
+                                info=lorem.paragraph(),
+                            )
+                            if SCREEN_OUTPUT:
+                                self.stdout.write(self.style.SUCCESS(f'New CompetitionMembership created: Competition - {competition_membership.competition.name} ; Round - {competition_membership.round.name}'))                
 
                     
             
@@ -598,3 +604,41 @@ class Command(BaseCommand):
         #         )
         #         if SCREEN_OUTPUT:
         #             self.stdout.write(self.style.SUCCESS(f'New CompetitionMembership created: Competition - {competition_membership.competition.name} ; Round - {competition_membership.round.name}'))                
+
+        # rounds = [
+        #     Round(
+        #         author = self.user,
+        #         name = "Indoor 18 meter Donderdag 1 Januari 2026",
+        #         start_date = "2026-01-01",
+        #         start_time = "20:00",
+        #         info=lorem.paragraph(),
+        #     ),
+        #     Round(
+        #         author = self.user,
+        #         name = "Indoor 18 meter Donderdag 8 Januari 2026",
+        #         start_date = "2026-01-08",
+        #         start_time = "20:00",
+        #         info=lorem.paragraph(),
+        #     ),
+        #     Round(
+        #         author = self.user,
+        #         name = "Indoor 18 meter Donderdag 15 Januari 2026",
+        #         start_date = "2026-01-15",
+        #         start_time = "20:00",
+        #         info=lorem.paragraph(),
+        #     ),
+        #     Round(
+        #         author = self.user,
+        #         name = "Indoor 18 meter Donderdag 22 Januari 2026",
+        #         start_date = "2026-01-22",
+        #         start_time = "20:00",
+        #         info=lorem.paragraph(),
+        #     ),
+        #     Round(
+        #         author = self.user,
+        #         name = "Indoor 18 meter Donderdag 29 Januari 2026",
+        #         start_date = "2026-01-29",
+        #         start_time = "20:00",
+        #         info=lorem.paragraph(),
+        #     ),
+        # ]

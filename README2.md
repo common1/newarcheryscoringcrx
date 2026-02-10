@@ -80,3 +80,14 @@ python manage.py migrate
 python manage.py populate_db
 ```
 
+## 010 Create app common
+
+```
+```
+
+```bash
+# Part 1
+python manage.py startapp common
+```
+
+
