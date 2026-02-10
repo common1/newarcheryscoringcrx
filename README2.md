@@ -88,6 +88,8 @@ python manage.py populate_db
 ```bash
 # Part 1
 python manage.py startapp common
+# Part 2
+# Working on populate_db.py
 ```
 
 

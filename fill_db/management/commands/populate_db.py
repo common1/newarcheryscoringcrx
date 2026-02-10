@@ -2,7 +2,6 @@ import random
 from django.core.management.base import BaseCommand
 from lorem_text import lorem
 
-
 from custom_user.models import User
 
 from scoring.models import (
@@ -25,7 +24,27 @@ from scoring.models import (
     CompetitionMembership,
 )
 
-from common.utilities import get_rounds_strings
+from datetime import date, timedelta
+import calendar
+from faker import Faker
+from random import randint
+
+DAYS_OF_WEEK = {
+    "monday": 0,
+    "maandag": 0,
+    "tuesday": 1,
+    "dinsdag": 1,
+    "wednesday": 2,
+    "woensdag": 2,
+    "thursday": 3,
+    "donderdag": 3,
+    "friday": 4,
+    "vrijdag": 4,
+    "saturday": 5,
+    "zaterdag": 5,
+    "sunday": 6,
+    "zondag": 6,
+}
 
 SCREEN_OUTPUT = True
 DEFAULT_USERNAME = "admin"
@@ -64,11 +83,18 @@ class Command(BaseCommand):
         self.create_sample_scoringsheets()
         self.create_sample_target_face_name_choices()
         self.create_sample_target_faces()
-        self.create_sample_rounds("Indoor", 18, "meter", 2026, 'donderdag')
+        self.create_sample_rounds("Indoor", 18, "meter", 2026, 'donderdag', '20:00')
+        self.create_sample_rounds("Indoor", 18, "meter", 2027, 'donderdag', '20:00')
         self.create_sample_round_memberships()
         self.create_sample_competitions()
         self.create_sample_competitions_memberships()
-        
+
+    def random_with_N_digits(self, n):
+        range_start = 10**(n-1)
+        range_end = (10**n)-1
+
+        return randint(range_start, range_end)
+
     def create_sample_archers(self):
         archers = [
             Archer(
@@ -475,49 +501,38 @@ class Command(BaseCommand):
     def create_sample_target_faces(self):
         pass
 
-    def create_sample_rounds(self, prefix, distance, unit, year, day):
-        day_strings = get_rounds_strings(prefix, distance, unit, year, day)
-        # dates = get_all_weekday_dates(year, day)
-        # for date in dates:
-        #     print(f"year : {date.year} month: {date.month}")
+    def get_rounds_info(self, prefix, distance, unit, year, day, start_time):
+        # Start a januari 1 of the given year
+        d = date(year, 1,1)
+
+        # look for the first 'day'
+        d += timedelta(days=(DAYS_OF_WEEK[day]) % 7)
         
-        rounds = [
-            Round(
+        rounds_info = []
+        # Loop through the year, as long as we are in the same year
+        while d.year == year: 
+            name = f"{prefix} {distance} {unit} {day} {d.day} {calendar.month_name[d.month]} {d.year}"
+            start_date = f"{d.year}-{d.month:02d}-{d.day:02d}"
+            info = {'name': name, 'start_date': start_date, 'start_time': start_time}
+            rounds_info.append(info)
+            d += timedelta(days = 7) # Add a week
+
+        return rounds_info
+
+    def create_sample_rounds(self, prefix, distance, unit, year, day, start_time):
+
+        rounds = []
+        rounds_info = self.get_rounds_info(prefix, distance, unit, year, day, start_time)
+        for round_info in rounds_info:
+            round = Round(
                 author = self.user,
-                name = "Indoor 18 meter Donderdag 1 Januari 2026",
-                start_date = "2026-01-01",
-                start_time = "20:00",
+                name = round_info['name'],
+                start_date = round_info['start_date'],
+                start_time = round_info['start_time'],
                 info=lorem.paragraph(),
-            ),
-            Round(
-                author = self.user,
-                name = "Indoor 18 meter Donderdag 8 Januari 2026",
-                start_date = "2026-01-08",
-                start_time = "20:00",
-                info=lorem.paragraph(),
-            ),
-            Round(
-                author = self.user,
-                name = "Indoor 18 meter Donderdag 15 Januari 2026",
-                start_date = "2026-01-15",
-                start_time = "20:00",
-                info=lorem.paragraph(),
-            ),
-            Round(
-                author = self.user,
-                name = "Indoor 18 meter Donderdag 22 Januari 2026",
-                start_date = "2026-01-22",
-                start_time = "20:00",
-                info=lorem.paragraph(),
-            ),
-            Round(
-                author = self.user,
-                name = "Indoor 18 meter Donderdag 29 Januari 2026",
-                start_date = "2026-01-29",
-                start_time = "20:00",
-                info=lorem.paragraph(),
-            ),
-        ]
+            )
+            rounds.append(round)
+
         for round in rounds:
             if not Round.objects.filter(name=round.name):
                 round.save()
@@ -525,22 +540,39 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.SUCCESS(f'Round - {round.name} created'))
 
     def create_sample_round_memberships(self):
-        for i in range(1, 10):
-            round = random.choice(Round.objects.all())
-            archer = random.choice(Archer.objects.all())
-            round_membership = RoundMembership.objects.filter(
-                archer=archer,
-                round=round,
-            )
-            if not round_membership:
-                round_membership = RoundMembership.objects.create(
-                    author=self.user,
-                    round=round,
+        for round in Round.objects.all():
+            for archer in Archer.objects.all():
+                round_membership = RoundMembership.objects.filter(
                     archer=archer,
-                    info=lorem.paragraph(),
+                    round=round,
                 )
-                if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'New RoundMembership created: Round - {round_membership.round.name} ; Archer - {round_membership.archer.first_name} {round_membership.archer.last_name}'))                
+                if not round_membership:
+                    round_membership = RoundMembership.objects.create(
+                        author=self.user,
+                        round=round,
+                        archer=archer,
+                        info=lorem.paragraph(),
+                    )
+                    if SCREEN_OUTPUT:
+                        self.stdout.write(self.style.SUCCESS(f'New RoundMembership created: Round - {round_membership.round.name} ; Archer - {round_membership.archer.first_name} {round_membership.archer.last_name}'))                
+
+    # def create_sample_round_memberships(self):
+    #     for i in range(1, 20):
+    #         round = random.choice(Round.objects.all())
+    #         archer = random.choice(Archer.objects.all())
+    #         round_membership = RoundMembership.objects.filter(
+    #             archer=archer,
+    #             round=round,
+    #         )
+    #         if not round_membership:
+    #             round_membership = RoundMembership.objects.create(
+    #                 author=self.user,
+    #                 round=round,
+    #                 archer=archer,
+    #                 info=lorem.paragraph(),
+    #             )
+    #             if SCREEN_OUTPUT:
+    #                 self.stdout.write(self.style.SUCCESS(f'New RoundMembership created: Round - {round_membership.round.name} ; Archer - {round_membership.archer.first_name} {round_membership.archer.last_name}'))                
 
     YEARS = range(2026, 2036, 1)
 

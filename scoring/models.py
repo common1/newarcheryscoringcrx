@@ -1008,7 +1008,7 @@ class Round(BaseScoringModel):
 
     class Meta:
         db_table = 'rounds'
-        ordering = ['name']
+        ordering = ['start_date']
         verbose_name = _("Round")
         verbose_name_plural = _("Rounds")
 
@@ -1735,6 +1735,7 @@ class RoundSnippetViewSet(SnippetViewSet):
     add_to_settings_menu = False
     add_to_admin_menu = False
     list_display = ('name', 'start_date', 'start_time', 'end_date', 'end_time', BooleanColumn('is_active'),)
+    ordering = ['start_date']
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
@@ -1774,7 +1775,8 @@ class RoundMembershipSnippetViewset(SnippetViewSet):
     add_to_settings_menu = False
     add_to_admin_menu = False
     list_display = ('round', 'archer', BooleanColumn('is_active'),)
-    list_filter = ('is_active',)
+    # ordering = ['round__start_date']
+    list_filter = ('is_active', 'round', 'archer')
     inspect_view_enabled = True
     copy_view_enabled = True
     history_view_enabled = True
