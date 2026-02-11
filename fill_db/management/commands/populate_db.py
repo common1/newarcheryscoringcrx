@@ -88,6 +88,7 @@ class Command(BaseCommand):
         self.create_sample_round_memberships()
         self.create_sample_competitions()
         self.create_sample_competitions_memberships()
+        self.create_sample_scores()
 
     def random_with_N_digits(self, n):
         range_start = 10**(n-1)
@@ -116,6 +117,20 @@ class Command(BaseCommand):
                 first_name="Peter",
                 last_name="Vanalles",
                 union_number=333333,
+                info=lorem.paragraph(),
+            ),
+            Archer(
+                author=self.user,
+                first_name="Jan",
+                last_name="Niemand",
+                union_number=444444,
+                info=lorem.paragraph(),
+            ),
+            Archer(
+                author=self.user,
+                first_name="Karel",
+                last_name="Nergens",
+                union_number=55555,
                 info=lorem.paragraph(),
             ),
         ]
@@ -497,9 +512,32 @@ class Command(BaseCommand):
                 if SCREEN_OUTPUT:
                     self.stdout.write(self.style.SUCCESS(f'TargetFaceNameChoice "{new_name} created" '))
     
-    # TODO: Finish create_sample_target_faces
     def create_sample_target_faces(self):
-        pass
+        TARGET_FACE_NAMES = [
+            "Indoor Target Archery 40 cm 10-Zone",
+            "Indoor Target Archery 60 cm 10-Zone",
+            "Outdoor Field Archery 20 cm 6-Zone",
+            "Outdoor Field Archery 40 cm 6-Zone",
+            "Outdoor Field Archery 60 cm 6-Zone",
+            "Outdoor Field Archery 80 cm 6-Zone",
+            "Outdoor Target Archery 122 cm 10-Zone",
+            "Outdoor Target Archery 80 cm 10-Zone",
+        ]
+
+        targetface_instances = []
+        for targetface_name in TARGET_FACE_NAMES:
+            obj = TargetFace(
+                author=self.user,
+                name=targetface_name,
+                info=lorem.paragraph(),
+            ),
+            targetface_instances.append(obj[0])
+
+        for targetface_instance in targetface_instances:
+            if not TargetFace.objects.filter(name=targetface_instance.name):
+                targetface_instance.save()
+                if SCREEN_OUTPUT:
+                    self.stdout.write(self.style.SUCCESS(f'TargetFace - {targetface_instance.name} created'))
 
     def get_rounds_info(self, prefix, distance, unit, year, day, start_time):
         # Start a januari 1 of the given year
@@ -520,7 +558,6 @@ class Command(BaseCommand):
         return rounds_info
 
     def create_sample_rounds(self, prefix, distance, unit, year, day, start_time):
-
         rounds = []
         rounds_info = self.get_rounds_info(prefix, distance, unit, year, day, start_time)
         for round_info in rounds_info:
@@ -540,6 +577,7 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.SUCCESS(f'Round - {round.name} created'))
 
     def create_sample_round_memberships(self):
+        # Create all Round Archer combinations
         for round in Round.objects.all():
             for archer in Archer.objects.all():
                 round_membership = RoundMembership.objects.filter(
@@ -555,24 +593,6 @@ class Command(BaseCommand):
                     )
                     if SCREEN_OUTPUT:
                         self.stdout.write(self.style.SUCCESS(f'New RoundMembership created: Round - {round_membership.round.name} ; Archer - {round_membership.archer.first_name} {round_membership.archer.last_name}'))                
-
-    # def create_sample_round_memberships(self):
-    #     for i in range(1, 20):
-    #         round = random.choice(Round.objects.all())
-    #         archer = random.choice(Archer.objects.all())
-    #         round_membership = RoundMembership.objects.filter(
-    #             archer=archer,
-    #             round=round,
-    #         )
-    #         if not round_membership:
-    #             round_membership = RoundMembership.objects.create(
-    #                 author=self.user,
-    #                 round=round,
-    #                 archer=archer,
-    #                 info=lorem.paragraph(),
-    #             )
-    #             if SCREEN_OUTPUT:
-    #                 self.stdout.write(self.style.SUCCESS(f'New RoundMembership created: Round - {round_membership.round.name} ; Archer - {round_membership.archer.first_name} {round_membership.archer.last_name}'))                
 
     YEARS = range(2026, 2036, 1)
 
@@ -615,62 +635,23 @@ class Command(BaseCommand):
                             )
                             if SCREEN_OUTPUT:
                                 self.stdout.write(self.style.SUCCESS(f'New CompetitionMembership created: Competition - {competition_membership.competition.name} ; Round - {competition_membership.round.name}'))                
+    # TODO: Finish create_sample_scores
+    def create_sample_scores(self):
+        scores = []
+        roundmemberships = RoundMembership.objects.all()
+        
+        score = Score(
+            author = self.user,
+            round_archer = roundmemberships.first(),
+            score = 235,
+            number_of_arrows = 30,
+            info=lorem.paragraph(),
+        )
+        scores.append(score)
+        for score in scores:
+            if not Score.objects.filter(round_archer=score.round_archer):
+                score.save()
+                if SCREEN_OUTPUT:
+                    self.stdout.write(self.style.SUCCESS(f'Score - {score.score} created'))
 
-                    
             
-        # for i in range(1, 10):
-        #     competition = random.choice(Competition.objects.all())
-        #     round = random.choice(Round.objects.all())
-        #     competition_membership = CompetitionMembership.objects.filter(
-        #         round=round,
-        #         competition=competition,
-        #     )
-        #     if not competition_membership:
-        #         # competition.name and round.name
-                
-        #         competition_membership = CompetitionMembership.objects.create(
-        #             author=self.user,
-        #             competition=competition,
-        #             round=round,
-        #             info=lorem.paragraph(),
-        #         )
-        #         if SCREEN_OUTPUT:
-        #             self.stdout.write(self.style.SUCCESS(f'New CompetitionMembership created: Competition - {competition_membership.competition.name} ; Round - {competition_membership.round.name}'))                
-
-        # rounds = [
-        #     Round(
-        #         author = self.user,
-        #         name = "Indoor 18 meter Donderdag 1 Januari 2026",
-        #         start_date = "2026-01-01",
-        #         start_time = "20:00",
-        #         info=lorem.paragraph(),
-        #     ),
-        #     Round(
-        #         author = self.user,
-        #         name = "Indoor 18 meter Donderdag 8 Januari 2026",
-        #         start_date = "2026-01-08",
-        #         start_time = "20:00",
-        #         info=lorem.paragraph(),
-        #     ),
-        #     Round(
-        #         author = self.user,
-        #         name = "Indoor 18 meter Donderdag 15 Januari 2026",
-        #         start_date = "2026-01-15",
-        #         start_time = "20:00",
-        #         info=lorem.paragraph(),
-        #     ),
-        #     Round(
-        #         author = self.user,
-        #         name = "Indoor 18 meter Donderdag 22 Januari 2026",
-        #         start_date = "2026-01-22",
-        #         start_time = "20:00",
-        #         info=lorem.paragraph(),
-        #     ),
-        #     Round(
-        #         author = self.user,
-        #         name = "Indoor 18 meter Donderdag 29 Januari 2026",
-        #         start_date = "2026-01-29",
-        #         start_time = "20:00",
-        #         info=lorem.paragraph(),
-        #     ),
-        # ]

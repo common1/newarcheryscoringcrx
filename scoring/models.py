@@ -105,7 +105,7 @@ class Archer(BaseScoringModel):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name=_("Image"),
+        verbose_name=_("Archer Image"),
     )
     slug = AutoSlugField(populate_from='last_name',editable=True)
     union_number = models.PositiveIntegerField(
@@ -3712,16 +3712,6 @@ class FeedbackPage(CoderedWebPage):
     content_panels = CoderedWebPage.content_panels + [
         FieldPanel('description'),
     ]
-
-# class FeedbackPage(FormPage):
-#     """
-#     Feedback page with a form.
-#     """
-
-#     class Meta:
-#         verbose_name = "Feedback Page"
-
-#     template = "scoring/pages/feedback_page.html"
 
 # TODO: Here
 

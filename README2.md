@@ -83,6 +83,7 @@ python manage.py populate_db
 ## 010 Create app common
 
 ```
+Not used
 ```
 
 ```bash
@@ -92,4 +93,11 @@ python manage.py startapp common
 # Working on populate_db.py
 ```
 
+## 011 Wagtail AI
 
+[https://wagtail-ai.readthedocs.io/latest/]
+
+```bash
+Part 1
+pip install wagtail-ai
+```

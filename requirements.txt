@@ -6,3 +6,4 @@ django-extensions==4.1
 pyclean==3.5.0
 lorem-text==3.0
 Faker==40.4.0
+wagtail-ai==3.0.0
