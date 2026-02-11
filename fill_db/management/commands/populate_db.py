@@ -97,43 +97,40 @@ class Command(BaseCommand):
         return randint(range_start, range_end)
 
     def create_sample_archers(self):
-        archers = [
-            Archer(
-                author=self.user,
-                first_name="Peter",
-                last_name="Paulus",
-                union_number=111111,
-                info=lorem.paragraph(),
-            ),
-            Archer(
-                author=self.user,
-                first_name="Piet",
-                last_name="Jansen",
-                union_number=222222,
-                info=lorem.paragraph(),
-            ),
-            Archer(
-                author=self.user,
-                first_name="Peter",
-                last_name="Vanalles",
-                union_number=333333,
-                info=lorem.paragraph(),
-            ),
-            Archer(
-                author=self.user,
-                first_name="Jan",
-                last_name="Niemand",
-                union_number=444444,
-                info=lorem.paragraph(),
-            ),
-            Archer(
-                author=self.user,
-                first_name="Karel",
-                last_name="Nergens",
-                union_number=55555,
-                info=lorem.paragraph(),
-            ),
+        ARCHERS = [
+            {"first_name": "Robin", "last_name": "Hood", "union_number": 121212},
+            {"first_name": "Katniss", "last_name": "Evergreen", "union_number": 212121},
+            {"first_name": "Legolas", "last_name": "Nightshade", "union_number": 343434},
+            {"first_name": "Lara", "last_name": "Croft", "union_number": 434343},
+            {"first_name": "Oliver", "last_name": "Queen", "union_number": 565656},
+            {"first_name": "Merida", "last_name": "Barveheart", "union_number": 656565},
+            {"first_name": "Howard", "last_name": "Archer", "union_number": 787878},
+            {"first_name": "Tuck", "last_name": "Shot", "union_number": 878787},
+            {"first_name": "Luna", "last_name": "Aimsalot", "union_number": 112233},
+            {"first_name": "Archeron", "last_name": "Finn", "union_number": 223344},
+            {"first_name": "Hawkeye", "last_name": "Pierce", "union_number": 334455},
+            {"first_name": "Green", "last_name": "Arrow", "union_number": 445566},
+            {"first_name": "Artemis", "last_name": "Storm", "union_number": 556677},
+            {"first_name": "Bowman", "last_name": "Jackson", "union_number": 667788},
+            {"first_name": "Penny", "last_name": "Pindrop", "union_number": 778899},
+            {"first_name": "Shotzi", "last_name": "McShotface", "union_number": 998877},
+            {"first_name": "Elinor", "last_name": "Dashwood", "union_number": 887766},
+            {"first_name": "Finnly", "last_name": "Swift", "union_number": 776655},
+            {"first_name": "Aiden", "last_name": "Aimright", "union_number": 665544},
+            {"first_name": "Willow", "last_name": "Winstone", "union_number": 554433},
         ]
+
+        archers = []
+        for archer_info in ARCHERS:
+            archer = Archer(
+                author=self.user,
+                first_name=archer_info['first_name'],
+                last_name=archer_info['last_name'],
+                union_number=archer_info['union_number'],
+                info=lorem.paragraph(),
+            )
+            archers.append(archer)
+
         for archer in archers:
             if not Archer.objects.filter(union_number=archer.union_number):
                 archer.save()

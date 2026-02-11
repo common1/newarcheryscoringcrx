@@ -101,3 +101,8 @@ python manage.py startapp common
 Part 1
 pip install wagtail-ai
 ```
+ ## 012 Update populate_db.py
+Work on def create_sample_archers(self):
+ ```
+ 
+ ```                                                                                                
