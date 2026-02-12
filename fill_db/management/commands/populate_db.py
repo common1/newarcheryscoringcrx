@@ -72,23 +72,22 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         # Snippets
         self.create_sample_archers()
-        self.create_sample_clubs()
-        self.create_sample_club_memberships()
-        self.create_sample_disciplines()
-        self.create_sample_discipline_memberships()
-        self.create_sample_categories()
-        self.create_sample_category_memberships()
+        # self.create_sample_clubs()
+        # self.create_sample_club_memberships()
+        # self.create_sample_disciplines()
+        # self.create_sample_discipline_memberships()
+        # self.create_sample_categories()
+        # self.create_sample_category_memberships()
         self.create_sample_teams()
         self.create_sample_team_memberships()
-        self.create_sample_scoringsheets()
-        self.create_sample_target_face_name_choices()
-        self.create_sample_target_faces()
-        self.create_sample_rounds("Indoor", 18, "meter", 2026, 'donderdag', '20:00')
-        self.create_sample_rounds("Indoor", 18, "meter", 2027, 'donderdag', '20:00')
-        self.create_sample_round_memberships()
-        self.create_sample_competitions()
-        self.create_sample_competitions_memberships()
-        self.create_sample_scores()
+        # self.create_sample_scoringsheets()
+        # self.create_sample_target_face_name_choices()
+        # self.create_sample_target_faces()
+        # self.create_sample_rounds("Indoor", 18, "meter", 2026, 'donderdag', '20:00')
+        # self.create_sample_round_memberships()
+        # self.create_sample_competitions()
+        # self.create_sample_competitions_memberships()
+        # self.create_sample_scores()
 
     def random_with_N_digits(self, n):
         range_start = 10**(n-1)
@@ -138,38 +137,39 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.SUCCESS(f'Archer - {archer.first_name} {archer.last_name} created'))
 
     def create_sample_clubs(self):
-        clubs = [
-            Club(
-                author=self.user,
-                name="De Boogschutters", 
-                town="Eindhoven", 
-                info=lorem.paragraph(),
-            ),
-            Club(
-                author=self.user,
-                name="De Pijlen", 
-                town="Veldhoven", 
-                info=lorem.paragraph(),
-            ),
-            Club(
-                author=self.user,
-                name="De Schutters", 
-                town="Breda", 
-                info=lorem.paragraph(),
-            ),
-            Club(
-                author=self.user,
-                name="De Pijl", 
-                town="Tilburg", 
-                info=lorem.paragraph(),
-            ),
-            Club(
-                author=self.user,
-                name="De Boog", 
-                town="Den Bosch",
-                info=lorem.paragraph(),
-            ),
+        CLUBS = [
+            {"name": "The Golden Arrows", "town": "Aarle-Rixtel"},
+            {"name": "Arrow Dynamics", "town": "Best"},
+            {"name": "Bullseye Archers", "town": "Bladel"},
+            {"name": "The Flying Shafts", "town": "Boxtel"},
+            {"name": "Target Masters", "town": "Budel"},
+            {"name": "Arrowheads", "town": "Chaam"},
+            {"name": "The Quiver Club", "town": "Dongen"},
+            {"name": "Straight Shooters", "town": "Eersel"},
+            {"name": "The Firing Line", "town": "Etten-Leur"},
+            {"name": "Archery United", "town": "Geffen"},
+            {"name": "The Point Blank Club", "town": "Geldrop"},
+            {"name": "The Recurve Rangers", "town": "Gemert"},
+            {"name": "Bowmen of Brabant", "town": "Gilze"},
+            {"name": "The Aim High Club", "town": "Grave"},
+            {"name": "The Silent Shooters", "town": "Helmond"},
+            {"name": "The Arrow Alliance", "town": "Heusden"},
+            {"name": "The Target Tazers", "town": "Hilvarenbeek"},
+            {"name": "The Precision Pointers", "town": "Hooge Mierde"},
+            {"name": "The Flying Arrows", "town": "Lierop"},
+            {"name": "The Bow Squa", "town": "Oirschot"},
         ]
+        
+        clubs = []
+        for club_info in CLUBS:
+            club  = Club(
+                author=self.user,
+                name=club_info['name'],
+                town=club_info['town'],
+                info=lorem.paragraph(),
+            )
+            clubs.append(club)
+
         for club in clubs:
             if not Club.objects.filter(name=club.name):
                 club.save()
@@ -177,76 +177,47 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.SUCCESS(f'Club "{club.name} created" '))
 
     def create_sample_club_memberships(self):
-        for i in range (1,10):
-            _club = random.choice(Club.objects.all())
-            _archer = random.choice(Archer.objects.all())
-            club_membership = ClubMembership.objects.filter(
-                archer=_archer,
-                club=_club,
-            )
-            if not club_membership:
-                club_membership = ClubMembership.objects.create(
-                    author=self.user,
-                    club=_club,
-                    archer=_archer,
-                    info=lorem.paragraph(),
+        clubs = Club.objects.all()
+        archers = Archer.objects.all()
+        for club in clubs:
+            for archer in archers:
+                club_membership = ClubMembership.objects.filter(
+                    archer=archer,
+                    club=club,
                 )
-                if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'New ClubMembership created: Club - {club_membership.club.name} ; Archer - {club_membership.archer.first_name} {club_membership.archer.last_name}'))
+                if not club_membership:
+                    club_membership = ClubMembership.objects.create(
+                        author=self.user,
+                        club=club,
+                        archer=archer,
+                        info=lorem.paragraph(),
+                    )
+                    if SCREEN_OUTPUT:
+                        self.stdout.write(self.style.SUCCESS(f'New ClubMembership created: Club - {club_membership.club.name} ; Archer - {club_membership.archer.first_name} {club_membership.archer.last_name}'))
 
     def create_sample_disciplines(self):
-        disciplines = [
-            Discipline(
-                author=self.user,
-                name="Target Archery",
-                info=lorem.paragraph(),
-            ),
-            Discipline(
-                author=self.user,
-                name="Indoor Archery",
-                info=lorem.paragraph(),
-            ),
-            Discipline(
-                author=self.user,
-                name="Field Archery",
-                info=lorem.paragraph(),
-            ),
-            Discipline(
-                author=self.user,
-                name="3D Archery",
-                info=lorem.paragraph(),
-            ),
-            Discipline(
-                author=self.user,
-                name="Flight Archery",
-                info=lorem.paragraph(),
-            ),
-            Discipline(
-                author=self.user,
-                name="Clout Archery",
-                info=lorem.paragraph(),
-            ),
-            Discipline(
-                author=self.user,
-                name="Ski Archery",
-                info=lorem.paragraph(),
-            ),
-            Discipline(
-                author=self.user,
-                name="Para Archery",
-                info=lorem.paragraph(),
-            ),
-            Discipline(
-                author=self.user,
-                name="Run archery",
-                info=lorem.paragraph(),
-            ),
-            Discipline(
-                author=self.user,
-                name="Bowhunting",
-                info=lorem.paragraph(),
-            ),
+        DISCIPLINES = [
+            {"name": "Target Archery"},
+            {"name": "Indoor Archery"},
+            {"name": "Field Archery"},
+            {"name": "3D Archery"},
+            {"name": "Flight Archery"},
+            {"name": "Clout Archery"},
+            {"name": "Ski Archery"},
+            {"name": "Para Archery"},
+            {"name": "Run archery"},
+            {"name": "Bowhunting"},
         ]
+        
+        disciplines = []
+        for discipline_info in DISCIPLINES:
+            discipline  = Discipline(
+                author=self.user,
+                name=discipline_info['name'],
+                info=lorem.paragraph(),
+            )
+            disciplines.append(discipline)
+        
         for discipline in disciplines:
             if not Discipline.objects.filter(name=discipline.name):
                 discipline.save()
@@ -254,103 +225,174 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.SUCCESS(f'Discipline "{discipline.name} created"'))
 
     def create_sample_discipline_memberships(self):
-        for i in range(1, 10):
-            discipline = random.choice(Discipline.objects.all())
-            archer = random.choice(Archer.objects.all())
-            discipline_membership = DisciplineMembership.objects.filter(
-                archer=archer,
-                discipline=discipline,
-            )
-            if not discipline_membership:
-                discipline_membership = DisciplineMembership.objects.create(
-                    author=self.user,
-                    discipline=discipline,
+        disciplines = Discipline.objects.all()
+        archers = Archer.objects.all()
+        for discipline in disciplines:
+            for archer in archers:                
+                discipline_membership = DisciplineMembership.objects.filter(
                     archer=archer,
-                    info=lorem.paragraph(),
+                    discipline=discipline,
                 )
-                if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'New DisciplineMembership created: Discipline - {discipline_membership.discipline.name} ; Archer - {discipline_membership.archer.first_name} {discipline_membership.archer.last_name}'))
+                if not discipline_membership:
+                    discipline_membership = DisciplineMembership.objects.create(
+                        author=self.user,
+                        discipline=discipline,
+                        archer=archer,
+                        info=lorem.paragraph(),
+                    )
+                    if SCREEN_OUTPUT:
+                        self.stdout.write(self.style.SUCCESS(f'New DisciplineMembership created: Discipline - {discipline_membership.discipline.name} ; Archer - {discipline_membership.archer.first_name} {discipline_membership.archer.last_name}'))
+
+
+    # def create_sample_discipline_memberships(self):
+    #     for i in range(1, 10):
+    #         discipline = random.choice(Discipline.objects.all())
+    #         archer = random.choice(Archer.objects.all())
+    #         discipline_membership = DisciplineMembership.objects.filter(
+    #             archer=archer,
+    #             discipline=discipline,
+    #         )
+    #         if not discipline_membership:
+    #             discipline_membership = DisciplineMembership.objects.create(
+    #                 author=self.user,
+    #                 discipline=discipline,
+    #                 archer=archer,
+    #                 info=lorem.paragraph(),
+    #             )
+    #             if SCREEN_OUTPUT:
+    #                 self.stdout.write(self.style.SUCCESS(f'New DisciplineMembership created: Discipline - {discipline_membership.discipline.name} ; Archer - {discipline_membership.archer.first_name} {discipline_membership.archer.last_name}'))
 
     def create_sample_categories(self):
-        categories = [
-            Category(
-                author=self.user,
-                name="Recurve",
-                info=lorem.paragraph(),
-            ),
-            Category(
-                author=self.user,
-                name="Compound",
-                info=lorem.paragraph(),
-            ),
-            Category(
-                author=self.user,
-                name="Barebow",
-                info=lorem.paragraph(),
-            ),
-            Category(
-                author=self.user,
-                name="Longbow",
-                info=lorem.paragraph(),
-            ),
-            Category(
-                author=self.user,
-                name="Traditional",
-                info=lorem.paragraph(),
-            ),
+        CATEGORIES = [
+            {"name": "Recurve"},
+            {"name": "Compound"},
+            {"name": "Barebow"},
+            {"name": "Longbow"},
+            {"name": "Traditional"},
         ]
+
+        categories = []
+        for category_info in CATEGORIES:
+            category  = Category(
+                author=self.user,
+                name=category_info['name'],
+                info=lorem.paragraph(),
+            )
+            categories.append(category)
+
         for category in categories:
             if not Category.objects.filter(name=category.name):
                 category.save()
                 if SCREEN_OUTPUT:
                     self.stdout.write(self.style.SUCCESS(f'Category - {category.name} created'))
+
+        # categories = [
+        #     Category(
+        #         author=self.user,
+        #         name="Recurve",
+        #         info=lorem.paragraph(),
+        #     ),
+        #     Category(
+        #         author=self.user,
+        #         name="Compound",
+        #         info=lorem.paragraph(),
+        #     ),
+        #     Category(
+        #         author=self.user,
+        #         name="Barebow",
+        #         info=lorem.paragraph(),
+        #     ),
+        #     Category(
+        #         author=self.user,
+        #         name="Longbow",
+        #         info=lorem.paragraph(),
+        #     ),
+        #     Category(
+        #         author=self.user,
+        #         name="Traditional",
+        #         info=lorem.paragraph(),
+        #     ),
+        # ]
        
     def create_sample_category_memberships(self):
-        for i in range(1, 10):
-            category = random.choice(Category.objects.all())
-            archer = random.choice(Archer.objects.all())
-            category_membership = CategoryMembership.objects.filter(
-                archer=archer,
-                category=category,
-            )
-            if not category_membership:
-                category_membership = CategoryMembership.objects.create(
-                    author=self.user,
-                    category=category,
+        categories = Category.objects.all()
+        archers = Archer.objects.all()
+        for category in categories:
+            for archer in archers:                
+                category_membership = CategoryMembership.objects.filter(
                     archer=archer,
-                    info=lorem.paragraph(),
+                    category=category,
                 )
-                if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'New CategoryMembership created: Category - {category_membership.category.name} ; Archer - {category_membership.archer.first_name} {category_membership.archer.last_name}'))                
+                if not category_membership:
+                    category_membership = CategoryMembership.objects.create(
+                        author=self.user,
+                        category=category,
+                        archer=archer,
+                        info=lorem.paragraph(),
+                    )
+                    if SCREEN_OUTPUT:
+                        self.stdout.write(self.style.SUCCESS(f'New CategoryMembership created: Category - {category_membership.category.name} ; Archer - {category_membership.archer.first_name} {category_membership.archer.last_name}'))                
         
     def create_sample_teams(self):
-        teams = [
-            Team(
-                author=self.user,
-                name='The Archers',
-                info=lorem.paragraph(),              
-            ),
-            Team(
-                author=self.user,
-                name='Bullseye Squad',
-                info=lorem.paragraph(),              
-            ),
-            Team(
-                author=self.user,
-                name='Arrow Masters',
-                info=lorem.paragraph(),              
-            ),
-            Team(
-                author=self.user,
-                name='Target Titans',
-                info=lorem.paragraph(),              
-            ),
-            Team(
-                author=self.user,
-                name='Precision Crew',
-                info=lorem.paragraph(),              
-            ),
+        TEAMS = [
+            {"name": "De Gouden Pijl"},
+            {"name": "Pijl en Boog"},
+            {"name": "Doelgericht"},
+            {"name": "De Schutters van Brabant"},
+            {"name": "De Vliegende Pijlen"},
+            {"name": "Het Doel"},
+            {"name": "De Boogschutters"},
+            {"name": "De Trefzekeren"},
+            {"name": "De Pijlspits"},
+            {"name": "Boog en Pees"},
+            {"name": "De Schietvereniging"},
+            {"name": "De Pijlstormers"},
+            {"name": "Het Wit Kruis"},
+            {"name": "De Handboogclub"},
+            {"name": "De Doelschutters"},
+            {"name": "De Brabantse Bogen"},
+            {"name": "De Pijlclub"},
+            {"name": "De Schietclub"},
+            {"name": "De Boogschutters van Nederland"},
+            {"name": "De Toppers"},
         ]
+
+        teams = []
+        for team_info in TEAMS:
+            team  = Team(
+                author=self.user,
+                name=team_info['name'],
+                info=lorem.paragraph(),
+            )
+            teams.append(team)
+
+        # teams = [
+        #     Team(
+        #         author=self.user,
+        #         name='The Archers',
+        #         info=lorem.paragraph(),              
+        #     ),
+        #     Team(
+        #         author=self.user,
+        #         name='Bullseye Squad',
+        #         info=lorem.paragraph(),              
+        #     ),
+        #     Team(
+        #         author=self.user,
+        #         name='Arrow Masters',
+        #         info=lorem.paragraph(),              
+        #     ),
+        #     Team(
+        #         author=self.user,
+        #         name='Target Titans',
+        #         info=lorem.paragraph(),              
+        #     ),
+        #     Team(
+        #         author=self.user,
+        #         name='Precision Crew',
+        #         info=lorem.paragraph(),              
+        #     ),
+        # ]
         for team in teams:
             if not Team.objects.filter(name=team.name):
                 team.save()
@@ -358,75 +400,68 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.SUCCESS(f'Team "{team.name} created"'))
                          
     def create_sample_team_memberships(self):
-        for i in range(1, 10):
-            team = random.choice(Team.objects.all())
-            archer = random.choice(Archer.objects.all())
-            team_membership = TeamMembership.objects.filter(
-                archer=archer,
-                team=team,
-            )
-            if not team_membership:
-                team_membership = TeamMembership.objects.create(
-                    author=self.user,
-                    team=team,
+        teams = Team.objects.all()
+        archers = Archer.objects.all()
+        for team in teams:
+            for archer in archers:
+                team_membership = TeamMembership.objects.filter(
                     archer=archer,
-                    info=lorem.paragraph(),
+                    team=team,
                 )
-                if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'New TeamMembership created: Discipline - {team_membership.team.name} ; Archer - {team_membership.archer.first_name} {team_membership.archer.last_name}'))
+                if not team_membership:
+                    team_membership = TeamMembership.objects.create(
+                        author=self.user,
+                        team=team,
+                        archer=archer,
+                        info=lorem.paragraph(),
+                    )
+                    if SCREEN_OUTPUT:
+                        self.stdout.write(self.style.SUCCESS(f'New TeamMembership created: Discipline - {team_membership.team.name} ; Archer - {team_membership.archer.first_name} {team_membership.archer.last_name}'))
                 
     def create_sample_scoringsheets(self):
-        scoringsheets = [
-            ScoringSheet(
-                author=self.user,
-                name="Indoor 18 meter",
-                columns=3,
-                rows=10,
-                info=lorem.sentence()
-            ),
-            ScoringSheet(
-                author=self.user,
-                name="Indoor 25 meter",
-                columns=5,
-                rows=5,
-                info=lorem.sentence()
-            ),
-            ScoringSheet(
-                author=self.user,
-                name="Outdoor 30 meter",
-                columns=3,
-                rows=12,
-                info=lorem.sentence()
-            ),
-            ScoringSheet(
-                author=self.user,
-                name="Outdoor 50 meter",
-                columns=3,
-                rows=12,
-                info=lorem.sentence()
-            ),
-            ScoringSheet(
-                author=self.user,
-                name="Outdoor 60 meter",
-                columns=3,
-                rows=12,
-                info=lorem.sentence()
-            ),
-            ScoringSheet(
-                author=self.user,
-                name="Outdoor 70 meter",
-                columns=3,
-                rows=12,
-                info=lorem.sentence()
-            ),
-            ScoringSheet(
-                author=self.user,
-                name="Outdoor 90 meter",
-                columns=3,
-                rows=12,
-                info=lorem.sentence()
-            ),
+        SCORINGSHEETS = [
+            {"name": "Indoor 18 meter", "columns": 3, "rows": 10},
+            {"name": "Indoor 25 meter", "columns": 5, "rows": 5},
+            {"name": "Outdoor 30 meter", "columns": 3, "rows": 12},
         ]
+        
+        # scoringsheets = [
+        #     ScoringSheet(
+        #         author=self.user,
+        #         name="Outdoor 30 meter",
+        #         columns=3,
+        #         rows=12,
+        #         info=lorem.sentence()
+        #     ),
+        #     ScoringSheet(
+        #         author=self.user,
+        #         name="Outdoor 50 meter",
+        #         columns=3,
+        #         rows=12,
+        #         info=lorem.sentence()
+        #     ),
+        #     ScoringSheet(
+        #         author=self.user,
+        #         name="Outdoor 60 meter",
+        #         columns=3,
+        #         rows=12,
+        #         info=lorem.sentence()
+        #     ),
+        #     ScoringSheet(
+        #         author=self.user,
+        #         name="Outdoor 70 meter",
+        #         columns=3,
+        #         rows=12,
+        #         info=lorem.sentence()
+        #     ),
+        #     ScoringSheet(
+        #         author=self.user,
+        #         name="Outdoor 90 meter",
+        #         columns=3,
+        #         rows=12,
+        #         info=lorem.sentence()
+        #     ),
+        # ]
         for scoringsheet in scoringsheets:
             if not ScoringSheet.objects.filter(name=scoringsheet.name):
                 scoringsheet.save()
