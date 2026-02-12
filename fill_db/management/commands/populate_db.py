@@ -78,10 +78,10 @@ class Command(BaseCommand):
         # self.create_sample_discipline_memberships()
         # self.create_sample_categories()
         # self.create_sample_category_memberships()
-        self.create_sample_teams()
-        self.create_sample_team_memberships()
+        # self.create_sample_teams()
+        # self.create_sample_team_memberships()
         # self.create_sample_scoringsheets()
-        # self.create_sample_target_face_name_choices()
+        self.create_sample_target_face_name_choices()
         # self.create_sample_target_faces()
         # self.create_sample_rounds("Indoor", 18, "meter", 2026, 'donderdag', '20:00')
         # self.create_sample_round_memberships()
@@ -423,30 +423,29 @@ class Command(BaseCommand):
             {"name": "Indoor 18 meter", "columns": 3, "rows": 10},
             {"name": "Indoor 25 meter", "columns": 5, "rows": 5},
             {"name": "Outdoor 30 meter", "columns": 3, "rows": 12},
+            {"name": "Outdoor 30 meter", "columns": 3, "rows": 12},
+            {"name": "Outdoor 50 meter", "columns": 3, "rows": 12},
+            {"name": "Outdoor 60 meter", "columns": 3, "rows": 12},
+            {"name": "Outdoor 70 meter", "columns": 3, "rows": 12},
+            {"name": "Outdoor 90 meter", "columns": 3, "rows": 12},
         ]
+
+        scoringsheets = []
+        for scoringsheet_info in SCORINGSHEETS:
+            scoringsheet  = ScoringSheet(
+                author=self.user,
+                name=scoringsheet_info['name'],
+                info=lorem.paragraph(),
+            )
+            scoringsheets.append(scoringsheet)
+
+        for scoringsheet in scoringsheets:
+            if not ScoringSheet.objects.filter(name=scoringsheet.name):
+                scoringsheet.save()
+                if SCREEN_OUTPUT:
+                    self.stdout.write(self.style.SUCCESS(f'Scoringsheet - {scoringsheet.name} created'))
         
         # scoringsheets = [
-        #     ScoringSheet(
-        #         author=self.user,
-        #         name="Outdoor 30 meter",
-        #         columns=3,
-        #         rows=12,
-        #         info=lorem.sentence()
-        #     ),
-        #     ScoringSheet(
-        #         author=self.user,
-        #         name="Outdoor 50 meter",
-        #         columns=3,
-        #         rows=12,
-        #         info=lorem.sentence()
-        #     ),
-        #     ScoringSheet(
-        #         author=self.user,
-        #         name="Outdoor 60 meter",
-        #         columns=3,
-        #         rows=12,
-        #         info=lorem.sentence()
-        #     ),
         #     ScoringSheet(
         #         author=self.user,
         #         name="Outdoor 70 meter",
@@ -462,14 +461,20 @@ class Command(BaseCommand):
         #         info=lorem.sentence()
         #     ),
         # ]
-        for scoringsheet in scoringsheets:
-            if not ScoringSheet.objects.filter(name=scoringsheet.name):
-                scoringsheet.save()
-                if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'Scoringsheet - {scoringsheet.name} created'))
 
     # TODO: Finish create_sample_target_face_name_choices
     def create_sample_target_face_name_choices(self):
+        TARGETFACENAMECHOICES = [
+            {"environment": "Indoor",  "discipline": "Target Archery", "targetsize": "", "keyfeature": ""},
+            {"environment": "Indoor",  "discipline": "Target Archery", "targetsize": "", "keyfeature": ""},
+            {"environment": "Outdoor", "discipline": "Target Archery", "targetsize": "", "keyfeature": ""},
+            {"environment": "Outdoor", "discipline": "Target Archery", "targetsize": "", "keyfeature": ""},
+            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "", "keyfeature": ""},
+            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "", "keyfeature": ""},
+            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "", "keyfeature": ""},
+            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "", "keyfeature": ""},
+        ]
+
         targetfacenamechoices = [
             TargetFaceNameChoice(
                 author=self.user,
