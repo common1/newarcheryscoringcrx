@@ -107,6 +107,21 @@ pip install wagtail-ai
 Work on def create_sample_archers(self):
 
 ```
- 
-               
 
+# 013 Working on scoring.admin.py
+
+```
+```
+
+```bash
+# Working on scoring.admin.py
+# Installation of wagtail-flexible-forms 
+
+$ pip install wagtail-flexible-forms
+
+INSTALLED_APPS = [
+    ...,
+    "wagtail_flexible_forms",
+    ...,
+]
+```

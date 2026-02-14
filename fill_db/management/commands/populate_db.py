@@ -5,6 +5,7 @@ from lorem_text import lorem
 from custom_user.models import User
 
 from scoring.models import (
+    AgeGroup,
     Archer, 
     Club,
     ClubMembership,
@@ -70,24 +71,57 @@ class Command(BaseCommand):
     help = 'Populate the database with sample data'
 
     def handle(self, *args, **kwargs):
-        # Snippets
+        self.create_sample_agegroups()
         self.create_sample_archers()
-        # self.create_sample_clubs()
-        # self.create_sample_club_memberships()
-        # self.create_sample_disciplines()
-        # self.create_sample_discipline_memberships()
-        # self.create_sample_categories()
-        # self.create_sample_category_memberships()
-        # self.create_sample_teams()
-        # self.create_sample_team_memberships()
-        # self.create_sample_scoringsheets()
+        self.create_sample_clubs()
+        self.create_sample_club_memberships()
+        self.create_sample_disciplines()
+        self.create_sample_discipline_memberships()
+        self.create_sample_categories()
+        self.create_sample_category_memberships()
+        self.create_sample_teams()
+        self.create_sample_team_memberships()
+        self.create_sample_scoringsheets()
         self.create_sample_target_face_name_choices()
-        # self.create_sample_target_faces()
-        # self.create_sample_rounds("Indoor", 18, "meter", 2026, 'donderdag', '20:00')
-        # self.create_sample_round_memberships()
-        # self.create_sample_competitions()
-        # self.create_sample_competitions_memberships()
-        # self.create_sample_scores()
+        self.create_sample_target_faces()
+        self.create_sample_rounds("Indoor", 18, "meter", 2026, 'donderdag', '20:00')
+        self.create_sample_round_memberships()
+        self.create_sample_competitions()
+        self.create_sample_competitions_memberships()
+        self.create_sample_scores()
+
+    def create_sample_agegroups(self):
+        AGEGROUPS = [
+            {"name": "Onder 12", "from_year": None, "until_year": 11},
+            {"name": "Onder 14", "from_year": None, "until_year": 13},
+            {"name": "Onder 18", "from_year": None, "until_year": 17},
+            {"name": "Onder 21", "from_year": None, "until_year": 20},
+            {"name": "Senior",   "from_year": 21,   "until_year": None},
+            {"name": "50+",      "from_year": 50,   "until_year": None},
+            {"name": "60+",      "from_year": 60,   "until_year": None},
+        ]
+
+        agegroups = []
+        for agegroup_info in AGEGROUPS:
+            agegroup = AgeGroup(
+                author=self.user,
+                name=agegroup_info['name'],
+                from_year=agegroup_info['from_year'],
+                until_year=agegroup_info['until_year'],
+                info=lorem.paragraph(),
+            )
+            agegroups.append(agegroup)
+
+        for  agegroup in  agegroups:
+            if not AgeGroup.objects.filter(name=agegroup.name):
+                agegroup.save()
+                if SCREEN_OUTPUT:
+                    self.stdout.write(self.style.SUCCESS(f'AgeGroup - {agegroup.name} created'))
+
+        # agegroups = AgeGroup.objects.all()
+        # for agegroup in agegroups:
+        #     if agegroup.name == 'Onder 12':
+        #         pass
 
     def random_with_N_digits(self, n):
         range_start = 10**(n-1)

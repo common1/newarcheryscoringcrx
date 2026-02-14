@@ -530,6 +530,27 @@ class AgeGroup(BaseScoringModel):
         verbose_name=_("Name"),
         help_text=_("format: required, max-32")
     )
+    from_year = models.PositiveIntegerField(
+        unique=False,
+        null=True,
+        blank=True,
+        verbose_name=_("From year"),
+        help_text=_("format: not required")
+    )
+    until_year = models.PositiveIntegerField(
+        unique=False,
+        null=True,
+        blank=True,
+        verbose_name=_("Until year"),
+        help_text=_("format: not required")
+    )
+    agegroups = models.ManyToManyField(
+        "self",
+        blank=True,
+        help_text=_("format: not required"),
+        verbose_name=_("Other allowed AgeGroups"),
+    )
+
     slug = AutoSlugField(populate_from='name',editable=True)
     info = models.TextField(
         null=True,
@@ -1508,7 +1529,7 @@ class AgeGroupSnippetViewSet(SnippetViewSet):
     menu_order = 20
     add_to_settings_menu = False
     add_to_admin_menu = False
-    list_display = ('name', BooleanColumn('is_active'),)
+    list_display = ('name', 'from_year', 'until_year', BooleanColumn('is_active'),)
     list_filter = ('is_active',)
     inspect_view_enabled = True
     copy_view_enabled = True
@@ -1518,6 +1539,9 @@ class AgeGroupSnippetViewSet(SnippetViewSet):
     panels = [
         FieldPanel('name'),
         FieldPanel('info'),
+        FieldPanel('from_year'),
+        FieldPanel('until_year'),
+        FieldPanel('agegroups'),
         MultiFieldPanel(
             [
                 FieldPanel('slug'),
@@ -3716,4 +3740,85 @@ class FeedbackPage(CoderedWebPage):
 # TODO: Here
 
 # TODO: Page models - End
+
+# TODO: wagtail-flexible-form pages
+
+from wagtail import blocks
+from wagtail.images.blocks import ImageBlock
+from wagtail_flexible_forms import blocks as wff_blocks
+
+# First, let's define the fields we'd like our form to contain, as blocks.
+# StreamForms can contain *any* block, not just form fields!
+STREAMFORM_FIELDS = [
+    # Include form field blocks from wagtail_flexible_forms.
+    ("sf_singleline", wff_blocks.CharFieldBlock(group="Fields")),
+    ("sf_multiline", wff_blocks.TextFieldBlock(group="Fields")),
+    ("sf_checkboxes", wff_blocks.CheckboxesFieldBlock(group="Fields")),
+    ("sf_radios", wff_blocks.RadioButtonsFieldBlock(group="Fields")),
+    ("sf_dropdown", wff_blocks.DropdownFieldBlock(group="Fields")),
+    ("sf_checkbox", wff_blocks.CheckboxFieldBlock(group="Fields")),
+    ("sf_date", wff_blocks.DateFieldBlock(group="Fields")),
+    ("sf_time", wff_blocks.TimeFieldBlock(group="Fields")),
+    ("sf_datetime", wff_blocks.DateTimeFieldBlock(group="Fields")),
+    ("sf_image", wff_blocks.ImageFieldBlock(group="Fields")),
+    ("sf_file", wff_blocks.FileFieldBlock(group="Fields")),
+    # And content blocks from Wagtail!
+    ("text", blocks.RichTextBlock(group="Content")),
+    ("image", ImageBlock(group="Content")),
+]
+
+from wagtail_flexible_forms.models import AbstractSessionFormSubmission
+from wagtail_flexible_forms.models import AbstractSubmissionRevision
+
+class MySubmissionRevision(AbstractSubmissionRevision):
+    pass
+
+class MySessionFormSubmission(AbstractSessionFormSubmission):
+    @staticmethod
+    def get_revision_class():
+        return MySubmissionRevision
+
+from wagtail.admin.panels import FieldPanel
+from wagtail.contrib.forms.models import FormSubmission
+from wagtail.fields import RichTextField
+from wagtail.fields import StreamField
+from wagtail.models import Page
+from wagtail_flexible_forms.models import StreamFormMixin
+
+class StreamFormPage(StreamFormMixin, Page):
+    template = "scoring/forms/stream_form_page.html"
+    landing_page_template = "scoring/forms/form_page_landing.html"
+
+    # Typical Wagtail field, like any other page.
+    intro = RichTextField(blank=True)
+
+    # Set ``form_fields`` to contain our Streamform fields.
+    form_fields = StreamField(STREAMFORM_FIELDS)
+
+    content_panels = Page.content_panels + [
+        FieldPanel("intro"),
+        FieldPanel("form_fields"),
+    ]
+
+    @staticmethod
+    def get_submission_class():
+        """
+        Submission class is used to store the final form
+        submission, after the user has finished their session.
+
+        For simplicity, use Wagtail's default FormSubmission class.
+        """
+        return FormSubmission
+
+    @staticmethod
+    def get_session_submission_class():
+        """
+        Session submission class is used to store temporary
+        data while the form is being filled out, i.e. for
+        multi-step forms.
+
+        You must return something that inherits from
+        ``AbstractSessionFormSubmission``.
+        """
+        return MySessionFormSubmission
 

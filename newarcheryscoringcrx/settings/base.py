@@ -59,10 +59,12 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     # Third-party apps
     "django_extensions",
+    "wagtail_flexible_forms",
     # Own apps
     "scoring",
     "fill_db",
     "common",
+    "spreadsheet",
 ]
 
 MIDDLEWARE = [
