@@ -125,3 +125,13 @@ INSTALLED_APPS = [
     ...,
 ]
 ```
+
+# 014 speadsheetgrid app and working on scoring.admin
+
+```
+```
+
+```bash
+python manage.py startapp spreadsheet
+```
+

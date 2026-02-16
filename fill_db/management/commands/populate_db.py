@@ -277,25 +277,6 @@ class Command(BaseCommand):
                     if SCREEN_OUTPUT:
                         self.stdout.write(self.style.SUCCESS(f'New DisciplineMembership created: Discipline - {discipline_membership.discipline.name} ; Archer - {discipline_membership.archer.first_name} {discipline_membership.archer.last_name}'))
 
-
-    # def create_sample_discipline_memberships(self):
-    #     for i in range(1, 10):
-    #         discipline = random.choice(Discipline.objects.all())
-    #         archer = random.choice(Archer.objects.all())
-    #         discipline_membership = DisciplineMembership.objects.filter(
-    #             archer=archer,
-    #             discipline=discipline,
-    #         )
-    #         if not discipline_membership:
-    #             discipline_membership = DisciplineMembership.objects.create(
-    #                 author=self.user,
-    #                 discipline=discipline,
-    #                 archer=archer,
-    #                 info=lorem.paragraph(),
-    #             )
-    #             if SCREEN_OUTPUT:
-    #                 self.stdout.write(self.style.SUCCESS(f'New DisciplineMembership created: Discipline - {discipline_membership.discipline.name} ; Archer - {discipline_membership.archer.first_name} {discipline_membership.archer.last_name}'))
-
     def create_sample_categories(self):
         CATEGORIES = [
             {"name": "Recurve"},
@@ -319,35 +300,7 @@ class Command(BaseCommand):
                 category.save()
                 if SCREEN_OUTPUT:
                     self.stdout.write(self.style.SUCCESS(f'Category - {category.name} created'))
-
-        # categories = [
-        #     Category(
-        #         author=self.user,
-        #         name="Recurve",
-        #         info=lorem.paragraph(),
-        #     ),
-        #     Category(
-        #         author=self.user,
-        #         name="Compound",
-        #         info=lorem.paragraph(),
-        #     ),
-        #     Category(
-        #         author=self.user,
-        #         name="Barebow",
-        #         info=lorem.paragraph(),
-        #     ),
-        #     Category(
-        #         author=self.user,
-        #         name="Longbow",
-        #         info=lorem.paragraph(),
-        #     ),
-        #     Category(
-        #         author=self.user,
-        #         name="Traditional",
-        #         info=lorem.paragraph(),
-        #     ),
-        # ]
-       
+      
     def create_sample_category_memberships(self):
         categories = Category.objects.all()
         archers = Archer.objects.all()
@@ -400,33 +353,6 @@ class Command(BaseCommand):
             )
             teams.append(team)
 
-        # teams = [
-        #     Team(
-        #         author=self.user,
-        #         name='The Archers',
-        #         info=lorem.paragraph(),              
-        #     ),
-        #     Team(
-        #         author=self.user,
-        #         name='Bullseye Squad',
-        #         info=lorem.paragraph(),              
-        #     ),
-        #     Team(
-        #         author=self.user,
-        #         name='Arrow Masters',
-        #         info=lorem.paragraph(),              
-        #     ),
-        #     Team(
-        #         author=self.user,
-        #         name='Target Titans',
-        #         info=lorem.paragraph(),              
-        #     ),
-        #     Team(
-        #         author=self.user,
-        #         name='Precision Crew',
-        #         info=lorem.paragraph(),              
-        #     ),
-        # ]
         for team in teams:
             if not Team.objects.filter(name=team.name):
                 team.save()
@@ -479,102 +405,30 @@ class Command(BaseCommand):
                 if SCREEN_OUTPUT:
                     self.stdout.write(self.style.SUCCESS(f'Scoringsheet - {scoringsheet.name} created'))
         
-        # scoringsheets = [
-        #     ScoringSheet(
-        #         author=self.user,
-        #         name="Outdoor 70 meter",
-        #         columns=3,
-        #         rows=12,
-        #         info=lorem.sentence()
-        #     ),
-        #     ScoringSheet(
-        #         author=self.user,
-        #         name="Outdoor 90 meter",
-        #         columns=3,
-        #         rows=12,
-        #         info=lorem.sentence()
-        #     ),
-        # ]
-
-    # TODO: Finish create_sample_target_face_name_choices
     def create_sample_target_face_name_choices(self):
         TARGETFACENAMECHOICES = [
-            {"environment": "Indoor",  "discipline": "Target Archery", "targetsize": "", "keyfeature": ""},
-            {"environment": "Indoor",  "discipline": "Target Archery", "targetsize": "", "keyfeature": ""},
-            {"environment": "Outdoor", "discipline": "Target Archery", "targetsize": "", "keyfeature": ""},
-            {"environment": "Outdoor", "discipline": "Target Archery", "targetsize": "", "keyfeature": ""},
-            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "", "keyfeature": ""},
-            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "", "keyfeature": ""},
-            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "", "keyfeature": ""},
-            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "", "keyfeature": ""},
+            {"environment": "Indoor",  "discipline": "Target Archery", "targetsize": "40 cm",  "keyfeature": "10-Zone"},
+            {"environment": "Outdoor", "discipline": "Target Archery", "targetsize": "60 cm",  "keyfeature": "10-Zone"},
+            {"environment": "Outdoor", "discipline": "Target Archery", "targetsize": "122 cm", "keyfeature": "10-Zone"},
+            {"environment": "Outdoor", "discipline": "Target Archery", "targetsize": "80 cm",  "keyfeature": "10-Zone"},
+            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "80 cm",  "keyfeature": "6-Zone"},
+            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "60 cm",  "keyfeature": "6-Zone"},
+            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "40 cm",  "keyfeature": "6-Zone"},
+            {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "20 cm",  "keyfeature": "6-Zone"},
         ]
 
-        targetfacenamechoices = [
-            TargetFaceNameChoice(
+        targetfacenamechoices = []
+        for targetfacenamechoice_info in TARGETFACENAMECHOICES:
+            targetfacenamechoice  = TargetFaceNameChoice(
                 author=self.user,
-                environment="Indoor",
-                discipline="Target Archery",
-                targetsize="40 cm",
-                keyfeature="10-Zone",
+                environment=targetfacenamechoice_info['environment'],
+                discipline=targetfacenamechoice_info['discipline'],
+                targetsize=targetfacenamechoice_info['targetsize'],
+                keyfeature=targetfacenamechoice_info['keyfeature'],
                 info=lorem.paragraph(),
-            ),
-            TargetFaceNameChoice(
-                author=self.user,
-                environment="Indoor",
-                discipline="Target Archery",
-                targetsize="60 cm",
-                keyfeature="10-Zone",
-                info=lorem.paragraph(),
-            ),
-            TargetFaceNameChoice(
-                author=self.user,
-                environment="Outdoor",
-                discipline="Target Archery",
-                targetsize="122 cm",
-                keyfeature="10-Zone",
-                info=lorem.paragraph(),
-            ),
-            TargetFaceNameChoice(
-                author=self.user,
-                environment="Outdoor",
-                discipline="Target Archery",
-                targetsize="80 cm",
-                keyfeature="10-Zone",
-                info=lorem.paragraph(),
-            ),
-            TargetFaceNameChoice(
-                author=self.user,
-                environment="Outdoor",
-                discipline="Field Archery",
-                targetsize="80 cm",
-                keyfeature="6-Zone",
-                info=lorem.paragraph(),
-            ),
-            TargetFaceNameChoice(
-                author=self.user,
-                environment="Outdoor",
-                discipline="Field Archery",
-                targetsize="60 cm",
-                keyfeature="6-Zone",
-                info=lorem.paragraph(),
-            ),
-            TargetFaceNameChoice(
-                author=self.user,
-                environment="Outdoor",
-                discipline="Field Archery",
-                targetsize="40 cm",
-                keyfeature="6-Zone",
-                info=lorem.paragraph(),
-            ),
-            TargetFaceNameChoice(
-                author=self.user,
-                environment="Outdoor",
-                discipline="Field Archery",
-                targetsize="20 cm",
-                keyfeature="6-Zone",
-                info=lorem.paragraph(),
-            ),
-        ]
+            )
+            targetfacenamechoices.append(targetfacenamechoice)
+
         for targetfacenamechoice in targetfacenamechoices:
             new_name = f"{targetfacenamechoice.environment} {targetfacenamechoice.discipline} {targetfacenamechoice.targetsize} {targetfacenamechoice.keyfeature}"
             if not TargetFaceNameChoice.objects.filter(name=new_name):
@@ -706,6 +560,7 @@ class Command(BaseCommand):
                             )
                             if SCREEN_OUTPUT:
                                 self.stdout.write(self.style.SUCCESS(f'New CompetitionMembership created: Competition - {competition_membership.competition.name} ; Round - {competition_membership.round.name}'))                
+
     # TODO: Finish create_sample_scores
     def create_sample_scores(self):
         scores = []
