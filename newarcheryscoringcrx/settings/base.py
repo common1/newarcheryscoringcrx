@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     # Third-party apps
     "django_extensions",
     "wagtail_flexible_forms",
+    "neapolitan",
     # Own apps
     "scoring",
     "fill_db",

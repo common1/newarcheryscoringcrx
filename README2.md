@@ -135,3 +135,12 @@ INSTALLED_APPS = [
 python manage.py startapp spreadsheet
 ```
 
+# 015 Install neapolitan
+
+```
+```
+
+```bash
+pip install neapolitan
+```
+
