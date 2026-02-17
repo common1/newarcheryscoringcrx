@@ -91,6 +91,9 @@ ROOT_URLCONF = "newarcheryscoringcrx.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
+        'DIRS': [
+            BASE_DIR / "scoring/templates/scoring",
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

@@ -1,0 +1,31 @@
+{% extends "../base.html" %}
+
+{% block title %}Archers{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid pt-5">
+        <h1>Archers</h1>
+        <p>Welcome to the archers page</p>
+        <p><a href="/scoring">Back</a></p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>Last name</th>
+                <th>First name</th>
+                <th>Middle name</th>
+            </tr>
+            {% for archer in archers %}
+            <tr>
+                <td>{{ archer.first_name }} </td>
+                <td>{{ archer.last_name }} </td>
+                <td>{{ archer.middle_name }} </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}
+

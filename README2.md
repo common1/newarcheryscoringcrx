@@ -144,3 +144,8 @@ python manage.py startapp spreadsheet
 pip install neapolitan
 ```
 
+# 016 CRUD - Read data
+
+```
+scoring.views.Archer
+```
