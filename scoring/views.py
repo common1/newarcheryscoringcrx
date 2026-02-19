@@ -6,13 +6,13 @@ from .models import (
 )
 
 def scoring(request):
-    template = 'scoring/django/scoring.html'
+    template = 'scoring/django/index.html'
 
     return render(request, template)
 
 def archers(request):
     archers = Archer.objects.all()
-    template = 'scoring/django/archer/archers.html'
+    template = 'scoring/django/archer/index.html'
     context = {'archers': archers}
 
     return render(request, template, context)

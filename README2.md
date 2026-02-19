@@ -149,3 +149,9 @@ pip install neapolitan
 ```
 scoring.views.Archer
 ```
+
+## 017 Create webapp\templates\webapp folder and basic empty html files
+
+```
+```
+
