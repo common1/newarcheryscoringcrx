@@ -4,19 +4,15 @@
 
 {% block content %}
 
-    <div class="container-fluid pt-5">
+    <div class="container-fluid pt-5 text-center bg-warning">
         <h1>Scoring Home Page</h1>
-        <p>Hello, Welcom to the Scoring App</p>
+        <p>Keep track of y our archery scoring effectively</p>
+        <br>
     </div>
 
-    <div class="table-responsive">
-        <table class="table">
-            <tr>
-                <th>Database tables</th>
-            </tr>
-            <tr>
-                <td><a href="/scoring/archers">Archers</a></td>
-            </tr>
-        </table>
+    <div class="container-fluid text-center">
+        <br>
+        <a class="btn btn-primary" type="button" href="{% url 'scoring' %}"> Create your account </a>
     </div>
+
 {% endblock %}

@@ -10,6 +10,11 @@ def scoring(request):
 
     return render(request, template)
 
+def database_tables(request):
+    template = 'scoring/django/database_tables.html'
+
+    return render(request, template)
+
 def archers(request):
     archers = Archer.objects.all()
     template = 'scoring/django/archer/index.html'

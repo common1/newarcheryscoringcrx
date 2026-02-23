@@ -155,3 +155,9 @@ scoring.views.Archer
 ```
 ```
 
+## 018 User creation and authentication = Part 1
+
+```
+Current: 1:28:30
+```
+

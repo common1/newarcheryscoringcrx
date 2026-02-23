@@ -4,21 +4,33 @@
 
 {% block content %}
 
-    <div class="container-fluid pt-5">
+    <div class="container-fluid pt-5 text-center bg-warning">
         <h1>Archers</h1>
         <p>Welcome to the archers page</p>
-        <p><a href="/scoring">Back</a></p>
+        <br>
+    </div>
+
+    <div>
+        <hr>
+        <p>
+           <a class="btn btn-primary" type="button" href="{% url 'scoring_database' %}"> Back </a>
+        </p>
+        <hr>
     </div>
 
     <div class="table-responsive">
-        <table class="table">
+        <table class="table table-hover">
+            <thead class="table-dark">
             <tr>
-                <th>Last name</th>
-                <th>First name</th>
-                <th>Middle name</th>
+                <th scope="col">#</th>
+                <th scope="col">Last name</th>
+                <th scope="col">First name</th>
+                <th scope="col">Middle name</th>
             </tr>
+            </thead>
             {% for archer in archers %}
             <tr>
+                <th scope="row">{{ forloop.counter }} </th>
                 <td>{{ archer.first_name }} </td>
                 <td>{{ archer.last_name }} </td>
                 <td>{{ archer.middle_name }} </td>
