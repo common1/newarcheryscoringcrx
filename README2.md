@@ -158,6 +158,12 @@ scoring.views.Archer
 ## 018 User creation and authentication = Part 1
 
 ```
-Current: 1:28:30
 ```
+
+## 06 User creation and authentication = Part 2
+
+```bash
+pip install django-crispy-forms==1.14.0
+```
+
 

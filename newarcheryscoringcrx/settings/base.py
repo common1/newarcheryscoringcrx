@@ -61,12 +61,15 @@ INSTALLED_APPS = [
     "django_extensions",
     "wagtail_flexible_forms",
     "neapolitan",
+    "crispy_forms",
     # Own apps
     "scoring",
     "fill_db",
     "common",
     "spreadsheet",
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     # Save pages to cache. Must be FIRST.

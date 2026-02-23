@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from .models import (
     Archer
 )
+
+from .forms import CreateUserForm, LoginForm
 
 def scoring(request):
     template = 'scoring/django/index.html'
@@ -21,3 +23,20 @@ def archers(request):
     context = {'archers': archers}
 
     return render(request, template, context)
+
+# Register a user
+
+def register(request):
+    form = CreateUserForm()
+    
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            
+            # return.redirect('')
+    
+    context = {'form': form}
+
+    return render(request, 'scoring/django/register.html', context=context)
+
