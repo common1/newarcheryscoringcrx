@@ -14,6 +14,6 @@ class CreateUserForm(UserCreationForm):
         fields = ['email', 'password1', 'password2']
 
 class LoginForm(AuthenticationForm):
-    email = forms.CharField(widget=TextInput())
+    username = forms.EmailField(label="E-mail", widget=forms.EmailInput(attrs={'autofocus': True}))
     password = forms.CharField(widget=PasswordInput())
 
