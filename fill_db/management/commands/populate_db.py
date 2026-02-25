@@ -48,10 +48,11 @@ DAYS_OF_WEEK = {
 }
 
 SCREEN_OUTPUT = True
-DEFAULT_USERNAME = "admin"
+
+# DEFAULT_USERNAME = "admin"
 DEFAULT_SUPERUSER_EMAil = "me@mail.com"
 DEFAULT_SUPERUSER_PASSWORD = "abcd@1234"
-DEFAULT_DISPLAY_NAME = "Admin User"
+# DEFAULT_DISPLAY_NAME = "Admin User"
 
 class Command(BaseCommand):
     user = None
@@ -66,11 +67,14 @@ class Command(BaseCommand):
                     password=DEFAULT_SUPERUSER_PASSWORD, 
                     email=DEFAULT_SUPERUSER_EMAil
                 )
-            if SCREEN_OUTPUT:
-                self.stdout.write(self.style.SUCCESS('Superuser "admin" ensured.'))
+                if SCREEN_OUTPUT:
+                    self.stdout.write(self.style.SUCCESS('Superuser "admin" created.'))
+                            
     help = 'Populate the database with sample data'
 
     def handle(self, *args, **kwargs):
+        self.create_super_users()
+        self.create_normal_users()
         self.create_sample_agegroups()
         self.create_sample_archers()
         self.create_sample_clubs()
@@ -90,6 +94,41 @@ class Command(BaseCommand):
         self.create_sample_competitions_memberships()
         self.create_sample_scores()
 
+    def create_super_users(self):
+        SUPER_USERS = [
+            {"email": "me@mail.com", "password": "abcd@1234"},
+            {"email": "you@mail.com", "password": "abcd@1234"},
+        ]
+
+        for super_user in SUPER_USERS:
+            user = User.objects.filter(email=super_user['email']).first()
+            if not user:
+                super_user = User.objects.create_superuser(
+                    email=super_user['email'],
+                    password=super_user['password']
+                )
+                if SCREEN_OUTPUT:
+                    self.stdout.write(self.style.SUCCESS(f'New superuser with email { super_user.email } created'))
+
+    def create_normal_users(self):
+        NORMAL_USERS = [
+            {"email": "you1@mail.com", "password": "abcd@1234"},
+            {"email": "you2@mail.com", "password": "abcd@1234"},
+            {"email": "you3@mail.com", "password": "abcd@1234"},
+            {"email": "you4@mail.com", "password": "abcd@1234"},
+            {"email": "you5@mail.com", "password": "abcd@1234"},
+        ]
+
+        for normal_user in NORMAL_USERS:
+            user = User.objects.filter(email=normal_user['email']).first()
+            if not user:
+                new_user = User.objects.create(
+                    email=normal_user['email'],
+                    password=normal_user['password']
+                )
+                if SCREEN_OUTPUT:
+                    self.stdout.write(self.style.SUCCESS(f'New user with email { new_user.email } created'))
+
     def create_sample_agegroups(self):
         AGEGROUPS = [
             {"name": "Onder 12", "from_year": None, "until_year": 11},
@@ -101,7 +140,6 @@ class Command(BaseCommand):
             {"name": "60+",      "from_year": 60,   "until_year": None},
         ]
 
-        agegroups = []
         for agegroup_info in AGEGROUPS:
             agegroup = AgeGroup(
                 author=self.user,
@@ -110,18 +148,11 @@ class Command(BaseCommand):
                 until_year=agegroup_info['until_year'],
                 info=lorem.paragraph(),
             )
-            agegroups.append(agegroup)
 
-        for  agegroup in  agegroups:
             if not AgeGroup.objects.filter(name=agegroup.name):
                 agegroup.save()
                 if SCREEN_OUTPUT:
                     self.stdout.write(self.style.SUCCESS(f'AgeGroup - {agegroup.name} created'))
-
-        # agegroups = AgeGroup.objects.all()
-        # for agegroup in agegroups:
-        #     if agegroup.name == 'Onder 12':
-        #         pass
 
     def random_with_N_digits(self, n):
         range_start = 10**(n-1)
