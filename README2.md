@@ -172,3 +172,9 @@ pip install django-crispy-forms==1.14.0
 User authentication finished
 ```
 
+# 020 CRUD - Read - Part 1
+
+```
+Current: 2:26:40
+```
+
