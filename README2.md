@@ -174,6 +174,14 @@ User authentication finished
 
 ## 020 CRUD - Read - Part 1
 
+```
 Some adjustments to populate_db.py
 2 superusers and 5 normal users are created
+```
+
+## 021 CRUD - Read  Part 2
+
+```
+index.html listing of records for all objects
+```
 

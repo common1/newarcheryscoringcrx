@@ -73,7 +73,6 @@ class Command(BaseCommand):
     help = 'Populate the database with sample data'
 
     def handle(self, *args, **kwargs):
-        self.create_super_users()
         self.create_normal_users()
         self.create_sample_agegroups()
         self.create_sample_archers()
@@ -89,26 +88,11 @@ class Command(BaseCommand):
         self.create_sample_target_face_name_choices()
         self.create_sample_target_faces()
         self.create_sample_rounds("Indoor", 18, "meter", 2026, 'donderdag', '20:00')
+        self.create_sample_rounds("Indoor", 18, "meter", 2027, 'donderdag', '20:00')
         self.create_sample_round_memberships()
         self.create_sample_competitions()
         self.create_sample_competitions_memberships()
         self.create_sample_scores()
-
-    def create_super_users(self):
-        SUPER_USERS = [
-            {"email": "me@mail.com", "password": "abcd@1234"},
-            {"email": "you@mail.com", "password": "abcd@1234"},
-        ]
-
-        for super_user in SUPER_USERS:
-            user = User.objects.filter(email=super_user['email']).first()
-            if not user:
-                super_user = User.objects.create_superuser(
-                    email=super_user['email'],
-                    password=super_user['password']
-                )
-                if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'New superuser with email { super_user.email } created'))
 
     def create_normal_users(self):
         NORMAL_USERS = [
@@ -140,25 +124,17 @@ class Command(BaseCommand):
             {"name": "60+",      "from_year": 60,   "until_year": None},
         ]
 
-        for agegroup_info in AGEGROUPS:
-            agegroup = AgeGroup(
-                author=self.user,
-                name=agegroup_info['name'],
-                from_year=agegroup_info['from_year'],
-                until_year=agegroup_info['until_year'],
-                info=lorem.paragraph(),
-            )
-
-            if not AgeGroup.objects.filter(name=agegroup.name):
-                agegroup.save()
+        for agegroup in AGEGROUPS:
+            if not AgeGroup.objects.filter(name=agegroup['name']):
+                new_agegroup = AgeGroup.objects.create(
+                    author=self.user,
+                    name=agegroup['name'],
+                    from_year=agegroup['from_year'],
+                    until_year=agegroup['until_year'],
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'AgeGroup - {agegroup.name} created'))
-
-    def random_with_N_digits(self, n):
-        range_start = 10**(n-1)
-        range_end = (10**n)-1
-
-        return randint(range_start, range_end)
+                    self.stdout.write(self.style.SUCCESS(f'AgeGroup {new_agegroup.name} created'))
 
     def create_sample_archers(self):
         ARCHERS = [
@@ -184,22 +160,17 @@ class Command(BaseCommand):
             {"first_name": "Willow", "last_name": "Winstone", "union_number": 554433},
         ]
 
-        archers = []
-        for archer_info in ARCHERS:
-            archer = Archer(
-                author=self.user,
-                first_name=archer_info['first_name'],
-                last_name=archer_info['last_name'],
-                union_number=archer_info['union_number'],
-                info=lorem.paragraph(),
-            )
-            archers.append(archer)
-
-        for archer in archers:
-            if not Archer.objects.filter(union_number=archer.union_number):
-                archer.save()
+        for archer in ARCHERS:
+            if not Archer.objects.filter(union_number=archer['union_number']):
+                new_archer = Archer.objects.create(
+                    author=self.user,
+                    first_name=archer['first_name'],
+                    last_name=archer['last_name'],
+                    union_number=archer['union_number'],
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'Archer - {archer.first_name} {archer.last_name} created'))
+                    self.stdout.write(self.style.SUCCESS(f'Archer "{new_archer}" created'))
 
     def create_sample_clubs(self):
         CLUBS = [
@@ -224,22 +195,17 @@ class Command(BaseCommand):
             {"name": "The Flying Arrows", "town": "Lierop"},
             {"name": "The Bow Squa", "town": "Oirschot"},
         ]
-        
-        clubs = []
-        for club_info in CLUBS:
-            club  = Club(
-                author=self.user,
-                name=club_info['name'],
-                town=club_info['town'],
-                info=lorem.paragraph(),
-            )
-            clubs.append(club)
 
-        for club in clubs:
-            if not Club.objects.filter(name=club.name):
-                club.save()
+        for club in CLUBS:
+            if not Club.objects.filter(name=club['name']):
+                new_club  = Club.objects.create(
+                    author=self.user,
+                    name=club['name'],
+                    town=club['town'],
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'Club "{club.name} created" '))
+                    self.stdout.write(self.style.SUCCESS(f'Club "{new_club.name} created" '))
 
     def create_sample_club_memberships(self):
         clubs = Club.objects.all()
@@ -273,21 +239,16 @@ class Command(BaseCommand):
             {"name": "Run archery"},
             {"name": "Bowhunting"},
         ]
-        
-        disciplines = []
-        for discipline_info in DISCIPLINES:
-            discipline  = Discipline(
-                author=self.user,
-                name=discipline_info['name'],
-                info=lorem.paragraph(),
-            )
-            disciplines.append(discipline)
-        
-        for discipline in disciplines:
-            if not Discipline.objects.filter(name=discipline.name):
-                discipline.save()
+
+        for discipline in DISCIPLINES:
+            if not Discipline.objects.filter(name=discipline['name']):
+                new_discipline  = Discipline.objects.create(
+                    author=self.user,
+                    name=discipline['name'],
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'Discipline "{discipline.name} created"'))
+                    self.stdout.write(self.style.SUCCESS(f'Discipline "{new_discipline.name} created"'))
 
     def create_sample_discipline_memberships(self):
         disciplines = Discipline.objects.all()
@@ -317,21 +278,16 @@ class Command(BaseCommand):
             {"name": "Traditional"},
         ]
 
-        categories = []
-        for category_info in CATEGORIES:
-            category  = Category(
-                author=self.user,
-                name=category_info['name'],
-                info=lorem.paragraph(),
-            )
-            categories.append(category)
-
-        for category in categories:
-            if not Category.objects.filter(name=category.name):
-                category.save()
+        for category in CATEGORIES:
+            if not Category.objects.filter(name=category['name']):
+                new_category  = Category.objects.create(
+                    author=self.user,
+                    name=category['name'],
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'Category - {category.name} created'))
-      
+                    self.stdout.write(self.style.SUCCESS(f'Category - {new_category.name} created'))
+
     def create_sample_category_memberships(self):
         categories = Category.objects.all()
         archers = Archer.objects.all()
@@ -375,21 +331,16 @@ class Command(BaseCommand):
             {"name": "De Toppers"},
         ]
 
-        teams = []
-        for team_info in TEAMS:
-            team  = Team(
-                author=self.user,
-                name=team_info['name'],
-                info=lorem.paragraph(),
-            )
-            teams.append(team)
-
-        for team in teams:
-            if not Team.objects.filter(name=team.name):
-                team.save()
+        for team in TEAMS:
+            if not Team.objects.filter(name=team['name']):
+                new_team  = Team.objects.create(
+                    author=self.user,
+                    name=team['name'],
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'Team "{team.name} created"'))
-                         
+                    self.stdout.write(self.style.SUCCESS(f'Team "{new_team.name} created"'))
+
     def create_sample_team_memberships(self):
         teams = Team.objects.all()
         archers = Archer.objects.all()
@@ -421,20 +372,17 @@ class Command(BaseCommand):
             {"name": "Outdoor 90 meter", "columns": 3, "rows": 12},
         ]
 
-        scoringsheets = []
-        for scoringsheet_info in SCORINGSHEETS:
-            scoringsheet  = ScoringSheet(
-                author=self.user,
-                name=scoringsheet_info['name'],
-                info=lorem.paragraph(),
-            )
-            scoringsheets.append(scoringsheet)
-
-        for scoringsheet in scoringsheets:
-            if not ScoringSheet.objects.filter(name=scoringsheet.name):
-                scoringsheet.save()
+        for scoringsheet in SCORINGSHEETS:
+            if not ScoringSheet.objects.filter(name=scoringsheet['name']):
+                new_scoringsheet  = ScoringSheet.objects.create(
+                    author=self.user,
+                    name=scoringsheet['name'],
+                    columns=scoringsheet['columns'],
+                    rows=scoringsheet['rows'],
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'Scoringsheet - {scoringsheet.name} created'))
+                    self.stdout.write(self.style.SUCCESS(f'Scoringsheet - {new_scoringsheet.name} created'))
         
     def create_sample_target_face_name_choices(self):
         TARGETFACENAMECHOICES = [
@@ -448,28 +396,23 @@ class Command(BaseCommand):
             {"environment": "Outdoor", "discipline": "Field Archery",  "targetsize": "20 cm",  "keyfeature": "6-Zone"},
         ]
 
-        targetfacenamechoices = []
-        for targetfacenamechoice_info in TARGETFACENAMECHOICES:
-            targetfacenamechoice  = TargetFaceNameChoice(
-                author=self.user,
-                environment=targetfacenamechoice_info['environment'],
-                discipline=targetfacenamechoice_info['discipline'],
-                targetsize=targetfacenamechoice_info['targetsize'],
-                keyfeature=targetfacenamechoice_info['keyfeature'],
-                info=lorem.paragraph(),
-            )
-            targetfacenamechoices.append(targetfacenamechoice)
-
-        for targetfacenamechoice in targetfacenamechoices:
-            new_name = f"{targetfacenamechoice.environment} {targetfacenamechoice.discipline} {targetfacenamechoice.targetsize} {targetfacenamechoice.keyfeature}"
+        for targetfacenamechoice in TARGETFACENAMECHOICES:
+            new_name = f"{targetfacenamechoice['environment']} {targetfacenamechoice['discipline']} {targetfacenamechoice['targetsize']} {targetfacenamechoice['keyfeature']}"
             if not TargetFaceNameChoice.objects.filter(name=new_name):
-                targetfacenamechoice.name = new_name
-                targetfacenamechoice.save()
+                new_targetfacenamechoice  = TargetFaceNameChoice.objects.create(
+                    author=self.user,
+                    name=new_name,
+                    environment=targetfacenamechoice['environment'],
+                    discipline=targetfacenamechoice['discipline'],
+                    targetsize=targetfacenamechoice['targetsize'],
+                    keyfeature=targetfacenamechoice['keyfeature'],
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'TargetFaceNameChoice "{new_name} created" '))
+                    self.stdout.write(self.style.SUCCESS(f'TargetFaceNameChoice {new_targetfacenamechoice.name}" created" '))
     
     def create_sample_target_faces(self):
-        TARGET_FACE_NAMES = [
+        TARGETFACENAMES = [
             "Indoor Target Archery 40 cm 10-Zone",
             "Indoor Target Archery 60 cm 10-Zone",
             "Outdoor Field Archery 20 cm 6-Zone",
@@ -480,20 +423,15 @@ class Command(BaseCommand):
             "Outdoor Target Archery 80 cm 10-Zone",
         ]
 
-        targetface_instances = []
-        for targetface_name in TARGET_FACE_NAMES:
-            obj = TargetFace(
-                author=self.user,
-                name=targetface_name,
-                info=lorem.paragraph(),
-            ),
-            targetface_instances.append(obj[0])
-
-        for targetface_instance in targetface_instances:
-            if not TargetFace.objects.filter(name=targetface_instance.name):
-                targetface_instance.save()
+        for targetfacename in TARGETFACENAMES:
+            if not TargetFace.objects.filter(name=targetfacename):
+                new_targetfacename = TargetFace.objects.create(
+                    author=self.user,
+                    name=targetfacename,
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'TargetFace - {targetface_instance.name} created'))
+                    self.stdout.write(self.style.SUCCESS(f'TargetFace {new_targetfacename.name} created'))
 
     def get_rounds_info(self, prefix, distance, unit, year, day, start_time):
         # Start a januari 1 of the given year
@@ -514,21 +452,17 @@ class Command(BaseCommand):
         return rounds_info
 
     def create_sample_rounds(self, prefix, distance, unit, year, day, start_time):
-        rounds = []
-        rounds_info = self.get_rounds_info(prefix, distance, unit, year, day, start_time)
-        for round_info in rounds_info:
-            round = Round(
-                author = self.user,
-                name = round_info['name'],
-                start_date = round_info['start_date'],
-                start_time = round_info['start_time'],
-                info=lorem.paragraph(),
-            )
-            rounds.append(round)
-
+        rounds = self.get_rounds_info(prefix, distance, unit, year, day, start_time)
+        
         for round in rounds:
-            if not Round.objects.filter(name=round.name):
-                round.save()
+            if not Round.objects.filter(name=round['name']):
+                round = Round.objects.create(
+                    author = self.user,
+                    name = round['name'],
+                    start_date = round['start_date'],
+                    start_time = round['start_time'],
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
                     self.stdout.write(self.style.SUCCESS(f'Round - {round.name} created'))
 
@@ -554,22 +488,17 @@ class Command(BaseCommand):
 
     def create_sample_competitions(self):
 
-        competitions = []
         for year in self.YEARS:
             name_string = f"Indoor 30 pijlen, {year}"
-            competition = Competition(
-                author=self.user,
-                name=name_string,
-                info=lorem.paragraph(),
-            ),
-            competitions.append(competition[0])
-
-        for competition in competitions:
-            if not Competition.objects.filter(name=competition.name):
-                competition.save()
+            if not Competition.objects.filter(name=name_string):
+                new_competition = Competition.objects.create(
+                    author=self.user,
+                    name=name_string,
+                    info=lorem.paragraph(),
+                )
                 if SCREEN_OUTPUT:
-                    self.stdout.write(self.style.SUCCESS(f'Competition - {competition.name} created'))
-    
+                    self.stdout.write(self.style.SUCCESS(f'Competition {new_competition.name} created'))
+
     def create_sample_competitions_memberships(self):
         for year in self.YEARS:
             competitions = Competition.objects.all()

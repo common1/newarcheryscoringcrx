@@ -2,7 +2,18 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from .models import (
-    Archer
+    AgeGroup,
+    Archer,
+    Category,
+    Club,
+    Competition,
+    Discipline,
+    Round,
+    Score,
+    ScoringSheet,
+    TargetFace,
+    TargetFaceNameChoice,
+    Team,
 )
 
 from .forms import CreateUserForm, LoginForm
@@ -22,10 +33,102 @@ def database_tables(request):
 
     return render(request, template)
 
+# AgeGroup
+
+def agegroups(request):
+    agegroups = AgeGroup.objects.all()
+    template = 'scoring/django/agegroup/index.html'
+    context = {'agegroups': agegroups}
+
+    return render(request, template, context)
+
+# Archer
+
 def archers(request):
     archers = Archer.objects.all()
     template = 'scoring/django/archer/index.html'
     context = {'archers': archers}
+
+    return render(request, template, context)
+
+# Category
+
+def categories(request):
+    categories = Category.objects.all()
+    template = 'scoring/django/category/index.html'
+    context = {'categories': categories}
+
+    return render(request, template, context)
+
+# Club
+
+def clubs(request):
+    clubs = Club.objects.all()
+    template = 'scoring/django/club/index.html'
+    context = {'clubs': clubs}
+
+    return render(request, template, context)
+
+# Competition
+
+def competitions(request):
+    competitions = Competition.objects.all()
+    template = 'scoring/django/competition/index.html'
+    context = {'competitions': competitions}
+
+    return render(request, template, context)
+
+# Discipline
+
+def disciplines(request):
+    disciplines = Discipline.objects.all()
+    template = 'scoring/django/discipline/index.html'
+    context = {'disciplines': disciplines}
+
+    return render(request, template, context)
+
+# Round
+
+def rounds(request):
+    rounds = Round.objects.all()
+    template = 'scoring/django/round/index.html'
+    context = {'rounds': rounds}
+
+    return render(request, template, context)
+
+# Score
+
+def scores(request):
+    scores = Score.objects.all()
+    template = 'scoring/django/score/index.html'
+    context = {'scores': scores}
+
+    return render(request, template, context)
+
+# ScoringSheet
+
+def scoringsheets(request):
+    scoringsheets = ScoringSheet.objects.all()
+    template = 'scoring/django/scoringsheet/index.html'
+    context = {'scoringsheets': scoringsheets}
+
+    return render(request, template, context)
+
+# TargetFace
+
+def targetfaces(request):
+    targetfaces = TargetFace.objects.all()
+    template = 'scoring/django/targetface/index.html'
+    context = {'targetfaces': targetfaces}
+
+    return render(request, template, context)
+
+# Team
+
+def teams(request):
+    teams = Team.objects.all()
+    template = 'scoring/django/team/index.html'
+    context = {'teams': teams}
 
     return render(request, template, context)
 
@@ -72,7 +175,7 @@ def my_login(request):
 
 # - Dashboard
 
-@login_required(login_url='my-login')
+@login_required(login_url='scoring/my-login')
 def dashboard(request):
     return render(request, 'scoring/django/dashboard.html')
 

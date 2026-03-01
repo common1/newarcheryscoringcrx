@@ -1,20 +1,20 @@
 {% extends "scoring/django/base.html" %}
 
-{% block title %}Archers{% endblock %}
+{% block title %}Categories{% endblock %}
 
 {% block content %}
 
     <div class="container-fluid pt-5 text-center bg-warning">
-        <h1>Archers</h1>
-        <p>Welcome to the archers page</p>
+        <h1>Categories</h1>
+        <p>Welcome to the categories page</p>
         <br>
     </div>
 
     <div>
         <hr>
         <p>
-           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_database' %}"> Back </a>
-           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_archers' %}"> Create a new record </a>
+           <a class="btn btn-outline-primary btn-sm" type="button" href="{% url 'scoring_database' %}"> Back </a>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_categories' %}"> Create a new record </a>
         </p>
         <hr>
     </div>
@@ -24,19 +24,15 @@
             <thead class="table-light">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Last name</th>
-                <th scope="col">First name</th>
-                <th scope="col">Middle name</th>
+                <th scope="col">Name</th>
                 <th> </th>
             </tr>
             </thead>
-            {% if archers %}
-                {% for archer in archers %}
+            {% if categories %}
+                {% for category in categories %}
                     <tr>
                         <th scope="row">{{ forloop.counter }} </th>
-                        <td>{{ archer.first_name }} </td>
-                        <td>{{ archer.last_name }} </td>
-                        <td>{{ archer.middle_name }} </td>
+                        <td>{{ category.name }} </td>
                         <td> </td>
                     </tr>
                 {% endfor %}

@@ -12,8 +12,53 @@
 
     <hr>
 
-    <div class="container-fluid">
-        <a class="btn btn-primary" type="button" href="{% url 'scoring_archers' %}"> Archers </a>
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_agegroups' %}"> Agegroups </a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_archers' %}"> Archers </a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_categories' %}"> Categories </a>
+                </td>
+            </tr>
+            <tr>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_clubs' %}"> Clubs </a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_competitions' %}"> Competitions </a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_disciplines' %}"> Disciplines </a>
+                </td>
+            </tr>
+            <tr>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_rounds' %}"> Rounds </a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_scores' %}"> Scores </a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_scoringsheets' %}"> Scoring Sheets </a>
+                </td>
+            </tr>
+            <tr>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_targetfaces' %}"> Target Faces </a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_teams' %}"> Teams </a>
+                </td>
+                <td class='text-center'>
+                </td>
+            </tr>
+        </table>
     </div>
 
 {% endblock %}
+
