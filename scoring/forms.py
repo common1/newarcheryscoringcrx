@@ -6,6 +6,20 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms.widgets import PasswordInput, TextInput
 
+from .models import (
+    AgeGroup,
+    Archer,
+    Category,
+    Club,
+    Competition,
+    Discipline,
+    Round,
+    Score,
+    ScoringSheet,
+    TargetFace,
+    Team,
+)
+
 # Register/Create a user
 
 class CreateUserForm(UserCreationForm):

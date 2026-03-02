@@ -185,3 +185,9 @@ Some adjustments to populate_db.py
 index.html listing of records for all objects
 ```
 
+## 022 CRUD - Create  Part 1
+
+```
+Current: 2:52:21
+```
+

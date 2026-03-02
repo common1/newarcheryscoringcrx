@@ -42,6 +42,10 @@ def agegroups(request):
 
     return render(request, template, context)
 
+@login_required(login_url='scoring/my-login')
+def create_agegroup(request):
+    pass
+
 # Archer
 
 def archers(request):
