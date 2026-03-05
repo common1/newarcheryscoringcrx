@@ -16,7 +16,21 @@ from .models import (
     Team,
 )
 
-from .forms import CreateUserForm, LoginForm
+from .forms import (
+    CreateUserForm,
+    LoginForm,
+    CreateAgeGroupForm,
+    CreateArcherForm,
+    CreateCategoryForm,
+    CreateClubForm,
+    CreateCompetitionForm,
+    CreateDisciplineForm,
+    CreateRoundForm,
+    CreateScoreForm,
+    CreateScoringSheetForm,
+    CreateTargetFaceForm,
+    CreateTeamForm,
+)
 
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate
@@ -44,7 +58,18 @@ def agegroups(request):
 
 @login_required(login_url='scoring/my-login')
 def create_agegroup(request):
-    pass
+    form = CreateAgeGroupForm()
+    if request.method == "POST":
+        form = CreateAgeGroupForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_dashboard")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/agegroup/create.html', context=context)
 
 # Archer
 
@@ -55,6 +80,21 @@ def archers(request):
 
     return render(request, template, context)
 
+@login_required(login_url='scoring/my-login')
+def create_archer(request):
+    form = CreateArcherForm()
+    if request.method == "POST":
+        form = CreateArcherForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_archers")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/archer/create.html', context=context)
+
 # Category
 
 def categories(request):
@@ -63,6 +103,21 @@ def categories(request):
     context = {'categories': categories}
 
     return render(request, template, context)
+
+@login_required(login_url='scoring/my-login')
+def create_category(request):
+    form = CreateCategoryForm()
+    if request.method == "POST":
+        form = CreateCategoryForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_categories")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/category/create.html', context=context)
 
 # Club
 
@@ -73,6 +128,21 @@ def clubs(request):
 
     return render(request, template, context)
 
+@login_required(login_url='scoring/my-login')
+def create_club(request):
+    form = CreateClubForm()
+    if request.method == "POST":
+        form = CreateClubForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_clubs")
+
+    context = {'form': form} 
+
+    return render(request, 'scoring/django/club/create.html', context=context)
+
 # Competition
 
 def competitions(request):
@@ -81,6 +151,21 @@ def competitions(request):
     context = {'competitions': competitions}
 
     return render(request, template, context)
+
+@login_required(login_url='scoring/my-login')
+def create_competition(request):
+    form = CreateCompetitionForm()
+    if request.method == "POST":
+        form = CreateCompetitionForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_competitions")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/competition/create.html', context=context)
 
 # Discipline
 
@@ -91,6 +176,21 @@ def disciplines(request):
 
     return render(request, template, context)
 
+@login_required(login_url='scoring/my-login')
+def create_discipline(request):
+    form = CreateDisciplineForm()
+    if request.method == "POST":
+        form = CreateDisciplineForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_disciplines")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/discipline/create.html', context=context)
+
 # Round
 
 def rounds(request):
@@ -99,6 +199,21 @@ def rounds(request):
     context = {'rounds': rounds}
 
     return render(request, template, context)
+
+@login_required(login_url='scoring/my-login')
+def create_round(request):
+    form = CreateRoundForm()
+    if request.method == "POST":
+        form = CreateRoundForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_rounds")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/round/create.html', context=context)
 
 # Score
 
@@ -109,6 +224,21 @@ def scores(request):
 
     return render(request, template, context)
 
+@login_required(login_url='scoring/my-login')
+def create_score(request):
+    form = CreateScoreForm()
+    if request.method == "POST":
+        form = CreateScoreForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_scores")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/score/create.html', context=context)
+
 # ScoringSheet
 
 def scoringsheets(request):
@@ -117,6 +247,20 @@ def scoringsheets(request):
     context = {'scoringsheets': scoringsheets}
 
     return render(request, template, context)
+
+def create_scoringsheet(request):
+    form = CreateScoringSheetForm()
+    if request.method == "POST":
+        form = CreateScoringSheetForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_scoringsheets")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/scoringsheet/create.html', context=context)
 
 # TargetFace
 
@@ -127,6 +271,20 @@ def targetfaces(request):
 
     return render(request, template, context)
 
+def create_targetface(request):
+    form = CreateTargetFaceForm()
+    if request.method == "POST":
+        form = CreateTargetFaceForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_targetfaces")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/targetface/create.html', context=context)
+
 # Team
 
 def teams(request):
@@ -135,6 +293,21 @@ def teams(request):
     context = {'teams': teams}
 
     return render(request, template, context)
+
+@login_required(login_url='scoring/my-login')
+def create_team(request):
+    form = CreateTeamForm()
+    if request.method == "POST":
+        form = CreateTeamForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            return redirect("scoring_teams")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/team/create.html', context=context)
 
 # Register a user
 

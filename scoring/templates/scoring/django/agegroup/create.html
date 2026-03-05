@@ -1,1 +1,27 @@
 {% extends "scoring/django/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="container bg-light shadow-md p-5 form-layout">
+        <h3>Create agegroup</h3>
+        <h5> Start adding in the required details for your agegroup </h5>
+        <div>
+            <hr>
+            <p>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_agegroups' %}"> Back </a>
+            </p>
+            <hr>
+        </div>
+
+        <form method="POST" autocomplete="off" >
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br>
+            <button type="submit" class="btn btn-primary w-100 btn-block p-2"> Create agegroup </button>
+        </form>
+    </div>
+    <br>
+
+{% endblock  %}

@@ -188,6 +188,11 @@ index.html listing of records for all objects
 ## 022 CRUD - Create  Part 1
 
 ```
-Current: 2:52:21
+```
+
+## 023 CRUD - Create  Part 2
+
+```
+Current: 2:59:59
 ```
 
