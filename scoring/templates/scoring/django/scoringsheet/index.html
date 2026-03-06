@@ -37,7 +37,9 @@
                         <td>{{ scoringsheet.name }} </td>
                         <td>{{ scoringsheet.columns }} </td>
                         <td>{{ scoringsheet.rows }} </td>
-                        <td> </td>
+                        <td> 
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringsheet_singular' scoringsheet.id %}">View</a>
+                        </td>
                     </tr>
                 {% endfor %}
             {% endif %}

@@ -33,7 +33,9 @@
                     <tr>
                         <th scope="row">{{ forloop.counter }} </th>
                         <td>{{ category.name }} </td>
-                        <td> </td>
+                        <td> 
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_category_singular' category.id %}">View</a>
+                        </td>
                     </tr>
                 {% endfor %}
             {% endif %}

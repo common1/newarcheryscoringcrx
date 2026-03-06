@@ -1,1 +1,23 @@
 {% extends "scoring/django/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="container bg-light shadow-md p-5 form-layout">
+        <h3>Update team</h3>
+        <h3>Update your team down below</h3>
+        <hr>
+        <br>
+
+        <form method="POST" autocomplete="off" >
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br>
+            <button type="submit" class="btn btn-primary w-100 btn-block p-2"> Update team </button>
+        </form>
+
+    </div>
+    <br>
+
+{% endblock %}

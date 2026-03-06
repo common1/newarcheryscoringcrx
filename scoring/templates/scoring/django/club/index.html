@@ -35,7 +35,9 @@
                         <th scope="row">{{ forloop.counter }} </th>
                         <td>{{ club.name }} </td>
                         <td>{{ club.town }} </td>
-                        <td> </td>
+                        <td> 
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_club_singular' club.id %}">View</a>
+                        </td>
                     </tr>
                 {% endfor %}
             {% endif %}

@@ -39,7 +39,9 @@
                         <td>{{ score.score }} </td>
                         <td>{{ score.number_of_arrows }} </td>
                         <td>{{ score.round_archer.round }} </td>
-                        <td> </td>
+                        <td> 
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_score_singular' score.id %}">View</a>
+                        </td>
                     </tr>
                 {% endfor %}
             {% endif %}

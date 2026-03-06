@@ -35,9 +35,11 @@
                     <tr>
                         <th scope="row">{{ forloop.counter }} </th>
                         <td>{{ agegroup.name }} </td>
-                        <td>{{ agegroup.from_year }} </td>
+                        <td>{{ agegroup.from_year }} </td>  
                         <td>{{ agegroup.until_year }} </td>
-                        <td> </td>
+                        <td>
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_agegroup_singular' agegroup.id %}">View</a>
+                        </td>
                     </tr>
                 {% endfor %}
             {% endif %}

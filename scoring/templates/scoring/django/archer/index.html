@@ -37,7 +37,9 @@
                         <td>{{ archer.first_name }} </td>
                         <td>{{ archer.last_name }} </td>
                         <td>{{ archer.middle_name }} </td>
-                        <td> </td>
+                        <td> 
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_archer_singular' archer.id %}">View</a>
+                        </td>
                     </tr>
                 {% endfor %}
             {% endif %}

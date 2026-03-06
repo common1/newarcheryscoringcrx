@@ -196,3 +196,8 @@ index.html listing of records for all objects
 Current: 2:59:59
 ```
 
+## 024 CRUD - Read, Update, Delete - Part 1
+
+```
+```
+

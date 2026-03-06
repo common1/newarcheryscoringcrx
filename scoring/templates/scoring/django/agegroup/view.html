@@ -1,1 +1,27 @@
 {% extends "scoring/django/base.html" %}
+
+{% block content %}
+
+    <div class="card">
+        <strong>
+            <br>
+            &nbsp;&nbsp;
+            {{ agegroup.name|upper }}
+        </strong>
+        <hr>
+        <div class="card-body">
+            <p><strong> ID: </strong> {{ agegroup.id }} </p>
+            <p><strong> Name: </strong> {{ agegroup.name }} </p>
+            <p><strong> From year: </strong> {{ agegroup.from_year }} </p>
+            <p><strong> Until year: </strong> {{ agegroup.until_year }} </p>
+            <p><strong> Is active: </strong> {{ agegroup.is_active }} </p>            
+        </div>
+    </div>
+    <br>
+    <a href="{% url 'scoring_agegroups' %}" class="btn btn-secondary btn-sm"> Return </a>
+    &nbsp;
+    <a href="{% url 'scoring_agegroup_update' agegroup.id %}" class="btn btn-info btn-sm"> Update agegroup </a>
+    &nbsp;
+    <a href="{% url 'scoring_agegroup_delete' agegroup.id %}" class="btn btn-danger btn-sm"> Delete </a>
+    
+{% endblock %}
