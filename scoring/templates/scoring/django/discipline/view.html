@@ -1,1 +1,77 @@
 {% extends "scoring/django/base.html" %}
+
+{% block content %}
+
+    <div class="card">
+
+        <div class="card-header">
+            <a href="{% url 'scoring_disciplines' %}" class="btn btn-secondary btn-sm"> Return </a>
+            &nbsp;
+            <a href="{% url 'scoring_discipline_update' discipline.id %}" class="btn btn-info btn-sm"> Update discipline </a>
+            &nbsp;
+            <a href="{% url 'scoring_discipline_delete' discipline.id %}" class="btn btn-danger btn-sm"> Delete </a>
+        </div>            
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <td scope="row" colspan="2">
+                                <strong>Discipline name: </strong>
+                                {{ discipline.name|upper }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col"> Field </th>
+                            <th scope="col"> Value </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><strong>ID:</strong></td>
+                        <td>{{ discipline.id }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Slug:</strong></td>
+                        <td>{{ discipline.slug }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Author:</strong></td>
+                        <td>{{ discipline.author }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Info:</strong></td>
+                        <td>{{ discipline.info }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Is&nbsp;active:</strong></td>
+                        <td>{{ discipline.is_active }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" width="10px">#</th>
+                            <th scope="col">Members</th>
+                        </tr>
+                    </thead>
+                    {% if discipline.archers.all %}
+                        {% for archer in discipline.archers.all %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }} </th>
+                                <td>{{ archer }} </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+    
+{% endblock %}

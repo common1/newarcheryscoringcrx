@@ -1,1 +1,64 @@
 {% extends "scoring/django/base.html" %}
+
+{% block content %}
+
+    <div class="card">
+
+        <div class="card-header">
+            <a href="{% url 'scoring_scoringsheets' %}" class="btn btn-secondary btn-sm"> Return </a>
+            &nbsp;
+            <a href="{% url 'scoring_scoringsheet_update' scoringsheet.id %}" class="btn btn-info btn-sm"> Update scoringsheet </a>
+            &nbsp;
+            <a href="{% url 'scoring_scoringsheet_delete' scoringsheet.id %}" class="btn btn-danger btn-sm"> Delete </a>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <td scope="row" colspan="2">
+                                <strong>Scoringsheet name: </strong>
+                                {{ scoringsheet.name|upper }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col"> Field </th>
+                            <th scope="col"> Value </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><strong> ID </strong></td>
+                        <td> {{ scoringsheet.id }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Columns </strong></td>
+                        <td> {{ scoringsheet.columns }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Rows </strong></td>
+                        <td> {{ scoringsheet.rows }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Slug </strong></td>
+                        <td> {{ scoringsheet.slug }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Author </strong></td>
+                        <td> {{ scoringsheet.author }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Info </strong></td>
+                        <td> {{ scoringsheet.info }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Is&nbsp;active: </strong></td>
+                        <td> {{ scoringsheet.is_active }} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    
+{% endblock %}

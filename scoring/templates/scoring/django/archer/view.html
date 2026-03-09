@@ -1,1 +1,93 @@
 {% extends "scoring/django/base.html" %}
+
+{% block content %}
+
+    <br>
+    <div class="card">
+
+        <div class="card-header">
+            <a href="{% url 'scoring_archers' %}" class="btn btn-secondary btn-sm"> Return </a>
+            &nbsp;
+            <a href="{% url 'scoring_archer_update' archer.id %}" class="btn btn-info btn-sm"> Update archer </a>
+            &nbsp;
+            <a href="{% url 'scoring_archer_delete' archer.id %}" class="btn btn-danger btn-sm"> Delete </a>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <td scope="row" colspan="2">
+                                <strong>Archer name: </strong>
+                                {{ archer.last_name|upper }}
+                                {{ archer.first_name }}
+                                {% if archer.middle_name %}
+                                    {{ archer.middle_name }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col" width="10px"> Field </th>
+                            <th scope="col"> Value </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><strong> ID: </strong></td>
+                        <td> {{ archer.id }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Union&nbsp;number: </strong></td>
+                        <td> {{ archer.union_number }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Email: </strong></td>
+                        <td> {{ archer.email }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phone:</strong></td>
+                        <td>{{ archer.phone }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Address:</strong></td>
+                        <td>{{ archer.address }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>City:</strong></td>
+                        <td>{{ archer.city }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zip&nbsp;code:</strong></td>
+                        <td>{{ archer.zip_code }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Province:</strong></td>
+                        <td>{{ archer.province }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Birth&nbsp;date:</strong></td>
+                        <td>{{ archer.birth_date }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Slug:</strong></td>
+                        <td>{{ archer.slug }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Author:</strong></td>
+                        <td>{{ archer.author }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Info:</strong></td>
+                        <td>{{ archer.info }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Is&nbsp;active:</strong></td>
+                        <td>{{ archer.is_active }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    
+{% endblock %}

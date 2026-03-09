@@ -1,1 +1,85 @@
 {% extends "scoring/django/base.html" %}
+
+{% block content %}
+
+    <div class="card">
+
+        <div class="card-header">
+            <a href="{% url 'scoring_competitions' %}" class="btn btn-secondary btn-sm"> Return </a>
+            &nbsp;
+            <a href="{% url 'scoring_competition_update' competition.id %}" class="btn btn-info btn-sm"> Update competition </a>
+            &nbsp;
+            <a href="{% url 'scoring_competition_delete' competition.id %}" class="btn btn-danger btn-sm"> Delete </a>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <td scope="row" colspan="2">
+                                <strong>Competition name: </strong>
+                                {{ competition.name|upper }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col"> Field </th>
+                            <th scope="col"> Value </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><strong>ID:</strong></td>
+                        <td>{{ competition.id }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Start&nbsp;date:</strong></td>
+                        <td>{{ competition.start_date }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>End&nbsp;date:</strong></td>
+                        <td>{{ competition.end_date }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Slug:</strong></td>
+                        <td>{{ competition.slug }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Author:</strong></td>
+                        <td>{{ competition.author }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Info:</strong></td>
+                        <td>{{ competition.info }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Is&nbsp;active:</strong></td>
+                        <td>{{ competition.is_active }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" width="10px">#</th>
+                            <th scope="col">Rounds</th>
+                        </tr>
+                    </thead>
+                    {% if competition.rounds.all %}
+                        {% for round in competition.rounds.all %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }} </th>
+                                <td>{{ round }} </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+    
+{% endblock %}

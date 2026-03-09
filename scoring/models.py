@@ -255,7 +255,7 @@ class DisciplineMembership(BaseScoringModel):
 
     discipline = models.ForeignKey(
         Discipline,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         unique=False,
         verbose_name=_("Discipline"),
         help_text=_("format: required"),
@@ -410,7 +410,7 @@ class ClubMembership(BaseScoringModel):
         
     club = models.ForeignKey(
         Club,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         unique=False,
         verbose_name=_("Club"),
         help_text=_("format: required"),
@@ -586,7 +586,7 @@ class CategoryMembership(BaseScoringModel):
 
     category = models.ForeignKey(
         Category,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         unique=False,
         verbose_name=_("Category"),
         help_text=_("format: required"),
@@ -698,7 +698,7 @@ class TeamMembership(BaseScoringModel):
 
     team = models.ForeignKey(
         Team,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         unique=False,
         verbose_name=_("Team"),
         help_text=_("format: required"),
@@ -1045,7 +1045,7 @@ class RoundMembership(BaseScoringModel):
 
     round = models.ForeignKey(
         Round,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         unique=False,
         default=1,
         verbose_name=_("Round"),
@@ -1235,7 +1235,7 @@ class CompetitionMembership(BaseScoringModel):
     )
     round = models.ForeignKey(
         Round,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         unique=False,
         verbose_name=_("Round"),
         help_text=_("format: required"),

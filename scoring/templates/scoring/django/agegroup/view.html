@@ -3,25 +3,49 @@
 {% block content %}
 
     <div class="card">
-        <strong>
-            <br>
-            &nbsp;&nbsp;
-            {{ agegroup.name|upper }}
-        </strong>
-        <hr>
-        <div class="card-body">
-            <p><strong> ID: </strong> {{ agegroup.id }} </p>
-            <p><strong> Name: </strong> {{ agegroup.name }} </p>
-            <p><strong> From year: </strong> {{ agegroup.from_year }} </p>
-            <p><strong> Until year: </strong> {{ agegroup.until_year }} </p>
-            <p><strong> Is active: </strong> {{ agegroup.is_active }} </p>            
+        <div class="card-header">
+            <a href="{% url 'scoring_agegroups' %}" class="btn btn-secondary btn-sm"> Return </a>
+            &nbsp;
+            <a href="{% url 'scoring_agegroup_update' agegroup.id %}" class="btn btn-info btn-sm"> Update agegroup </a>
+            &nbsp;
+            <a href="{% url 'scoring_agegroup_delete' agegroup.id %}" class="btn btn-danger btn-sm"> Delete </a>
         </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <td scope="row" colspan="2">
+                                <strong>AgeGroup name: </strong>
+                                {{ agegroup.name|upper }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col" width="10px"> Field </th>
+                            <th scope="col"> Value </th>
+                        </tr>                        
+                    </thead>
+                    <tr>
+                        <td><strong>ID:</strong></td>
+                        <td>{{ agegroup.id }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>From&nbsp;year:</strong></td>
+                        <td>{{ agegroup.from_year }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Until&nbsp;year:</strong></td>
+                        <td>{{ agegroup.until_year }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Is&nbsp;active:</strong></td>
+                        <td>{{ agegroup.is_active }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
     </div>
-    <br>
-    <a href="{% url 'scoring_agegroups' %}" class="btn btn-secondary btn-sm"> Return </a>
-    &nbsp;
-    <a href="{% url 'scoring_agegroup_update' agegroup.id %}" class="btn btn-info btn-sm"> Update agegroup </a>
-    &nbsp;
-    <a href="{% url 'scoring_agegroup_delete' agegroup.id %}" class="btn btn-danger btn-sm"> Delete </a>
     
 {% endblock %}

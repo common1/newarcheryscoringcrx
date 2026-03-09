@@ -1,1 +1,71 @@
 {% extends "scoring/django/base.html" %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <a href="{% url 'scoring_categories' %}" class="btn btn-secondary btn-sm"> Return </a>
+            &nbsp;
+            <a href="{% url 'scoring_category_update' category.id %}" class="btn btn-info btn-sm"> Update category </a>
+            &nbsp;
+            <a href="{% url 'scoring_category_delete' category.id %}" class="btn btn-danger btn-sm"> Delete </a>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <td scope="row" colspan="2">
+                                <strong>Category name: </strong>
+                                {{ category.name|upper }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col" width="10px"> Field </th>
+                            <th scope="col"> Value </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><strong> ID </strong></td>
+                        <td> {{ category.id }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Slug </strong></td>
+                        <td> {{ category.slug }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Author </strong></td>
+                        <td> {{ category.author }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Is&nbsp;active </strong></td>
+                        <td> {{ category.is_active }} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" width="10px">#</th>
+                            <th scope="col">Members</th>
+                        </tr>
+                    </thead>
+                    {% if category.archers.all %}
+                        {% for archer in category.archers.all %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }} </th>
+                                <td>{{ archer }} </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+
+    </div>    
+{% endblock %}

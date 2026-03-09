@@ -35,6 +35,12 @@ class LoginForm(AuthenticationForm):
 
 # - Create a agegroup
 class CreateAgeGroupForm(forms.ModelForm):
+    agegroups = forms.ModelMultipleChoiceField(
+        queryset = AgeGroup.objects.all(),
+        label="Agegroups",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = AgeGroup
         fields = [
@@ -45,6 +51,12 @@ class CreateAgeGroupForm(forms.ModelForm):
 
 # - Update a agegroup
 class UpdateAgeGroupForm(forms.ModelForm):
+    agegroups = forms.ModelMultipleChoiceField(
+        queryset = AgeGroup.objects.all(),
+        label="Agegroups",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = AgeGroup
         fields = [
@@ -79,19 +91,31 @@ class UpdateArcherForm(forms.ModelForm):
 # Category
 
 class CreateCategoryForm(forms.ModelForm):
+    archers = forms.ModelMultipleChoiceField(
+        queryset = Archer.objects.all(),
+        label="Archers",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Category
         fields = [
-            'name', 'info',
+            'name', 'archers', 'info',
             'slug', 'author',
             'is_active',
         ]
 
 class UpdateCategoryForm(forms.ModelForm):
+    archers = forms.ModelMultipleChoiceField(
+        queryset = Archer.objects.all(),
+        label="Archers",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Category
         fields = [
-            'name', 'info',
+            'name', 'archers', 'info',
             'slug', 'author',
             'is_active',
         ]
@@ -99,22 +123,36 @@ class UpdateCategoryForm(forms.ModelForm):
 # Club
 
 class CreateClubForm(forms.ModelForm):
+    archers = forms.ModelMultipleChoiceField(
+        queryset = Archer.objects.all(),
+        label="Archers",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Club
         fields = [
             'name', 'info',
             'address', 'zip_code', 'town', 'phone', 'email', 'website', 'social_media',
             'slug', 'author',
+            'archers',
             'is_active',
         ]
 
 class UpdateClubForm(forms.ModelForm):
+    archers = forms.ModelMultipleChoiceField(
+        queryset = Archer.objects.all(),
+        label="Archers",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Club
         fields = [
             'name', 'info',
             'address', 'zip_code', 'town', 'phone', 'email', 'website', 'social_media',
             'slug', 'author',
+            'archers',
             'is_active',
         ]
 
@@ -141,19 +179,31 @@ class UpdateCompetitionForm(forms.ModelForm):
 # Discipline
 
 class CreateDisciplineForm(forms.ModelForm):
+    archers = forms.ModelMultipleChoiceField(
+        queryset = Archer.objects.all(),
+        label="Archers",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Discipline
         fields = [
-            'name', 'info',
+            'name', 'archers', 'info',
             'slug', 'author',
             'is_active',
         ]
 
 class UpdateDisciplineForm(forms.ModelForm):
+    archers = forms.ModelMultipleChoiceField(
+        queryset = Archer.objects.all(),
+        label="Archers",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Discipline
         fields = [
-            'name', 'info',
+            'name', 'archers', 'info',
             'slug', 'author',
             'is_active',
         ]
@@ -164,7 +214,7 @@ class CreateRoundForm(forms.ModelForm):
     class Meta:
         model = Round
         fields = [
-            'name', 'start_date', 'start_time', 'end_date', 'end_time', 'info',
+            'name', 'archers', 'start_date', 'start_time', 'end_date', 'end_time', 'info',
             'slug', 'author',
             'is_active',
         ]
@@ -173,7 +223,7 @@ class UpdateRoundForm(forms.ModelForm):
     class Meta:
         model = Round
         fields = [
-            'name', 'start_date', 'start_time', 'end_date', 'end_time', 'info',
+            'name', 'archers', 'start_date', 'start_time', 'end_date', 'end_time', 'info',
             'slug', 'author',
             'is_active',
         ]
@@ -241,7 +291,7 @@ class CreateTeamForm(forms.ModelForm):
     class Meta:
         model = Team
         fields = [
-            'name', 'info',
+            'name', 'archers', 'info',
             'slug', 'author',
             'is_active',
         ]
@@ -250,7 +300,7 @@ class UpdateTeamForm(forms.ModelForm):
     class Meta:
         model = Team
         fields = [
-            'name', 'info',
+            'name', 'archers', 'info',
             'slug', 'author',
             'is_active',
         ]
