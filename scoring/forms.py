@@ -100,8 +100,9 @@ class CreateCategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = [
-            'name', 'archers', 'info',
+            'name', 'info',
             'slug', 'author',
+            'archers',
             'is_active',
         ]
 
@@ -115,8 +116,9 @@ class UpdateCategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = [
-            'name', 'archers', 'info',
+            'name', 'info',
             'slug', 'author',
+            'archers',
             'is_active',
         ]
 
@@ -159,20 +161,34 @@ class UpdateClubForm(forms.ModelForm):
 # Competition
 
 class CreateCompetitionForm(forms.ModelForm):
+    rounds = forms.ModelMultipleChoiceField(
+        queryset = Round.objects.all(),
+        label="Rounds",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Competition
         fields = [
             'name', 'start_date', 'end_date', 'info',
             'slug', 'author',
+            'rounds',
             'is_active',
         ]
 
 class UpdateCompetitionForm(forms.ModelForm):
+    rounds = forms.ModelMultipleChoiceField(
+        queryset = Round.objects.all(),
+        label="Rounds",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Competition
         fields = [
             'name', 'start_date', 'end_date', 'info',
             'slug', 'author',
+            'rounds',
             'is_active',
         ]
 
