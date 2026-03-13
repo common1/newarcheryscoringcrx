@@ -6,7 +6,7 @@
 
     <div class="container bg-light shadow-md p-5 form-layout">
         <h3>Update competition</h3>
-        <h3>Update your competition down below</h3>
+        <h5>Update your competition down below</h5>
         <div>
             <hr>
             <p>
@@ -19,7 +19,7 @@
             {% csrf_token %}
             {{ form|crispy }}
             <br>
-            <button type="submit" class="btn btn-primary w-100 btn-block p-2"> Update competition </button>
+            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Update competition </button>
         </form>
 
     </div>

@@ -984,7 +984,7 @@ class Round(BaseScoringModel):
         editable=True,
         unique=False,
         verbose_name=_("Start time"),
-        help_text=_("format: H:M:S, not required"),
+        help_text=_("format: H:M, not required"),
     )
     end_date = models.DateField(
         null=True,
@@ -1000,7 +1000,7 @@ class Round(BaseScoringModel):
         editable=True,
         unique=False,
         verbose_name=_("End time"),
-        help_text=_("format: H:M:S, not required"),
+        help_text=_("format: H:M, not required"),
     )
     # TODO: Insert location
     archers = models.ManyToManyField(
@@ -1054,7 +1054,7 @@ class RoundMembership(BaseScoringModel):
     )
     archer = models.ForeignKey(
         Archer,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         unique=False,
         verbose_name=_("Archer"),
         help_text=_("format: required"),

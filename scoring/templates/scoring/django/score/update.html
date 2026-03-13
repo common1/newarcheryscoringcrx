@@ -6,15 +6,20 @@
 
     <div class="container bg-light shadow-md p-5 form-layout">
         <h3>Update score</h3>
-        <h3>Update your score down below</h3>
-        <hr>
-        <br>
+        <h5>Update your score down below</h5>
+        <div>
+            <hr>
+            <p>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_score_singular' form.instance.id %}"> Back </a>
+            </p>
+            <hr>
+        </div>
 
         <form method="POST" autocomplete="off" >
             {% csrf_token %}
             {{ form|crispy }}
             <br>
-            <button type="submit" class="btn btn-primary w-100 btn-block p-2"> Update score </button>
+            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Update score </button>
         </form>
 
     </div>

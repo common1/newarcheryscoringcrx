@@ -5,6 +5,7 @@ from django import forms
 
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms.widgets import PasswordInput, TextInput
+from django.utils.translation import gettext_lazy as _
 
 from .models import (
     AgeGroup,
@@ -19,6 +20,16 @@ from .models import (
     TargetFace,
     Team,
 )
+
+from .widgets import (
+    DatePickerInput,
+    TimePickerInput,
+    DateTimePickerInput,
+)
+
+from calendar import Calendar
+
+from datetime import datetime
 
 # Register/Create a user
 
@@ -44,9 +55,9 @@ class CreateAgeGroupForm(forms.ModelForm):
     class Meta:
         model = AgeGroup
         fields = [
-            'name', 'from_year', 'until_year', 'agegroups', 'info',
+            'name', 'from_year', 'until_year', 'info',
             'slug', 'author',
-            'is_active',
+            'agegroups', 
         ]
 
 # - Update a agegroup
@@ -60,32 +71,50 @@ class UpdateAgeGroupForm(forms.ModelForm):
     class Meta:
         model = AgeGroup
         fields = [
-            'name', 'from_year', 'until_year', 'agegroups', 'info',
+            'name', 'from_year', 'until_year','info',
             'slug', 'author',
-            'is_active',
+            'agegroups', 
         ]
 
 # Archer
 
 # - Create an archer
 class CreateArcherForm(forms.ModelForm):
+    birth_date = forms.DateField(
+        widget=forms.SelectDateWidget(
+            empty_label=("Year", "Month", "Day"),
+            years=range(1940, datetime.now().year),
+            attrs=({'style': 'width: 33%; display: inline-block;'}),
+        ),
+        help_text=_("format: not required"),
+        required=False,
+    )
+
     class Meta:
         model = Archer
         fields = [
             'union_number', 'last_name', 'first_name', 'middle_name', 'info',
             'email', 'phone', 'address', 'city', 'zip_code', 'province',
             'birth_date', 'slug', 'author',
-            'is_active',
         ]
 
 class UpdateArcherForm(forms.ModelForm):
+    birth_date = forms.DateField(
+        widget=forms.SelectDateWidget(
+            empty_label=("Year", "Month", "Day"),
+            years=range(1940, datetime.now().year),
+            attrs=({'style': 'width: 33%; display: inline-block;'}),
+        ),
+        help_text=_("format: not required"),
+        required=False,
+    )
+
     class Meta:
         model = Archer
         fields = [
             'union_number', 'last_name', 'first_name', 'middle_name', 'info',
             'email', 'phone', 'address', 'city', 'zip_code', 'province',
             'birth_date', 'slug', 'author',
-            'is_active',
         ]
 
 # Category
@@ -103,7 +132,6 @@ class CreateCategoryForm(forms.ModelForm):
             'name', 'info',
             'slug', 'author',
             'archers',
-            'is_active',
         ]
 
 class UpdateCategoryForm(forms.ModelForm):
@@ -119,7 +147,6 @@ class UpdateCategoryForm(forms.ModelForm):
             'name', 'info',
             'slug', 'author',
             'archers',
-            'is_active',
         ]
 
 # Club
@@ -138,7 +165,6 @@ class CreateClubForm(forms.ModelForm):
             'address', 'zip_code', 'town', 'phone', 'email', 'website', 'social_media',
             'slug', 'author',
             'archers',
-            'is_active',
         ]
 
 class UpdateClubForm(forms.ModelForm):
@@ -155,7 +181,6 @@ class UpdateClubForm(forms.ModelForm):
             'address', 'zip_code', 'town', 'phone', 'email', 'website', 'social_media',
             'slug', 'author',
             'archers',
-            'is_active',
         ]
 
 # Competition
@@ -173,7 +198,6 @@ class CreateCompetitionForm(forms.ModelForm):
             'name', 'start_date', 'end_date', 'info',
             'slug', 'author',
             'rounds',
-            'is_active',
         ]
 
 class UpdateCompetitionForm(forms.ModelForm):
@@ -189,7 +213,6 @@ class UpdateCompetitionForm(forms.ModelForm):
             'name', 'start_date', 'end_date', 'info',
             'slug', 'author',
             'rounds',
-            'is_active',
         ]
 
 # Discipline
@@ -204,9 +227,9 @@ class CreateDisciplineForm(forms.ModelForm):
     class Meta:
         model = Discipline
         fields = [
-            'name', 'archers', 'info',
+            'name', 'info',
             'slug', 'author',
-            'is_active',
+            'archers',
         ]
 
 class UpdateDisciplineForm(forms.ModelForm):
@@ -219,29 +242,71 @@ class UpdateDisciplineForm(forms.ModelForm):
     class Meta:
         model = Discipline
         fields = [
-            'name', 'archers', 'info',
+            'name', 'info',
             'slug', 'author',
-            'is_active',
+            'archers',
         ]
 
 # Round
 
 class CreateRoundForm(forms.ModelForm):
+    archers = forms.ModelMultipleChoiceField(
+        queryset = Archer.objects.all(),
+        label="Archers",
+        widget=forms.CheckboxSelectMultiple
+    )
+    start_date = forms.DateField(
+        widget=forms.SelectDateWidget(
+            empty_label=("-Year-", "-Month-", "-Day-"),
+            years=range(1940, datetime.now().year),
+            attrs=({'style': 'width: 33%; display: inline-block;'}),
+        ),
+        help_text=_("Not required"),
+        required=False,
+    )
+    start_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        help_text=_("Not required"),
+        required=False,
+    )
+
+    end_date = forms.DateField(
+        widget=forms.SelectDateWidget(
+            empty_label=("-Year-", "-Month-", "-Day-"),
+            years=range(1940, datetime.now().year),
+            attrs=({'style': 'width: 33%; display: inline-block;'}),
+        ),
+        help_text=_("Not required"),
+        required=False,
+    )
+    end_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        help_text=_("Not required"),
+        required=False,
+    )
+
+
     class Meta:
         model = Round
         fields = [
-            'name', 'archers', 'start_date', 'start_time', 'end_date', 'end_time', 'info',
+            'name', 'start_date', 'start_time', 'end_date', 'end_time', 'info',
             'slug', 'author',
-            'is_active',
+            'archers',
         ]
 
 class UpdateRoundForm(forms.ModelForm):
+    archers = forms.ModelMultipleChoiceField(
+        queryset = Archer.objects.all(),
+        label="Archers",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Round
         fields = [
-            'name', 'archers', 'start_date', 'start_time', 'end_date', 'end_time', 'info',
+            'name', 'start_date', 'start_time', 'end_date', 'end_time', 'info',
             'slug', 'author',
-            'is_active',
+            'archers',
         ]
 
 # Score
@@ -270,7 +335,6 @@ class CreateScoringSheetForm(forms.ModelForm):
         fields = [
             'name', 'columns', 'rows', 'info',
             'slug', 'author',
-            'is_active',
         ]
 
 class UpdateScoringSheetForm(forms.ModelForm):
@@ -279,7 +343,6 @@ class UpdateScoringSheetForm(forms.ModelForm):
         fields = [
             'name', 'columns', 'rows', 'info',
             'slug', 'author',
-            'is_active',
         ]
 
 # TargetFace
@@ -290,7 +353,6 @@ class CreateTargetFaceForm(forms.ModelForm):
         fields = [
             'name', 'info',
             'slug', 'author',
-            'is_active',
         ]
 class UpdateTargetFaceForm(forms.ModelForm):
     class Meta:
@@ -298,25 +360,36 @@ class UpdateTargetFaceForm(forms.ModelForm):
         fields = [
             'name', 'info',
             'slug', 'author',
-            'is_active',
         ]
 
 # Team
 
 class CreateTeamForm(forms.ModelForm):
+    archers = forms.ModelMultipleChoiceField(
+        queryset = Archer.objects.all(),
+        label="Archers",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Team
         fields = [
-            'name', 'archers', 'info',
+            'name', 'info',
             'slug', 'author',
-            'is_active',
+            'archers', 
         ]
 
 class UpdateTeamForm(forms.ModelForm):
+    archers = forms.ModelMultipleChoiceField(
+        queryset = Archer.objects.all(),
+        label="Archers",
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Team
         fields = [
-            'name', 'archers', 'info',
+            'name', 'info',
             'slug', 'author',
-            'is_active',
+            'archers', 
         ]

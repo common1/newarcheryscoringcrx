@@ -209,5 +209,10 @@ Current: 2:59:59
 ## 026 CRUD - Read, Update, Delete - Part 3
 
 ```
+TODO: Date and time selection
 ```
 
+## 027 Changes to create, update and view tempaltes
+
+```
+```

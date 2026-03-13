@@ -6,11 +6,11 @@
     <div class="card">
 
         <div class="card-header">
-            <a href="{% url 'scoring_archers' %}" class="btn btn-secondary btn-sm"> Return </a>
+            <a href="{% url 'scoring_archers' %}" class="btn btn-outline-secondary btn-sm"> Return </a>
             &nbsp;
-            <a href="{% url 'scoring_archer_update' archer.id %}" class="btn btn-info btn-sm"> Update archer </a>
+            <a href="{% url 'scoring_archer_update' archer.id %}" class="btn btn-outline-info btn-sm"> Update archer </a>
             &nbsp;
-            <a href="{% url 'scoring_archer_delete' archer.id %}" class="btn btn-danger btn-sm"> Delete </a>
+            <a href="{% url 'scoring_archer_delete' archer.id %}" class="btn btn-outline-danger btn-sm"> Delete </a>
         </div>
 
         <div class="card-body">
@@ -83,6 +83,14 @@
                     <tr>
                         <td><strong>Is&nbsp;active:</strong></td>
                         <td>{{ archer.is_active }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Created&nbsp;at:</strong></td>
+                        <td>{{ archer.created_at }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modified&nbsp;at:</strong></td>
+                        <td>{{ archer.modified_at }}</td>
                     </tr>
                 </table>
             </div>
