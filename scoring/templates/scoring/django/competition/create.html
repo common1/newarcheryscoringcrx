@@ -10,16 +10,28 @@
         <div>
             <hr>
             <p>
-            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_competitions' %}"> Back </a>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_competitions' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back</a>
             </p>
             <hr>
         </div>
 
         <form method="POST" autocomplete="off" >
             {% csrf_token %}
-            {{ form|crispy }}
+            {{ form.name|as_crispy_field }}
             <br>
-            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Create competition </button>
+            {{ form.start_date|as_crispy_field }}
+            <br>
+            {{ form.end_date|as_crispy_field }}
+            <br>
+            {{ form.info|as_crispy_field }}
+            <br>
+            {{ form.slug|as_crispy_field }}
+            <br>
+            {{ form.author|as_crispy_field }}
+            <br>
+            {{ form.rounds|as_crispy_field }}
+            <br>
+            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Create competition &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
         </form>
     </div>
     <br>

@@ -1,6 +1,6 @@
 {% extends "scoring/django/base.html" %}
 
-{% block title%}Databse Tables{% endblock %}
+{% block title%}Database Tables{% endblock %}
 
 {% block content %}
 
@@ -16,43 +16,43 @@
         <table class="table">
             <tr>
                 <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_agegroups' %}"> Agegroups </a>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_agegroups' %}"> Agegroups &nbsp; <i class="fa fa-users" aria-hidden="true"></i></a>
                 </td>
                 <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_archers' %}"> Archers </a>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_archers' %}"> Archers &nbsp; <i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
                 </td>
                 <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_categories' %}"> Categories </a>
-                </td>
-            </tr>
-            <tr>
-                <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_clubs' %}"> Clubs </a>
-                </td>
-                <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_competitions' %}"> Competitions </a>
-                </td>
-                <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_disciplines' %}"> Disciplines </a>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_categories' %}"> Categories &nbsp; <i class="fa fa-list" aria-hidden="true"></i></a>
                 </td>
             </tr>
             <tr>
                 <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_rounds' %}"> Rounds </a>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_clubs' %}"> Clubs &nbsp; <i class="fa fa-building" aria-hidden="true"></i></a>
                 </td>
                 <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_scores' %}"> Scores </a>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_competitions' %}"> Competitions &nbsp; <i class="fa fa-trophy" aria-hidden="true"></i></a>
                 </td>
                 <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_scoringsheets' %}"> Scoring Sheets </a>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_disciplines' %}"> Disciplines &nbsp; <i class="fa fa-star" aria-hidden="true"></i></a>
                 </td>
             </tr>
             <tr>
                 <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_targetfaces' %}"> Target Faces </a>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_rounds' %}"> Rounds &nbsp; <i class="fa fa-circle" aria-hidden="true"></i></a>
                 </td>
                 <td class='text-center'>
-                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_teams' %}"> Teams </a>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_scores' %}"> Scores &nbsp; <i class="fa fa-space-shuttle" aria-hidden="true"></i></a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_scoringsheets' %}"> Scoring Sheets &nbsp; <i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_targetfaces' %}"> Target Faces &nbsp; <i class="fa fa-bullseye" aria-hidden="true"></i></a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href="{% url 'scoring_teams' %}"> Teams &nbsp; <i class="fa fa-rebel" aria-hidden="true"></i></a>
                 </td>
                 <td class='text-center'>
                 </td>

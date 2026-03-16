@@ -13,8 +13,8 @@
     <div>
         <hr>
         <p>
-           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_database' %}"> Back </a>
-           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_club_create' %}"> Create a new club </a>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_database' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back </a>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_club_create' %}"> Create a new club &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
         </p>
         <hr>
     </div>
@@ -23,10 +23,10 @@
         <table class="table table-hover table-bordered">
             <thead class="table-light">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col" width="10px">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Town</th>
-                <th> </th>
+                <th scope="col" width="10px"> </th>
             </tr>
             </thead>
             {% if clubs %}
@@ -36,7 +36,9 @@
                         <td>{{ club.name }} </td>
                         <td>{{ club.town }} </td>
                         <td> 
-                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_club_singular' club.id %}">View</a>
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_club_singular' club.id %}" title="View details">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

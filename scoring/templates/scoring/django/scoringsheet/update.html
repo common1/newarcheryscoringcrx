@@ -10,16 +10,26 @@
         <div>
             <hr>
             <p>
-            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringsheet_singular' form.instance.id %}"> Back </a>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringsheet_singular' form.instance.id %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back</a>
             </p>
             <hr>
         </div>
 
         <form method="POST" autocomplete="off" >
             {% csrf_token %}
-            {{ form|crispy }}
+            {{ form.name|as_crispy_field }}
             <br>
-            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Update scoringsheet </button>
+            {{ form.columns|as_crispy_field }}
+            <br>
+            {{ form.rows|as_crispy_field }}
+            <br>
+            {{ form.info|as_crispy_field }}
+            <br>
+            {{ form.slug|as_crispy_field }}
+            <br>
+            {{ form.author|as_crispy_field }}
+            <br>
+            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Update scoringsheet &nbsp; <i class="fa fa-save" aria-hidden="true"></i></button>
         </form>
 
     </div>

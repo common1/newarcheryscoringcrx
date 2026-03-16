@@ -6,11 +6,11 @@
     <div class="card">
 
         <div class="card-header">
-            <a href="{% url 'scoring_archers' %}" class="btn btn-outline-secondary btn-sm"> Return </a>
+            <a href="{% url 'scoring_archers' %}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Return</a>
             &nbsp;
-            <a href="{% url 'scoring_archer_update' archer.id %}" class="btn btn-outline-info btn-sm"> Update archer </a>
+            <a href="{% url 'scoring_archer_update' archer.id %}" class="btn btn-outline-info btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> &nbsp; Update archer </a>
             &nbsp;
-            <a href="{% url 'scoring_archer_delete' archer.id %}" class="btn btn-outline-danger btn-sm"> Delete </a>
+            <a href="{% url 'scoring_archer_delete' archer.id %}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp; Delete </a>
         </div>
 
         <div class="card-body">

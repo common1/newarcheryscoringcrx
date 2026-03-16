@@ -1,4 +1,4 @@
-{% extends "scoring/django/base.html" %}
+{% extends "scoring/django/base.html" %}from
 
 {% load crispy_forms_tags %}
 
@@ -10,16 +10,26 @@
         <div>
             <hr>
             <p>
-            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_agegroups' %}"> Back </a>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_agegroups' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back</a>
             </p>
             <hr>
         </div>
 
         <form method="POST" autocomplete="off" >
             {% csrf_token %}
-            {{ form|crispy }}
+            {{ form.name|as_crispy_field }}
             <br>
-            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Create agegroup </button>
+            {{ form.from_year|as_crispy_field }}
+            <br>
+            {{ form.until_year|as_crispy_field }}
+            <br>
+            {{ form.info|as_crispy_field }}
+            <br>
+            {{ form.slug|as_crispy_field }}
+            <br>
+            {{ form.agegroups|as_crispy_field }}
+            <br>
+            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Create agegroup &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
         </form>
     </div>
     <br>

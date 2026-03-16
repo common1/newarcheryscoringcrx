@@ -13,8 +13,8 @@
     <div>
         <hr>
         <p>
-           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_database' %}"> Back </a>
-           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_targetface_create' %}"> Create a new targetface </a>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_database' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back </a>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_targetface_create' %}"> Create a new targetface &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
         </p>
         <hr>
     </div>
@@ -23,9 +23,9 @@
         <table class="table table-hover table-bordered">
             <thead class="table-light">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col" width="10px">#</th>
                 <th scope="col">Name</th>
-                <th> </th>
+                <th scope="col" width="10px"></th>
             </tr>
             </thead>
             {% if targetfaces %}
@@ -34,7 +34,9 @@
                         <th scope="row">{{ forloop.counter }} </th>
                         <td>{{ targetface.name }} </td>
                         <td> 
-                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_targetface_singular' targetface.id %}">View</a>
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_targetface_singular' targetface.id %}" title="View details">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

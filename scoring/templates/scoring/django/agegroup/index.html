@@ -13,8 +13,8 @@
     <div>
         <hr>
         <p>
-           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_database' %}"> Back </a>
-           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_agegroup_create' %}"> Create a new agegroup </a>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_database' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back </a>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_agegroup_create' %}"> Create a new agegroup &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
         </p>
         <hr>
     </div>
@@ -23,11 +23,11 @@
         <table class="table table-hover table-bordered">
             <thead class="table-light">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col" width="10px">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">From year</th>
                 <th scope="col">Until year</th>
-                <th> </th>
+                <th scope="col" width="10px"> </th>
             </tr>
             </thead>
             {% if agegroups %}
@@ -38,7 +38,9 @@
                         <td>{{ agegroup.from_year }} </td>  
                         <td>{{ agegroup.until_year }} </td>
                         <td>
-                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_agegroup_singular' agegroup.id %}">View</a>
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_agegroup_singular' agegroup.id %}" title="View details">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

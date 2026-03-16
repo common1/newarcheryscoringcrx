@@ -209,10 +209,19 @@ Current: 2:59:59
 ## 026 CRUD - Read, Update, Delete - Part 3
 
 ```
+```
+
+## 027 Changes to create, update and view templates
+
+```
+```
+
+## 028 Changes to create, update and view templates - Part 2
+
+```
 TODO: Date and time selection
+TODO: Limit height of text field
+TODO: Multiple deletions with checkboxes
+TODO: Required = False for ManyToMany fields
 ```
 
-## 027 Changes to create, update and view tempaltes
-
-```
-```

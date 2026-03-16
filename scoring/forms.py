@@ -25,6 +25,7 @@ from .widgets import (
     DatePickerInput,
     TimePickerInput,
     DateTimePickerInput,
+    YEAR_CHOICES,
 )
 
 from calendar import Calendar
@@ -46,11 +47,23 @@ class LoginForm(AuthenticationForm):
 
 # - Create a agegroup
 class CreateAgeGroupForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     agegroups = forms.ModelMultipleChoiceField(
         queryset = AgeGroup.objects.all(),
         label="Agegroups",
         widget=forms.CheckboxSelectMultiple
     )
+    # from_year = forms.IntegerField(
+    #     required=False,
+    #     widget=forms.NumberInput(attrs={'placeholder': 'From Year'}),
+    # )
+    # until_year = forms.IntegerField(
+    #     required=False,
+    #     widget=forms.NumberInput(attrs={'placeholder': 'Until Year'}),
+    # )
 
     class Meta:
         model = AgeGroup
@@ -62,6 +75,10 @@ class CreateAgeGroupForm(forms.ModelForm):
 
 # - Update a agegroup
 class UpdateAgeGroupForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     agegroups = forms.ModelMultipleChoiceField(
         queryset = AgeGroup.objects.all(),
         label="Agegroups",
@@ -80,10 +97,14 @@ class UpdateAgeGroupForm(forms.ModelForm):
 
 # - Create an archer
 class CreateArcherForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     birth_date = forms.DateField(
         widget=forms.SelectDateWidget(
             empty_label=("Year", "Month", "Day"),
-            years=range(1940, datetime.now().year),
+            years=range(1940, datetime.now().year + 10),
             attrs=({'style': 'width: 33%; display: inline-block;'}),
         ),
         help_text=_("format: not required"),
@@ -99,10 +120,14 @@ class CreateArcherForm(forms.ModelForm):
         ]
 
 class UpdateArcherForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     birth_date = forms.DateField(
         widget=forms.SelectDateWidget(
             empty_label=("Year", "Month", "Day"),
-            years=range(1940, datetime.now().year),
+            years=range(1940, datetime.now().year + 10),
             attrs=({'style': 'width: 33%; display: inline-block;'}),
         ),
         help_text=_("format: not required"),
@@ -120,6 +145,10 @@ class UpdateArcherForm(forms.ModelForm):
 # Category
 
 class CreateCategoryForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         label="Archers",
@@ -135,6 +164,10 @@ class CreateCategoryForm(forms.ModelForm):
         ]
 
 class UpdateCategoryForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         label="Archers",
@@ -152,6 +185,10 @@ class UpdateCategoryForm(forms.ModelForm):
 # Club
 
 class CreateClubForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         label="Archers",
@@ -168,6 +205,10 @@ class CreateClubForm(forms.ModelForm):
         ]
 
 class UpdateClubForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         label="Archers",
@@ -186,6 +227,10 @@ class UpdateClubForm(forms.ModelForm):
 # Competition
 
 class CreateCompetitionForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     rounds = forms.ModelMultipleChoiceField(
         queryset = Round.objects.all(),
         label="Rounds",
@@ -201,6 +246,10 @@ class CreateCompetitionForm(forms.ModelForm):
         ]
 
 class UpdateCompetitionForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     rounds = forms.ModelMultipleChoiceField(
         queryset = Round.objects.all(),
         label="Rounds",
@@ -218,6 +267,10 @@ class UpdateCompetitionForm(forms.ModelForm):
 # Discipline
 
 class CreateDisciplineForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         label="Archers",
@@ -233,6 +286,10 @@ class CreateDisciplineForm(forms.ModelForm):
         ]
 
 class UpdateDisciplineForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         label="Archers",
@@ -250,6 +307,10 @@ class UpdateDisciplineForm(forms.ModelForm):
 # Round
 
 class CreateRoundForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         label="Archers",
@@ -258,7 +319,7 @@ class CreateRoundForm(forms.ModelForm):
     start_date = forms.DateField(
         widget=forms.SelectDateWidget(
             empty_label=("-Year-", "-Month-", "-Day-"),
-            years=range(1940, datetime.now().year),
+            years=range(1940, datetime.now().year + 10),
             attrs=({'style': 'width: 33%; display: inline-block;'}),
         ),
         help_text=_("Not required"),
@@ -269,11 +330,10 @@ class CreateRoundForm(forms.ModelForm):
         help_text=_("Not required"),
         required=False,
     )
-
     end_date = forms.DateField(
         widget=forms.SelectDateWidget(
             empty_label=("-Year-", "-Month-", "-Day-"),
-            years=range(1940, datetime.now().year),
+            years=range(1940, datetime.now().year + 10),
             attrs=({'style': 'width: 33%; display: inline-block;'}),
         ),
         help_text=_("Not required"),
@@ -285,7 +345,6 @@ class CreateRoundForm(forms.ModelForm):
         required=False,
     )
 
-
     class Meta:
         model = Round
         fields = [
@@ -295,10 +354,42 @@ class CreateRoundForm(forms.ModelForm):
         ]
 
 class UpdateRoundForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         label="Archers",
         widget=forms.CheckboxSelectMultiple
+    )
+    start_date = forms.DateField(
+        widget=forms.SelectDateWidget(
+            empty_label=("-Year-", "-Month-", "-Day-"),
+            years=range(1940, datetime.now().year + 10),
+            attrs=({'style': 'width: 33%; display: inline-block;'}),
+        ),
+        help_text=_("Not required"),
+        required=False,
+    )
+    start_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        help_text=_("Not required"),
+        required=False,
+    )
+    end_date = forms.DateField(
+        widget=forms.SelectDateWidget(
+            empty_label=("-Year-", "-Month-", "-Day-"),
+            years=range(1940, datetime.now().year + 10),
+            attrs=({'style': 'width: 33%; display: inline-block;'}),
+        ),
+        help_text=_("Not required"),
+        required=False,
+    )
+    end_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        help_text=_("Not required"),
+        required=False,
     )
 
     class Meta:
@@ -312,6 +403,11 @@ class UpdateRoundForm(forms.ModelForm):
 # Score
 
 class CreateScoreForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
+
     class Meta:
         model = Score
         fields = [
@@ -320,6 +416,11 @@ class CreateScoreForm(forms.ModelForm):
         ]
 
 class UpdateScoreForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
+
     class Meta:
         model = Score
         fields = [
@@ -330,6 +431,11 @@ class UpdateScoreForm(forms.ModelForm):
 # ScoringSheet
 
 class CreateScoringSheetForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
+
     class Meta:
         model = ScoringSheet
         fields = [
@@ -338,6 +444,11 @@ class CreateScoringSheetForm(forms.ModelForm):
         ]
 
 class UpdateScoringSheetForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
+
     class Meta:
         model = ScoringSheet
         fields = [
@@ -348,6 +459,11 @@ class UpdateScoringSheetForm(forms.ModelForm):
 # TargetFace
 
 class CreateTargetFaceForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
+
     class Meta:
         model = TargetFace
         fields = [
@@ -355,6 +471,11 @@ class CreateTargetFaceForm(forms.ModelForm):
             'slug', 'author',
         ]
 class UpdateTargetFaceForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
+
     class Meta:
         model = TargetFace
         fields = [
@@ -365,6 +486,11 @@ class UpdateTargetFaceForm(forms.ModelForm):
 # Team
 
 class CreateTeamForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
+
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         label="Archers",
@@ -380,6 +506,11 @@ class CreateTeamForm(forms.ModelForm):
         ]
 
 class UpdateTeamForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
+
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         label="Archers",

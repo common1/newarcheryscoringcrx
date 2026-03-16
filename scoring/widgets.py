@@ -8,3 +8,7 @@ class TimePickerInput(forms.TimeInput):
 
 class DateTimePickerInput(forms.DateTimeInput):
     input_type = 'datetime'
+ 
+YEAR_CHOICES = [("", "Select a year"),]
+YEAR_CHOICES = YEAR_CHOICES + [(year, year) for year in range(1940, 2035)]
+    

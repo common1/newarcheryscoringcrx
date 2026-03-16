@@ -5,11 +5,11 @@
     <div class="card">
 
         <div class="card-header">
-            <a href="{% url 'scoring_rounds' %}" class="btn btn-outline-secondary btn-sm"> Return </a>
+            <a href="{% url 'scoring_rounds' %}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Return</a>
             &nbsp;
-            <a href="{% url 'scoring_round_update' round.id %}" class="btn btn-outline-info btn-sm"> Update round </a>
+            <a href="{% url 'scoring_round_update' round.id %}" class="btn btn-outline-info btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> &nbsp; Update round </a>
             &nbsp;
-            <a href="{% url 'scoring_round_delete' round.id %}" class="btn btn-outline-danger btn-sm"> Delete </a>
+            <a href="{% url 'scoring_round_delete' round.id %}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp; Delete </a>
         </div>
 
         <div class="card-body">

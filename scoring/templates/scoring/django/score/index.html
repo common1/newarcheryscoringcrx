@@ -13,8 +13,8 @@
     <div>
         <hr>
         <p>
-           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_database' %}"> Back </a>
-           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_score_create' %}"> Create a new score </a>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_database' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back </a>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_score_create' %}"> Create a new score &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
         </p>
         <hr>
     </div>
@@ -23,12 +23,12 @@
         <table class="table table-hover table-bordered">
             <thead class="table-light">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col" width="10px">#</th>
                 <th scope="col">Archer</th>
                 <th scope="col">Score</th>
                 <th scope="col">Number of arrows</th>
                 <th scope="col">Round</th>
-                <th> </th>
+                <th scope="col" width="10px"></th>
             </tr>
             </thead>
             {% if scores %}
@@ -40,7 +40,9 @@
                         <td>{{ score.number_of_arrows }} </td>
                         <td>{{ score.round_archer.round }} </td>
                         <td> 
-                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_score_singular' score.id %}">View</a>
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_score_singular' score.id %}" title="View details">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

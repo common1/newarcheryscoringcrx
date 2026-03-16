@@ -63,6 +63,122 @@ class BaseScoringModel(ClusterableModel):
 
 # TODO: models - Begin
 
+class Collection(BaseScoringModel):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    name = models.CharField(
+        max_length=64,
+        null=False,
+        unique=True,
+        blank=False,
+        verbose_name=_("Name"),
+        help_text=_("format: required, max-64")
+    )
+    slug = AutoSlugField(populate_from='name',editable=True)
+    info = models.TextField(
+        null=True,
+        blank=True,
+        unique=False,
+        verbose_name=_("Info"),
+        help_text=_("format: not required"),
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        default=1,
+        verbose_name=_("Author"),
+        related_name='collection_author',
+        help_text=_("format: required, default=1 (superuser)"),
+    )   
+
+    class Meta:
+        db_table = 'collections'
+        ordering = ['name']
+        verbose_name = _("Collection")
+        verbose_name_plural = _("Collections")
+    
+    def __str__(self):
+        return self.name
+    def __unicode__(self):
+        return self.name
+
+class Solution(BaseScoringModel):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    name = models.CharField(
+        max_length=64,
+        null=False,
+        unique=True,
+        blank=False,
+        verbose_name=_("Name"),
+    )
+    slug = AutoSlugField(populate_from='name',editable=True)
+    info = models.TextField(
+        null=True,
+        blank=True,
+        unique=False,
+        verbose_name=_("Info"),
+        help_text=_("format: not required"),
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        default=1,
+        verbose_name=_("Author"),
+        related_name='solution_author',
+        help_text=_("Default=1 (superuser)"),
+    )   
+
+    class Meta:
+        db_table = 'solutions'
+        ordering = ['name']
+        verbose_name = _("Solution")
+        verbose_name_plural = _("Solutions")
+    
+        def __str__(self):
+            return self.name
+        def __unicode__(self):
+            return self.name
+    
+class Environment(BaseScoringModel):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    name = models.CharField(
+        max_length=64,
+        null=False,
+        unique=True,
+        blank=False,
+        verbose_name=_("Name"),
+    )
+    slug = AutoSlugField(populate_from='name',editable=True)
+    info = models.TextField(
+        null=True,
+        blank=True,
+        unique=False,
+        verbose_name=_("Info"),
+        help_text=_("format: not required"),
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        default=1,
+        verbose_name=_("Author"),
+        related_name='environment_author',
+        help_text=_("Default=1 (superuser)"),
+    )   
+
+    class Meta:
+        db_table = 'environments'
+        ordering = ['name']
+        verbose_name = _("Environment")
+        verbose_name_plural = _("Environments")
+    
+    def __str__(self):
+        return self.name
+    def __unicode__(self):
+        return self.name
+
 class Archer(BaseScoringModel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -111,7 +227,7 @@ class Archer(BaseScoringModel):
     union_number = models.PositiveIntegerField(
         unique=True,
         null=True,
-        blank=False,
+        blank=True,
         verbose_name=_("Union number"),
         help_text=_("format: not required")
     )
@@ -1227,7 +1343,7 @@ class CompetitionMembership(BaseScoringModel):
 
     competition = models.ForeignKey(
         Competition,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         unique=False,
         verbose_name=_("Competition"),
         help_text=_("format: required"),

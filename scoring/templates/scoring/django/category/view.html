@@ -4,11 +4,11 @@
 
     <div class="card">
         <div class="card-header">
-            <a href="{% url 'scoring_categories' %}" class="btn btn-outline-secondary btn-sm"> Return </a>
+            <a href="{% url 'scoring_categories' %}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Return</a>
             &nbsp;
-            <a href="{% url 'scoring_category_update' category.id %}" class="btn btn-outline-info btn-sm"> Update category </a>
+            <a href="{% url 'scoring_category_update' category.id %}" class="btn btn-outline-info btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> &nbsp; Update category </a>
             &nbsp;
-            <a href="{% url 'scoring_category_delete' category.id %}" class="btn btn-outline-danger btn-sm"> Delete </a>
+            <a href="{% url 'scoring_category_delete' category.id %}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp; Delete </a>
         </div>
 
         <div class="card-body">
