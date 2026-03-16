@@ -145,6 +145,7 @@ class CreateCategoryForm(forms.ModelForm):
     )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
+        required=False,
         label="Archers",
         widget=forms.CheckboxSelectMultiple
     )
@@ -164,6 +165,7 @@ class UpdateCategoryForm(forms.ModelForm):
     )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
+        required=False,
         label="Archers",
         widget=forms.CheckboxSelectMultiple
     )
@@ -185,6 +187,7 @@ class CreateClubForm(forms.ModelForm):
     )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
+        required=False,
         label="Archers",
         widget=forms.CheckboxSelectMultiple
     )
@@ -205,6 +208,7 @@ class UpdateClubForm(forms.ModelForm):
     )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
+        required=False,
         label="Archers",
         widget=forms.CheckboxSelectMultiple
     )
@@ -267,6 +271,7 @@ class CreateDisciplineForm(forms.ModelForm):
     )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
+        required=False,
         label="Archers",
         widget=forms.CheckboxSelectMultiple
     )
@@ -286,6 +291,7 @@ class UpdateDisciplineForm(forms.ModelForm):
     )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
+        required=False,
         label="Archers",
         widget=forms.CheckboxSelectMultiple
     )
@@ -307,6 +313,7 @@ class CreateRoundForm(forms.ModelForm):
     )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
+        required=False,
         label="Archers",
         widget=forms.CheckboxSelectMultiple
     )
@@ -354,6 +361,7 @@ class UpdateRoundForm(forms.ModelForm):
     )
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
+        required=False,
         label="Archers",
         widget=forms.CheckboxSelectMultiple
     )
@@ -487,6 +495,7 @@ class CreateTeamForm(forms.ModelForm):
 
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
+        required=False,
         label="Archers",
         widget=forms.CheckboxSelectMultiple
     )
@@ -507,6 +516,7 @@ class UpdateTeamForm(forms.ModelForm):
 
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
+        required=False,
         label="Archers",
         widget=forms.CheckboxSelectMultiple
     )

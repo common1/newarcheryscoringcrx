@@ -526,7 +526,7 @@ class ClubMembership(BaseScoringModel):
         
     club = models.ForeignKey(
         Club,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         unique=False,
         verbose_name=_("Club"),
         help_text=_("format: required"),

@@ -232,10 +232,11 @@ Current: 2:59:59
 Files:
 agegroup\create.html
 agegroup\update.html
-
-TODO: Date and time selection
-TODO: Limit height of text field
-TODO: Multiple deletions with checkboxes
-TODO: Required = False for ManyToMany fields
 ```
 
+## 031 Some minor adjustments
+
+```
+TODO: Multiple deletions with checkboxes
+TODO: Add ClubMembership to Scoring
+```
