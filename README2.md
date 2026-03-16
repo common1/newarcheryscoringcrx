@@ -219,14 +219,23 @@ Current: 2:59:59
 ## 028 Changes to create, update and view templates - Part 2
 
 ```
-TODO: Date and time selection
-TODO: Limit height of text field
-TODO: Multiple deletions with checkboxes
-TODO: Required = False for ManyToMany fields
 ```
 
 ## 029 Changes to create.html and update.html
 
 ```
+```
+
+## 030 Some errors in agegroup fixed
+
+```
+Files:
+agegroup\create.html
+agegroup\update.html
+
+TODO: Date and time selection
+TODO: Limit height of text field
+TODO: Multiple deletions with checkboxes
+TODO: Required = False for ManyToMany fields
 ```
 

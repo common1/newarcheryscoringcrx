@@ -53,17 +53,10 @@ class CreateAgeGroupForm(forms.ModelForm):
     )
     agegroups = forms.ModelMultipleChoiceField(
         queryset = AgeGroup.objects.all(),
+        required=False,
         label="Agegroups",
         widget=forms.CheckboxSelectMultiple
     )
-    # from_year = forms.IntegerField(
-    #     required=False,
-    #     widget=forms.NumberInput(attrs={'placeholder': 'From Year'}),
-    # )
-    # until_year = forms.IntegerField(
-    #     required=False,
-    #     widget=forms.NumberInput(attrs={'placeholder': 'Until Year'}),
-    # )
 
     class Meta:
         model = AgeGroup
@@ -81,6 +74,7 @@ class UpdateAgeGroupForm(forms.ModelForm):
     )
     agegroups = forms.ModelMultipleChoiceField(
         queryset = AgeGroup.objects.all(),
+        required=False,
         label="Agegroups",
         widget=forms.CheckboxSelectMultiple
     )
