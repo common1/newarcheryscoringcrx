@@ -240,3 +240,11 @@ agegroup\update.html
 TODO: Multiple deletions with checkboxes
 TODO: Add ClubMembership to Scoring
 ```
+
+## 032 CRUD mastery with Django | Build a CRM application | Django projects Course finished
+
+[https://www.youtube.com/watch?v=pqWyUAT38e0]
+
+```
+```
+

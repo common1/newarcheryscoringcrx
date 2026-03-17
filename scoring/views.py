@@ -49,6 +49,7 @@ from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate
 
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def scoring(request):
     template = 'scoring/django/index.html'
@@ -78,6 +79,8 @@ def create_agegroup(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Age Group created successfully!")
+
             return redirect("scoring_agegroups")
 
     context = {'form': form}
@@ -95,6 +98,8 @@ def update_agegroup(request, pk):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Age Group updated successfully!")
+
             return redirect("scoring_agegroups")
 
     context = {'form': form}
@@ -112,6 +117,8 @@ def singular_agegroup(request, pk):
 def delete_agegroup(request, pk):
     agegroup = AgeGroup.objects.get(id=pk)
     agegroup.delete()
+
+    messages.success(request, "Age Group deleted successfully!")
 
     return redirect("scoring_agegroups")
 
@@ -133,6 +140,8 @@ def create_archer(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Archer created successfully!")
+
             return redirect("scoring_archers")
 
     context = {'form': form}
@@ -149,7 +158,9 @@ def update_archer(request, pk):
 
         if form.is_valid():
             form.save()
-            
+
+            messages.success(request, "Archer updated successfully!")
+
             return redirect("scoring_archers")
 
     context = {'form': form}
@@ -167,6 +178,8 @@ def singular_archer(request, pk):
 def delete_archer(request, pk):
     archer = Archer.objects.get(id=pk)
     archer.delete()
+
+    messages.success(request, "Archer deleted successfully!")
 
     return redirect("scoring_archers")
 
@@ -188,6 +201,8 @@ def create_category(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Category created successfully!")
+
             return redirect("scoring_categories")
 
     context = {'form': form}
@@ -205,6 +220,8 @@ def update_category(request, pk):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Category updated successfully!")
+
             return redirect("scoring_categories")
 
     context = {'form': form}
@@ -222,6 +239,8 @@ def singular_category(request, pk):
 def delete_category(request, pk):
     category = Category.objects.get(id=pk)
     category.delete()
+
+    messages.success(request, "Category deleted successfully!")
 
     return redirect("scoring_categories")
 
@@ -243,6 +262,8 @@ def create_club(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Club created successfully!")
+
             return redirect("scoring_clubs")
 
     context = {'form': form} 
@@ -259,7 +280,9 @@ def update_club(request, pk):
 
         if form.is_valid():
             form.save()
-            
+
+            messages.success(request, "Club updated successfully!")
+
             return redirect("scoring_clubs")
 
     context = {'form': form}
@@ -277,6 +300,8 @@ def singular_club(request, pk):
 def delete_club(request, pk):
     club = Club.objects.get(id=pk)
     club.delete()
+
+    messages.success(request, "Club deleted successfully!")
 
     return redirect("scoring_clubs")
 
@@ -298,6 +323,8 @@ def create_competition(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Competition created successfully!")
+
             return redirect("scoring_competitions")
 
     context = {'form': form}
@@ -315,6 +342,8 @@ def update_competition(request, pk):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Competition updated successfully!")
+
             return redirect("scoring_competitions")
 
     context = {'form': form}
@@ -332,6 +361,8 @@ def singular_competition(request, pk):
 def delete_competition(request, pk):
     competition = Competition.objects.get(id=pk)
     competition.delete()
+
+    messages.success(request, "Competition deleted successfully!")
 
     return redirect("scoring_competitions")
 
@@ -353,6 +384,8 @@ def create_discipline(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Discipline created successfully!")
+
             return redirect("scoring_disciplines")
 
     context = {'form': form}
@@ -370,6 +403,8 @@ def update_discipline(request, pk):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Discipline updated successfully!")
+
             return redirect("scoring_disciplines")
 
     context = {'form': form}
@@ -387,6 +422,8 @@ def singular_discipline(request, pk):
 def delete_discipline(request, pk):
     discipline = Discipline.objects.get(id=pk)
     discipline.delete()
+
+    messages.success(request, "Discipline Deleted successfully!")
 
     return redirect("scoring_disciplines")
 
@@ -407,7 +444,9 @@ def create_round(request):
 
         if form.is_valid():
             form.save()
-            
+
+            messages.success(request, "Round created successfully!")
+
             return redirect("scoring_rounds")
 
     context = {'form': form}
@@ -425,6 +464,8 @@ def update_round(request, pk):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Round updated successfully!")
+
             return redirect("scoring_rounds")
 
     context = {'form': form}
@@ -442,6 +483,8 @@ def singular_round(request, pk):
 def delete_round(request, pk):
     round = Round.objects.get(id=pk)
     round.delete()
+
+    messages.success(request, "Round deleted successfully!")
 
     return redirect("scoring_rounds")
 
@@ -463,6 +506,8 @@ def create_score(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Score created successfully!")
+
             return redirect("scoring_scores")
 
     context = {'form': form}
@@ -480,6 +525,8 @@ def update_score(request, pk):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Score updated successfully!")
+
             return redirect("scoring_scores")
 
     context = {'form': form}
@@ -497,6 +544,8 @@ def singular_score(request, pk):
 def delete_score(request, pk):
     score = Score.objects.get(id=pk)
     score.delete()
+
+    messages.success(request, "Score deleted successfully!")
 
     return redirect("scoring_scores")
 
@@ -518,6 +567,8 @@ def create_scoringsheet(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Scoring Sheet created successfully!")
+
             return redirect("scoring_scoringsheets")
 
     context = {'form': form}
@@ -535,6 +586,8 @@ def update_scoringsheet(request, pk):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Scoring Sheet updated successfully!")
+
             return redirect("scoring_scoringsheets")
 
     context = {'form': form}
@@ -552,6 +605,8 @@ def singular_scoringsheet(request, pk):
 def delete_scoringsheet(request, pk):
     scoringsheet = ScoringSheet.objects.get(id=pk)
     scoringsheet.delete()
+
+    messages.success(request, "Scoring Sheet deleted successfully!")
 
     return redirect("scoring_scoringsheets")
 
@@ -573,6 +628,8 @@ def create_targetface(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Target Face created successfully!")
+
             return redirect("scoring_targetfaces")
 
     context = {'form': form}
@@ -590,6 +647,8 @@ def update_targetface(request, pk):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Target Face updated successfully!")
+
             return redirect("scoring_targetfaces")
 
     context = {'form': form}
@@ -607,6 +666,8 @@ def singular_targetface(request, pk):
 def delete_targetface(request, pk):
     targetface = TargetFace.objects.get(id=pk)
     targetface.delete()
+
+    messages.success(request, "Target Face deleted successfully!")
 
     return redirect("scoring_targetfaces")
 
@@ -628,6 +689,8 @@ def create_team(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Team created successfully!")
+
             return redirect("scoring_teams")
 
     context = {'form': form}
@@ -645,6 +708,8 @@ def update_team(request, pk):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Team updated successfully!")
+
             return redirect("scoring_teams")
 
     context = {'form': form}
@@ -663,6 +728,8 @@ def delete_team(request, pk):
     team = Team.objects.get(id=pk)
     team.delete()
 
+    messages.success(request, "Team deleted successfully!")
+
     return redirect("scoring_teams")
 
 # Register a user
@@ -675,6 +742,8 @@ def register(request):
         if form.is_valid():
             form.save()
             
+            messages.success(request, "Account created successfully for " + form.cleaned_data.get('email'))
+
             return redirect('scoring_my-login')
    
     context = {'form': form}
@@ -704,15 +773,17 @@ def my_login(request):
 
     return render(request, 'scoring/django/my-login.html', context=context)
 
+# - User logout
+
+def user_logout(request):
+    auth.logout(request)
+
+    messages.success(request, "You have been logged out!")
+
+    return redirect("scoring_my-login")
 # - Dashboard
 
 @login_required(login_url='scoring/my-login')
 def dashboard(request):
     return render(request, 'scoring/django/dashboard.html')
 
-# - User logout
-
-def user_logout(request):
-    auth.logout(request)
-
-    return redirect("scoring_my-login")
