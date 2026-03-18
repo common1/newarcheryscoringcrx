@@ -787,3 +787,4 @@ def user_logout(request):
 def dashboard(request):
     return render(request, 'scoring/django/dashboard.html')
 
+

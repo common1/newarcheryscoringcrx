@@ -237,8 +237,6 @@ agegroup\update.html
 ## 031 Some minor adjustments
 
 ```
-TODO: Multiple deletions with checkboxes
-TODO: Add ClubMembership to Scoring
 ```
 
 ## 032 CRUD mastery with Django | Build a CRM application | Django projects Course finished
@@ -246,5 +244,17 @@ TODO: Add ClubMembership to Scoring
 [https://www.youtube.com/watch?v=pqWyUAT38e0]
 
 ```
+```
+
+## 033 Result Wizard - Part 1
+
+```
+TODO: Multiple deletions with checkboxes
+TODO: Add ClubMembership to Scoring
+```
+
+```
+Indoor 18 Meter template wizard
+Indoor 25 Meter template wizard
 ```
 

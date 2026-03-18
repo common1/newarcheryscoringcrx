@@ -1,7 +1,40 @@
 {% extends "scoring/django/base.html" %}
 
 {% block content %}
-    <h1>Welcome to the dashboard page</h1>
+
+    <div class="container-fluid pt-5 text-center bg-warning">
+        <h1>Welcome to the dashboard page</h1>
+        <p>Work in progress</p>
+    </div>
+
     <hr>
-    <h3>Work in progress</h3>
+
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href=""> Indoor 18 meter &nbsp; <i class="fa fa-users" aria-hidden="true"></i></a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href=""> Indoor 25 meter &nbsp; <i class="fa fa-users" aria-hidden="true"></i></a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href=""> Training Indoor Individual&nbsp; <i class="fa fa-users" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href=""> Teams Indoor 18 meter &nbsp; <i class="fa fa-users" aria-hidden="true"></i></a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href=""> TeamsIndoor 25 meter &nbsp; <i class="fa fa-users" aria-hidden="true"></i></a>
+                </td>
+                <td class='text-center'>
+                    <a class="btn btn-outline-primary col-12" type="button" href=""> Training Outdoor Individual&nbsp; <i class="fa fa-users" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
 {% endblock %}
+

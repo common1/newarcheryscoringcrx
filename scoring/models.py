@@ -63,6 +63,45 @@ class BaseScoringModel(ClusterableModel):
 
 # TODO: models - Begin
 
+class Environment(BaseScoringModel):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    name = models.CharField(
+        max_length=64,
+        null=False,
+        unique=True,
+        blank=False,
+        verbose_name=_("Name"),
+    )
+    slug = AutoSlugField(populate_from='name',editable=True)
+    info = models.TextField(
+        null=True,
+        blank=True,
+        unique=False,
+        verbose_name=_("Info"),
+        help_text=_("format: not required"),
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        default=1,
+        verbose_name=_("Author"),
+        related_name='environment_author',
+        help_text=_("Default=1 (superuser)"),
+    )   
+
+    class Meta:
+        db_table = 'environments'
+        ordering = ['name']
+        verbose_name = _("Environment")
+        verbose_name_plural = _("Environments")
+    
+    def __str__(self):
+        return self.name
+    def __unicode__(self):
+        return self.name
+
 class Collection(BaseScoringModel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -106,6 +145,7 @@ class Collection(BaseScoringModel):
 class Solution(BaseScoringModel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
     name = models.CharField(
         max_length=64,
         null=False,
@@ -140,10 +180,15 @@ class Solution(BaseScoringModel):
             return self.name
         def __unicode__(self):
             return self.name
-    
-class Environment(BaseScoringModel):
+
+# ------------------
+# Begin ResultWizard
+# ------------------
+
+class ScoringType(BaseScoringModel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
     name = models.CharField(
         max_length=64,
         null=False,
@@ -157,27 +202,97 @@ class Environment(BaseScoringModel):
         blank=True,
         unique=False,
         verbose_name=_("Info"),
-        help_text=_("format: not required"),
     )
     author = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
         default=1,
         verbose_name=_("Author"),
-        related_name='environment_author',
+        related_name='scoringtype_author',
         help_text=_("Default=1 (superuser)"),
     )   
 
+    scoringsheet = models.ForeignKey(
+        "ScoringSheet",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        unique=False,
+        verbose_name=_("Scoring Sheet"),
+        related_name='scoringtype_scoringsheet'
+    )
+
     class Meta:
-        db_table = 'environments'
+        db_table = 'scoringtypes'
         ordering = ['name']
-        verbose_name = _("Environment")
-        verbose_name_plural = _("Environments")
+        verbose_name = _("Scoring Type")
+        verbose_name_plural = _("Scoring Types")
     
     def __str__(self):
         return self.name
     def __unicode__(self):
         return self.name
+
+class ResultType:
+    INDIVIDUAL = "I"
+    TEAM = "T"
+    ROUND = "R"
+    COMPETITION = "C"
+
+    choices = [
+        (INDIVIDUAL, _("Individual")),
+        (TEAM, _("Team")),
+        (ROUND, _("Round")),
+        (COMPETITION, _("Competition")),
+    ]
+
+class ResultWizard(BaseScoringModel):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    name = models.CharField(
+        max_length=64,
+        null=False,
+        unique=True,
+        blank=False,
+        verbose_name=_("Name"),
+    )
+    slug = AutoSlugField(populate_from='name',editable=True)
+    info = models.TextField(
+        null=True,
+        blank=True,
+        unique=False,
+        verbose_name=_("Info"),
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        default=1,
+        verbose_name=_("Author"),
+        related_name='resultwizard_author',
+        help_text=_("Default=1 (superuser)"),
+    )   
+
+    result_type = models.CharField(
+        max_length=1,
+        choices=ResultType.choices,
+        default=ResultType.INDIVIDUAL,
+    )
+
+    class Meta:
+        db_table = 'resultwizards'
+        ordering = ['name']
+        verbose_name = _("Result Wizard")
+        verbose_name_plural = _("Result Wizards")
+    
+    def __str__(self):
+        return self.name
+    def __unicode__(self):
+        return self.name
+
+# ----------------
+# End ResultWizard
+# ----------------
 
 class Archer(BaseScoringModel):
     def __init__(self, *args, **kwargs):
