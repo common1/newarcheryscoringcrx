@@ -21,6 +21,14 @@ from .models import (
     TeamMembership,
     Score,
     ScoringSheet,
+    
+    ResultType,
+    ScoringType,
+    ResultWizard,
+    
+    Environment,
+    Collection,
+    Solution,
 )
 from modelcluster.fields import ParentalKey
 
@@ -775,3 +783,38 @@ class CompetitionMembershipAdmin(admin.ModelAdmin):
     )
     search_fields = ('round__name', 'round__name')
 
+# ------------------------------
+# TODO: Begin ResultWizard Admin
+# ------------------------------
+
+@admin.register(ScoringType)
+class ScoringTypeAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(ResultWizard)
+class ResultWizardAdmin(admin.ModelAdmin):
+    pass
+
+# ------------------------------
+# TODO: End ResultWizard Admin
+# ------------------------------
+
+# -----------------------------
+# TODO: Begin Environment Admin
+# -----------------------------
+
+@admin.register(Environment)
+class EnvironmentAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Collection)
+class CollectionAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Solution)
+class SolutionAdmin(admin.ModelAdmin):
+    pass
+
+# ---------------------------
+# TODO: End Environment Admin
+# ---------------------------

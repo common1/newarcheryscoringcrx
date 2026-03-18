@@ -787,4 +787,38 @@ def user_logout(request):
 def dashboard(request):
     return render(request, 'scoring/django/dashboard.html')
 
+# ------------------
+# Begin ResultWizard
+# ------------------
 
+@login_required(login_url='scoring/my-login')
+def scoring_type(request):
+    pass
+
+@login_required(login_url='scoring/my-login')
+def result_wizard(request):
+    pass
+
+# ----------------
+# End ResultWizard
+# ----------------
+
+# -----------------
+# Begin Environment
+# -----------------
+
+@login_required(login_url='scoring/my-login')
+def environment(request):
+    pass
+
+@login_required(login_url='scoring/my-login')
+def collection(request):
+    pass
+
+@login_required(login_url='scoring/my-login')
+def solution(request):
+    pass
+
+# -----------------
+# End Environment
+# -----------------

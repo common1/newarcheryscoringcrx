@@ -513,7 +513,6 @@ class UpdateTeamForm(forms.ModelForm):
         required=False,
         widget=forms.Textarea(attrs={'rows': 4}),
     )
-
     archers = forms.ModelMultipleChoiceField(
         queryset = Archer.objects.all(),
         required=False,
@@ -528,3 +527,49 @@ class UpdateTeamForm(forms.ModelForm):
             'slug', 'author',
             'archers', 
         ]
+
+# -------------------------
+# TODO: Begin ScoringWizard
+# -------------------------
+
+class CreateScoringTypeForm(forms.ModelForm):
+    pass
+
+class UpdateScoringTypeForm(forms.ModelForm):
+    pass
+
+class CreateSoringWizardForm(forms.ModelForm):
+    pass
+
+class UpdateSoringWizardForm(forms.ModelForm):
+    pass
+
+# -----------------------
+# TODO: End ScoringWizard
+# -----------------------
+
+# -----------------------
+# TODO: Begin Environment
+# -----------------------
+
+class CreateEnvoronmentForm(forms.ModelForm):
+    pass
+
+class UpdateEnvoronmentForm(forms.ModelForm):
+    pass
+
+class CreateCollectionForm(forms.ModelForm):
+    pass
+
+class UpdateCollectionForm(forms.ModelForm):
+    pass
+
+class CreateSolutionForm(forms.ModelForm):
+    pass
+
+class UpdateSolutionForm(forms.ModelForm):
+    pass
+
+# ---------------------
+# TODO: End Environment
+# ---------------------
