@@ -1272,58 +1272,10 @@ class CompetitionMembership(BaseScoringModel):
         return f"{str(self.competition)} - {str(self.round)}"
 
 # ------------------------
-# TODO: Begin ResultWizard
+# TODO: Begin ScoringWizard
 # ------------------------
 
-class ScoringType(BaseScoringModel):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    name = models.CharField(
-        max_length=64,
-        null=False,
-        unique=True,
-        blank=False,
-        verbose_name=_("Name"),
-    )
-    slug = AutoSlugField(populate_from='name',editable=True)
-    info = models.TextField(
-        null=True,
-        blank=True,
-        unique=False,
-        verbose_name=_("Info"),
-    )
-    author = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        default=1,
-        verbose_name=_("Author"),
-        related_name='scoringtype_author',
-        help_text=_("Default=1 (superuser)"),
-    )   
-
-    scoringsheet = models.ForeignKey(
-        ScoringSheet,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        unique=False,
-        verbose_name=_("Scoring Sheet"),
-        related_name='scoringtype_scoringsheet'
-    )
-
-    class Meta:
-        db_table = 'scoringtypes'
-        ordering = ['name']
-        verbose_name = _("Scoring Type")
-        verbose_name_plural = _("Scoring Types")
-    
-    def __str__(self):
-        return self.name
-    def __unicode__(self):
-        return self.name
-
-class ResultType:
+class ScoringType:
     INDIVIDUAL = "I"
     TEAM = "T"
     ROUND = "R"
@@ -1336,7 +1288,7 @@ class ResultType:
         (COMPETITION, _("Competition")),
     ]
 
-class ResultWizard(BaseScoringModel):
+class ScoringWizard(BaseScoringModel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -1359,28 +1311,33 @@ class ResultWizard(BaseScoringModel):
         on_delete=models.PROTECT,
         default=1,
         verbose_name=_("Author"),
-        related_name='resultwizard_author',
+        related_name='scoringwizard_author',
         help_text=_("Default=1 (superuser)"),
     )   
 
-    result_type = models.CharField(
-        max_length=1,
-        choices=ResultType.choices,
-        default=ResultType.INDIVIDUAL,
-    )
-
-    scoringtype = models.ForeignKey(
-        ScoringType,
-        on_delete=models.CASCADE,
+    # ScoringWizard specific
+    title = models.CharField(
+        max_length=64,
         null=True,
-        blank=True,
-        unique=False,
-        verbose_name=_("Scoring Type"),
-        related_name='scoringtype_scoringsheet'
+        unique=True,
+        blank=False,
+        verbose_name=_("Title"),
+    )
+    sub_title = models.CharField(
+        max_length=64,
+        null=True,
+        unique=True,
+        blank=False,
+        verbose_name=_("Sub Title"),
+    )
+    scoring_type = models.CharField(
+        max_length=1,
+        choices=ScoringType.choices,
+        default=ScoringType.INDIVIDUAL,
     )
 
     class Meta:
-        db_table = 'resultwizards'
+        db_table = 'scoringwizards'
         ordering = ['name']
         verbose_name = _("Result Wizard")
         verbose_name_plural = _("Result Wizards")
@@ -1391,7 +1348,7 @@ class ResultWizard(BaseScoringModel):
         return self.name
 
 # ----------------
-# TODO: End ResultWizard
+# TODO: End ScoringWizard
 # ----------------
 
 # -----------------------

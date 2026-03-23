@@ -19,6 +19,8 @@ from .models import (
     ScoringSheet,
     TargetFace,
     Team,
+    
+    ScoringWizard,
 )
 
 from .widgets import (
@@ -532,17 +534,15 @@ class UpdateTeamForm(forms.ModelForm):
 # TODO: Begin ScoringWizard
 # -------------------------
 
-class CreateScoringTypeForm(forms.ModelForm):
-    pass
-
-class UpdateScoringTypeForm(forms.ModelForm):
-    pass
-
-class CreateSoringWizardForm(forms.ModelForm):
-    pass
-
-class UpdateSoringWizardForm(forms.ModelForm):
-    pass
+class ScoringWizardForm(forms.ModelForm):
+    class Meta:
+        model = ScoringWizard
+        fields = [
+            'name', 'info',
+            'slug', 'author',
+            'title', 'sub_title',
+            'scoring_type',
+        ]
 
 # -----------------------
 # TODO: End ScoringWizard

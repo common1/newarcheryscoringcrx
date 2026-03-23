@@ -22,9 +22,7 @@ from .models import (
     Score,
     ScoringSheet,
     
-    ResultType,
-    ScoringType,
-    ResultWizard,
+    ScoringWizard,
     
     Environment,
     Collection,
@@ -784,19 +782,15 @@ class CompetitionMembershipAdmin(admin.ModelAdmin):
     search_fields = ('round__name', 'round__name')
 
 # ------------------------------
-# TODO: Begin ResultWizard Admin
+# TODO: Begin ScoringWizard Admin
 # ------------------------------
 
-@admin.register(ScoringType)
-class ScoringTypeAdmin(admin.ModelAdmin):
-    pass
-
-@admin.register(ResultWizard)
-class ResultWizardAdmin(admin.ModelAdmin):
+@admin.register(ScoringWizard)
+class ScoringWizardAdmin(admin.ModelAdmin):
     pass
 
 # ------------------------------
-# TODO: End ResultWizard Admin
+# TODO: End ScoringWizard Admin
 # ------------------------------
 
 # -----------------------------

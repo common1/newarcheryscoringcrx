@@ -43,6 +43,7 @@ from .forms import (
     CreateUserForm,
     LoginForm,
     
+    ScoringWizardForm,
 )
 
 from django.contrib.auth.models import auth
@@ -788,20 +789,31 @@ def dashboard(request):
     return render(request, 'scoring/django/dashboard.html')
 
 # ------------------
-# Begin ResultWizard
+# Begin ScoringWizard
 # ------------------
 
-@login_required(login_url='scoring/my-login')
-def scoring_type(request):
+def scoring_wizards(request):
     pass
 
 @login_required(login_url='scoring/my-login')
-def result_wizard(request):
+def create_scoring_wizard(request):
     pass
 
-# ----------------
-# End ResultWizard
-# ----------------
+@login_required(login_url='scoring/my-login')
+def update_scoring_wizard(request):
+    pass
+
+@login_required(login_url='scoring/my-login')
+def singular_scoring_wizard(request):
+    pass
+
+@login_required(login_url='scoring/my-login')
+def delete_scoring_wizard(request):
+    pass
+
+# -----------------
+# End ScoringWizard
+# -----------------
 
 # -----------------
 # Begin Environment
