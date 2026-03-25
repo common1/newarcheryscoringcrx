@@ -1319,15 +1319,15 @@ class ScoringWizard(BaseScoringModel):
     title = models.CharField(
         max_length=64,
         null=True,
+        blank=True,
         unique=True,
-        blank=False,
         verbose_name=_("Title"),
     )
     sub_title = models.CharField(
         max_length=64,
         null=True,
+        blank=True,
         unique=True,
-        blank=False,
         verbose_name=_("Sub Title"),
     )
     scoring_type = models.CharField(
@@ -1339,8 +1339,8 @@ class ScoringWizard(BaseScoringModel):
     class Meta:
         db_table = 'scoringwizards'
         ordering = ['name']
-        verbose_name = _("Result Wizard")
-        verbose_name_plural = _("Result Wizards")
+        verbose_name = _("Scoring Wizard")
+        verbose_name_plural = _("Scoring Wizards")
     
     def __str__(self):
         return self.name

@@ -1,0 +1,40 @@
+{% extends "scoring/django/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="container bg-light shadow-md p-5 form-layout">
+        <h3>Create scoringwizard</h3>
+        <h5> Start adding in the required details for your scoringwizard </h5>
+        <div>
+            <hr>
+            <p>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringwizards' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back</a>
+            </p>
+            <hr>
+        </div>
+
+        <form method="POST" autocomplete="off" >
+            {% csrf_token %}
+            {{ form.name|as_crispy_field }}
+            <br>
+            {{ form.info|as_crispy_field }}
+            <br>
+            {{ form.slug|as_crispy_field }}
+            <br>
+            {{ form.author|as_crispy_field }}
+            <br>
+            {{ form.title|as_crispy_field }}
+            <br>
+            {{ form.sub_title|as_crispy_field }}
+            <br>
+            {{ form.scoring_type|as_crispy_field }}
+            <br>
+            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Create scoringwizard &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+        </form>
+
+    </div>
+    <br>
+
+{% endblock  %}

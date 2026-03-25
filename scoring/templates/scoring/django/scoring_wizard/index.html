@@ -1,0 +1,50 @@
+{% extends "scoring/django/base.html" %}
+
+{% block title %}Soring Wizards{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid pt-5 text-center bg-warning">
+        <h1>Soring Wizards</h1>
+        <p>Welcome to the scoring wizards page</p>
+        <br>
+    </div>
+
+    <div>
+        <hr>
+        <p>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_dashboard' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back </a>
+           <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringwizard_create' %}"> Create a new scoring wizard &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+        </p>
+        <hr>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="table-light">
+            <tr>
+                <th scope="col" width="10px">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Scoring Type</th>
+                <th scope="col" width="10px"></th>
+            </tr>
+            </thead>
+            {% if scoringwizards %}
+                {% for scoringwizard in scoringwizards %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }} </th>
+                        <td>{{ scoringwizard.name }} </td>
+                        <td>{{ scoringwizard.get_scoring_type_display }} </td>
+                        <td>
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringwizard_singular' scoringwizard.id %}" title="View details">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+
+{% endblock %}
+

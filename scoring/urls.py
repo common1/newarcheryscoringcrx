@@ -88,4 +88,12 @@ urlpatterns = [
     path('scoring/team/update/<uuid:pk>/', views.update_team, name='scoring_team_update'),
     path('scoring/team/singular/<uuid:pk>/', views.singular_team, name='scoring_team_singular'),
     path('scoring/team/delete/<uuid:pk>/', views.delete_team, name='scoring_team_delete'),
+
+    # ScoringWizard
+    path('scoring/scoringwizards/', views.scoringwizards, name='scoring_scoringwizards' ),
+    path('scoring/scoringwizard/create/', views.create_scoringwizard, name='scoring_scoringwizard_create' ),
+    path('scoring/scoringwizard/update/<uuid:pk>/', views.update_scoringwizard, name='scoring_scoringwizard_update'),
+    path('scoring/scoringwizard/singular/<uuid:pk>/', views.singular_scoringwizard, name='scoring_scoringwizard_singular'),
+    path('scoring/scoringwizard/delete/<uuid:pk>/', views.delete_scoringwizard, name='scoring_scoringwizard_delete'),
+
 ]

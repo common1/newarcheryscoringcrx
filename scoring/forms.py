@@ -535,6 +535,11 @@ class UpdateTeamForm(forms.ModelForm):
 # -------------------------
 
 class ScoringWizardForm(forms.ModelForm):
+    info = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 4}),
+    )
+
     class Meta:
         model = ScoringWizard
         fields = [

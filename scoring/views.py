@@ -14,6 +14,8 @@ from .models import (
     TargetFace,
     TargetFaceNameChoice,
     Team,
+
+    ScoringWizard,
 )
 
 from .forms import (
@@ -782,6 +784,7 @@ def user_logout(request):
     messages.success(request, "You have been logged out!")
 
     return redirect("scoring_my-login")
+
 # - Dashboard
 
 @login_required(login_url='scoring/my-login')
@@ -789,34 +792,51 @@ def dashboard(request):
     return render(request, 'scoring/django/dashboard.html')
 
 # ------------------
-# Begin ScoringWizard
+# TODO: Begin ScoringWizard
 # ------------------
 
-def scoring_wizards(request):
+def scoringwizards(request):
+    scoringwizards = ScoringWizard.objects.all()
+    template = 'scoring/django/scoring_wizard/index.html'
+    context = {'scoringwizards': scoringwizards}
+
+    return render(request, template, context)
+
+@login_required(login_url='scoring/my-login')
+def create_scoringwizard(request):
+    form = ScoringWizardForm()
+    if request.method == "POST":
+        form = ScoringWizardForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            
+            messages.success(request, "Scoring Wizard created successfully!")
+
+            return redirect("scoring_scoringwizards")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/scoring_wizard/create.html', context=context)
+
+@login_required(login_url='scoring/my-login')
+def update_scoringwizard(request):
     pass
 
 @login_required(login_url='scoring/my-login')
-def create_scoring_wizard(request):
+def singular_scoringwizard(request):
     pass
 
 @login_required(login_url='scoring/my-login')
-def update_scoring_wizard(request):
-    pass
-
-@login_required(login_url='scoring/my-login')
-def singular_scoring_wizard(request):
-    pass
-
-@login_required(login_url='scoring/my-login')
-def delete_scoring_wizard(request):
+def delete_scoringwizard(request):
     pass
 
 # -----------------
-# End ScoringWizard
+# TODO: End ScoringWizard
 # -----------------
 
 # -----------------
-# Begin Environment
+# TODO: Begin Environment
 # -----------------
 
 @login_required(login_url='scoring/my-login')
@@ -832,5 +852,5 @@ def solution(request):
     pass
 
 # -----------------
-# End Environment
+# TODO: End Environment
 # -----------------

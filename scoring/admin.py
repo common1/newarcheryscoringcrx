@@ -785,9 +785,45 @@ class CompetitionMembershipAdmin(admin.ModelAdmin):
 # TODO: Begin ScoringWizard Admin
 # ------------------------------
 
+@admin.action(description="Activate selected Scoring Wizards")
+def activate_scoring_wizards(modeladmin, request, queryset):
+    queryset.update(is_active=True)
+
+@admin.action(description="Deactivate selected Scoring Wizards")
+def deactivate_scoring_wizards(modeladmin, request, queryset):
+    queryset.update(is_active=False)
+
 @admin.register(ScoringWizard)
 class ScoringWizardAdmin(admin.ModelAdmin):
-    pass
+    actions=[activate_scoring_wizards, deactivate_scoring_wizards]
+    list_display = ('name', 'scoring_type', 'is_active',)
+    list_editable = ('is_active',)
+    list_filter = ('is_active',)
+    list_display_links = ('name',)
+    list_per_page = 20
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'info',)
+        }),
+        ('Scoring Wizard Specific', {
+            'fields': (
+                'title', 
+                'sub_title', 
+            ),
+        }),
+        ('Extra Information', {
+            'classes': ['collapse'],
+            'fields': (
+                'slug', 
+                'author', 
+            ),
+        }),
+        ('Special', {
+            'classes': ['collapse'],
+            'fields': ('is_active',),
+        }),
+    )
+    search_fields = ('name', 'info')
 
 # ------------------------------
 # TODO: End ScoringWizard Admin
