@@ -25,8 +25,8 @@
             <tr>
                 <th scope="col" width="10px">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">Scoring Type</th>
-                <th scope="col" width="10px"></th>
+                <th scope="col" width="10px" class="text-center">Scoring</th>
+                <th scope="col" width="10px" class="text-center">View</th>
             </tr>
             </thead>
             {% if scoringwizards %}
@@ -34,10 +34,31 @@
                     <tr>
                         <th scope="row">{{ forloop.counter }} </th>
                         <td>{{ scoringwizard.name }} </td>
-                        <td>{{ scoringwizard.get_scoring_type_display }} </td>
                         <td>
-                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringwizard_singular' scoringwizard.id %}" title="View details">
-                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            {% if scoringwizard.get_scoring_type_display ==  "Individual" %}
+                                <a class="btn btn-outline-primary btn-sm col-12" href="" title="Individual Scoring">
+                                    Individual
+                                </a>
+                            {% endif %}
+                            {% if scoringwizard.get_scoring_type_display ==  "Team" %}
+                                <a class="btn btn-outline-primary btn-sm col-12" href="" title="Team Scoring">
+                                    Team
+                                </a>
+                            {% endif %}
+                            {% if scoringwizard.get_scoring_type_display ==  "Round" %}
+                                <a class="btn btn-outline-primary btn-sm col-12" href="" title="Round Scoring">
+                                    Round
+                                </a>
+                            {% endif %}
+                            {% if scoringwizard.get_scoring_type_display ==  "Competition" %}
+                                <a class="btn btn-outline-primary btn-sm col-12" href="" title="Competition Scoring">
+                                    Competition
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringwizard_singular' scoringwizard.id %}">
+                                Details
                             </a>
                         </td>
                     </tr>

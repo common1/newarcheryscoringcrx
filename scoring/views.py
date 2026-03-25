@@ -820,16 +820,39 @@ def create_scoringwizard(request):
     return render(request, 'scoring/django/scoring_wizard/create.html', context=context)
 
 @login_required(login_url='scoring/my-login')
-def update_scoringwizard(request):
-    pass
+def update_scoringwizard(request, pk):
+    scoringwizard = ScoringWizard.objects.get(id=pk)
+    form = ScoringWizardForm(instance=scoringwizard)
+
+    if request.method == "POST":
+        form = ScoringWizardForm(request.POST, instance=scoringwizard)
+
+        if form.is_valid():
+            form.save()
+            
+            messages.success(request, "Scoring Wizard updated successfully!")
+
+            return redirect("scoring_scoringwizards")
+
+    context = {'form': form}
+
+    return render(request, 'scoring/django/scoring_wizard/update.html', context=context)
 
 @login_required(login_url='scoring/my-login')
-def singular_scoringwizard(request):
-    pass
+def singular_scoringwizard(request, pk):
+    scoringwizard = ScoringWizard.objects.get(id=pk)
+    context = {'scoringwizard': scoringwizard}
+
+    return render(request, 'scoring/django/scoring_wizard/view.html', context)
 
 @login_required(login_url='scoring/my-login')
-def delete_scoringwizard(request):
-    pass
+def delete_scoringwizard(request, pk):
+    scoringwizard = ScoringWizard.objects.get(id=pk)
+    scoringwizard.delete()
+
+    messages.success(request, "ScoringWizard deleted successfully!")
+
+    return redirect("scoring_scoringwizards")
 
 # -----------------
 # TODO: End ScoringWizard

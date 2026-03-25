@@ -5,12 +5,12 @@
 {% block content %}
 
     <div class="container bg-light shadow-md p-5">
-        <h3>Create scoringwizard</h3>
-        <h5> Start adding in the required details for your scoringwizard </h5>
+        <h3>Update scoringwizard</h3>
+        <h5>Update your scoringwizard down below</h5>
         <div>
             <hr>
             <p>
-            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringwizards' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back</a>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringwizard_singular' form.instance.id %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back</a>
             </p>
             <hr>
         </div>
@@ -31,10 +31,10 @@
             <br>
             {{ form.scoring_type|as_crispy_field }}
             <br>
-            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Create scoringwizard &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Update scoringwizard &nbsp; <i class="fa fa-save" aria-hidden="true"></i></button>
         </form>
 
     </div>
     <br>
 
-{% endblock  %}
+{% endblock %}

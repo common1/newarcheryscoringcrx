@@ -1,0 +1,68 @@
+{% extends "scoring/django/base.html" %}
+
+{% block content %}
+
+    <div class="card">
+
+        <div class="card-header">
+            <a href="{% url 'scoring_scoringwizards' %}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Return</a>
+            &nbsp;
+            <a href="{% url 'scoring_scoringwizard_update' scoringwizard.id %}" class="btn btn-outline-info btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> &nbsp; Update scoringwizard </a>
+            &nbsp;
+            <a href="{% url 'scoring_scoringwizard_delete' scoringwizard.id %}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> &nbsp; Delete </a>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <td scope="row" colspan="2">
+                                <strong>Scoring Wizard name: </strong>
+                                {{ scoringwizard.name|upper }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col"> Field </th>
+                            <th scope="col"> Value </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><strong> ID </strong></td>
+                        <td> {{ scoringwizard.id }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Slug </strong></td>
+                        <td> {{ scoringwizard.slug }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Author </strong></td>
+                        <td> {{ scoringwizard.author }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Info </strong></td>
+                        <td> {{ scoringwizard.info }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Is active </strong></td>
+                        <td> {{ scoringwizard.is_active }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Title </strong></td>
+                        <td> {{ scoringwizard.title }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Subtitle </strong></td>
+                        <td> {{ scoringwizard.sub_title }} </td>
+                    </tr>
+                    <tr>
+                        <td><strong> Scoring Type </strong></td>
+                        <td> {{ scoringwizard.get_scoring_type_display }} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    
+{% endblock %}

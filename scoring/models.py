@@ -1331,7 +1331,7 @@ class ScoringWizard(BaseScoringModel):
         verbose_name=_("Sub Title"),
     )
     scoring_type = models.CharField(
-        max_length=1,
+        max_length=3,
         choices=ScoringType.choices,
         default=ScoringType.INDIVIDUAL,
     )
