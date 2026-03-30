@@ -854,6 +854,23 @@ def delete_scoringwizard(request, pk):
 
     return redirect("scoring_scoringwizards")
 
+@login_required(login_url='scoring/my-login')
+def individual_scoring(request, pk):
+    pass
+
+@login_required(login_url='scoring/my-login')
+def team_scoring(request, pk):
+    pass
+
+@login_required(login_url='scoring/my-login')
+def round_scoring(request, pk):
+    pass
+
+@login_required(login_url='scoring/my-login')
+def competition_scoring(request, pk):
+    pass
+
+
 # -----------------
 # TODO: End ScoringWizard
 # -----------------
