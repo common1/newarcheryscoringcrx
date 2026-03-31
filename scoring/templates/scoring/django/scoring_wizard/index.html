@@ -36,22 +36,22 @@
                         <td>{{ scoringwizard.name }} </td>
                         <td>
                             {% if scoringwizard.get_scoring_type_display ==  "Individual" %}
-                                <a class="btn btn-outline-primary btn-sm col-12" href="" title="Individual Scoring">
+                                <a class="btn btn-outline-primary btn-sm col-12" href="{% url 'scoring_scoringwizard_individual' scoringwizard.id %}" title="Individual Scoring">
                                     Individual
                                 </a>
                             {% endif %}
                             {% if scoringwizard.get_scoring_type_display ==  "Team" %}
-                                <a class="btn btn-outline-primary btn-sm col-12" href="" title="Team Scoring">
+                                <a class="btn btn-outline-primary btn-sm col-12" href="{% url 'scoring_scoringwizard_team' scoringwizard.id %}" title="Team Scoring">
                                     Team
                                 </a>
                             {% endif %}
                             {% if scoringwizard.get_scoring_type_display ==  "Round" %}
-                                <a class="btn btn-outline-primary btn-sm col-12" href="" title="Round Scoring">
+                                <a class="btn btn-outline-primary btn-sm col-12" href="{% url 'scoring_scoringwizard_round' scoringwizard.id %}" title="Round Scoring">
                                     Round
                                 </a>
                             {% endif %}
                             {% if scoringwizard.get_scoring_type_display ==  "Competition" %}
-                                <a class="btn btn-outline-primary btn-sm col-12" href="" title="Competition Scoring">
+                                <a class="btn btn-outline-primary btn-sm col-12" href="{% url 'scoring_scoringwizard_competition' scoringwizard.id %}" title="Competition Scoring">
                                     Competition
                                 </a>
                             {% endif %}

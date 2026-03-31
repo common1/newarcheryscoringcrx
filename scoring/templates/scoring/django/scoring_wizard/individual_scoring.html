@@ -1,0 +1,29 @@
+{% extends "scoring/django/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="container bg-light shadow-md p-5">
+        <h3>Scoring Wizard - Individual Scoring</h3>
+        <h5>Update your individual scoring down below</h5>
+        <div>
+            <hr>
+            <p>
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'scoring_scoringwizards' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back</a>
+            </p>
+            <hr>
+        </div>
+
+        <form method="POST" autocomplete="off" >
+            {% csrf_token %}
+            {{ form.archer|as_crispy_field }}
+
+            <br>
+            <button type="submit" class="btn btn-outline-success w-100 btn-block p-2"> Create Individual score &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+        </form>
+
+    </div>
+    <br>
+
+{% endblock %}

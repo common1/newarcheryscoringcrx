@@ -95,5 +95,8 @@ urlpatterns = [
     path('scoring/scoringwizard/update/<uuid:pk>/', views.update_scoringwizard, name='scoring_scoringwizard_update'),
     path('scoring/scoringwizard/singular/<uuid:pk>/', views.singular_scoringwizard, name='scoring_scoringwizard_singular'),
     path('scoring/scoringwizard/delete/<uuid:pk>/', views.delete_scoringwizard, name='scoring_scoringwizard_delete'),
-
+    path('scoring/scoringwizard/individual/<uuid:pk>/', views.individual_scoring_scoringwizard, name='scoring_scoringwizard_individual'),
+    path('scoring/scoringwizard/team/<uuid:pk>/', views.team_scoring_scoringwizard, name='scoring_scoringwizard_team'),
+    path('scoring/scoringwizard/round/<uuid:pk>/', views.round_scoring_scoringwizard, name='scoring_scoringwizard_round'),
+    path('scoring/scoringwizard/competition/<uuid:pk>/', views.competition_scoring_scoringwizard, name='scoring_scoringwizard_competition'),
 ]

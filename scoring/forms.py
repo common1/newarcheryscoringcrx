@@ -549,6 +549,33 @@ class ScoringWizardForm(forms.ModelForm):
             'scoring_type',
         ]
 
+class IndividualScoringWizardForm(forms.Form):
+    archer = forms.ModelChoiceField(
+        queryset=Archer.objects.all(),
+        label="Select an Archer",
+        empty_label='--- Select ---',
+        required=True,
+        to_field_name='id',
+    )
+    score = forms.IntegerField(
+
+    )
+    number_of_arrows = forms.IntegerField(
+
+    )
+    round = forms.ModelChoiceField(
+        queryset=Round.objects.all()
+    )
+
+class TeamScoringWizardForm(forms.Form):
+    pass
+
+class RoundScoringWizardForm(forms.Form):
+    pass
+
+class CompetiionScoringWizardForm(forms.Form):
+    pass
+
 # -----------------------
 # TODO: End ScoringWizard
 # -----------------------

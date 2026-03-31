@@ -46,6 +46,7 @@ from .forms import (
     LoginForm,
     
     ScoringWizardForm,
+    IndividualScoringWizardForm,
 )
 
 from django.contrib.auth.models import auth
@@ -855,21 +856,46 @@ def delete_scoringwizard(request, pk):
     return redirect("scoring_scoringwizards")
 
 @login_required(login_url='scoring/my-login')
-def individual_scoring(request, pk):
-    pass
+def individual_scoring_scoringwizard(request, pk):
+    scoringwizards = ScoringWizard.objects.get(id=pk)
+
+    form = IndividualScoringWizardForm()
+
+    context = {
+        "form": form,
+    }
+
+    return render(request, 'scoring/django/scoring_wizard/individual_scoring.html', context)
 
 @login_required(login_url='scoring/my-login')
-def team_scoring(request, pk):
-    pass
+def team_scoring_scoringwizard(request, pk):
+    scoringwizards = ScoringWizard.objects.get(id=pk)
+
+    context = {
+        'scoringwizards': scoringwizards,
+    }
+
+    return render(request, 'scoring/django/scoring_wizard/team_scoring.html', context)
 
 @login_required(login_url='scoring/my-login')
-def round_scoring(request, pk):
-    pass
+def round_scoring_scoringwizard(request, pk):
+    scoringwizards = ScoringWizard.objects.get(id=pk)
+
+    context = {
+        'scoringwizards': scoringwizards,
+    }
+
+    return render(request, 'scoring/django/scoring_wizard/round_scoring.html', context)
 
 @login_required(login_url='scoring/my-login')
-def competition_scoring(request, pk):
-    pass
+def competition_scoring_scoringwizard(request, pk):
+    scoringwizards = ScoringWizard.objects.get(id=pk)
 
+    context = {
+        'scoringwizards': scoringwizards,
+    }
+
+    return render(request, 'scoring/django/scoring_wizard/competition_scoring.html', context)
 
 # -----------------
 # TODO: End ScoringWizard
